@@ -8,9 +8,9 @@ const Footer = () => {
   return (
     <footer className='bg-zebotix-black border-t border-gray-800 pt-16 pb-8' role='contentinfo'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
+        <div className='grid grid-cols-2 xl:grid-cols-4 gap-10'>
           {/* Company info */}
-          <div className='col-span-1 md:col-span-1'>
+          <div className='col-span-2 md:col-span-1'>
             <Link href='/' className='inline-block mb-4' aria-label='Zebotix homepage'>
               <span className='text-2xl font-bold bg-gradient-to-r from-zebotix-blue to-blue-300 bg-clip-text text-transparent'>
                 Zebotix

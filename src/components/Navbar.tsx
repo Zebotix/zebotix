@@ -16,7 +16,9 @@ const Navbar = () => {
 
   // Function to check if a link is active
   const isActive = (path: string) => {
-    return location === path;
+    const active = location === path;
+    console.log(location, path, active);
+    return active;
   };
 
   return (
@@ -151,10 +153,15 @@ const Navbar = () => {
             </Link>
             <Link
               href='#faq'
-              className={`block px-3 py-2 text-base font-medium text-blue-100 hover:text-zebotix-blue`}
-              onClick={() => setIsOpen(false)}
+              className={`block px-3 py-2 text-base font-medium ${
+                isActive('/#faq') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+              }`}
+              onClick={() => {
+                console.log('faq: ', location, isActive('#faq'));
+                return setIsOpen(false);
+              }}
             >
-              FAQs
+              <span>FAQs</span>
             </Link>
           </div>
         </div>

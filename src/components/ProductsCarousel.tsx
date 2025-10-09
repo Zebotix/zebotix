@@ -186,17 +186,17 @@ const HorizontalCarousel = ({ items }: { items: typeof SOLUTIONS }) => {
           {items?.map((s: any, i: any) => (
             <article
               key={i}
-              className='min-w-full sm:min-w-[40vw] md:min-h-[40vh] bg-gradient-to-b from-zebotix-darkGray to-zebotix-black rounded-xl space-y-6 p-5 text-center border border-gray-800'
+              className='flex flex-col justify-between min-w-full sm:min-w-[40vw] md:min-h-[30vh] bg-gradient-to-b from-zebotix-darkGray to-zebotix-black rounded-xl space-y-6 p-5 text-center border border-gray-800'
             >
               <header className='mb-3'>
-                <h3 className='text-lg font-semibold text-white'>{s.title}</h3>
-                <p className='text-xs text-gray-400'>{s.subtitle}</p>
+                <h3 className='text-xl sm:text-2xl font-semibold text-white'>{s.title}</h3>
+                <p className='text-sm sm:text-lg text-gray-400'>{s.subtitle}</p>
               </header>
 
               <div className='flex flex-col items-center justify-between'>
                 <Button asChild>
                   <a href={`/solutions/${s.id}`} className='text-sm'>
-                    Learn how to sell
+                    Learn more
                   </a>
                 </Button>
                 <span className='mt-3 text-xs text-gray-400'>Top categories • Local demand</span>

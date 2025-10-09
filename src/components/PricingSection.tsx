@@ -346,14 +346,14 @@ const PricingSection = () => {
           {plans.map((plan, index) => (
             <div
               key={plan.id}
-              className={`rounded-2xl p-8 transition-all duration-300 ${
+              className={` flex flex-col justify-between rounded-2xl p-8 transition-all duration-300 ${
                 plan.name.includes('recommended')
                   ? 'bg-gradient-to-b from-zebotix-blue/20 to-zebotix-black border border-zebotix-blue/30 transform hover:-translate-y-2'
                   : 'bg-zebotix-darkGray border border-gray-800 transform hover:-translate-y-1'
               }`}
             >
               {plan.name.includes('recommended') && (
-                <span className='bg-zebotix-blue text-zebotix-black text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block'>
+                <span className='w-fit bg-zebotix-blue text-zebotix-black text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block'>
                   Recommended
                 </span>
               )}

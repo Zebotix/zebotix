@@ -6,6 +6,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import ContactButton from '../ContactButton';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
@@ -16,7 +17,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Toaster />
         <Sonner />
         <Navbar />
-        <main className='min-h-screen bg-zebotix-black text-white'>{children}</main>
+        <main className='min-h-screen bg-zebotix-black text-white'>
+          {children}
+          <ContactButton />
+        </main>
         <Footer />
       </TooltipProvider>
     </QueryClientProvider>
