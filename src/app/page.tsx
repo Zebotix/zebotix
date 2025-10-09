@@ -2,7 +2,7 @@
 import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import PricingSection from '@/components/PricingSection';
-import PortfolioSection from '@/components/TestimonialsSection';
+import PortfolioSection from '@/components/PortfolioSection';
 import FaqSection from '@/components/FaqSection';
 import CtaSection from '@/components/CtaSection';
 import ProductsCarouselSection from '@/components/ProductsCarousel';
@@ -11,9 +11,9 @@ export default function Home() {
     <section>
       <HeroSection />
       <FeaturesSection />
-      <PricingSection />
       <ProductsCarouselSection />
       <PortfolioSection />
+      <PricingSection />
       <FaqSection />
       <CtaSection />
     </section>

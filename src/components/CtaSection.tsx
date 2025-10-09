@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 const CtaSection = () => {
   return (
-    <div className='bg-zebotix-darkGray py-16 md:py-20'>
+    <div id='cta' className='bg-zebotix-darkGray py-16 md:py-20'>
       <div className='section-container'>
         <div className='bg-gradient-to-r from-zebotix-blue/20 to-blue-300/20 rounded-2xl p-8 md:p-12 relative overflow-hidden'>
           {/* Abstract glow effect */}

@@ -86,7 +86,11 @@ const PortfolioCard = ({
 
 const PortfolioSection = () => {
   return (
-    <section className='bg-zebotix-black py-16 md:py-24' aria-labelledby='portfolio-heading'>
+    <section
+      id='portfolio'
+      className='bg-zebotix-black py-16 md:py-24'
+      aria-labelledby='portfolio-heading'
+    >
       <div className='section-container'>
         <div className='flex items-center justify-between mb-8'>
           <div className='max-w-2xl'>

@@ -121,7 +121,7 @@ const faqs = [
 
 const FaqSection = () => {
   return (
-    <div className='bg-zebotix-black py-16 md:py-24 border-t border-gray-800'>
+    <div id='faq' className='bg-zebotix-black py-16 md:py-24 border-t border-gray-800'>
       <div className='section-container'>
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <h2 className='text-3xl md:text-4xl font-bold mb-4'>

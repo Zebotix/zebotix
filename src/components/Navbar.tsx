@@ -36,7 +36,7 @@ const Navbar = () => {
           <div className='hidden md:block'>
             <div className='flex items-center space-x-4'>
               <Link
-                href='/'
+                href='#home'
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   isActive('/') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
@@ -44,15 +44,31 @@ const Navbar = () => {
                 Home
               </Link>
               <Link
-                href=''
+                href='#features'
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
               >
-                Roadmap
+                Features
               </Link>
               <Link
-                href=''
+                href='#solutions'
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                }`}
+              >
+                Solutions
+              </Link>
+              <Link
+                href='#portfolio'
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                }`}
+              >
+                Portfolio
+              </Link>
+              <Link
+                href='#pricing'
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
@@ -60,22 +76,14 @@ const Navbar = () => {
                 Pricing
               </Link>
               <Link
-                href=''
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
-                }`}
-              >
-                Contact
-              </Link>
-              <Link
-                href=''
+                href='#faq'
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   isActive('') || location.startsWith('/')
                     ? 'text-zebotix-blue'
                     : 'text-white hover:text-zebotix-blue'
                 }`}
               >
-                Blog
+                FAQs
               </Link>
             </div>
           </div>
@@ -97,7 +105,7 @@ const Navbar = () => {
         <div className='relative md:hidden'>
           <div className='w-full absolute bg-zebotix-black bg-opacity-90 backdrop-blur-sm px-2 pt-2 pb-3 space-y-1 sm:px-3'>
             <Link
-              href='/'
+              href='#home'
               className={`block px-3 py-2 text-base font-medium ${
                 isActive('/') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
@@ -106,16 +114,34 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              href=''
+              href='#features'
               className={`block px-3 py-2 text-base font-medium ${
                 isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
               onClick={() => setIsOpen(false)}
             >
-              Roadmap
+              Features
             </Link>
             <Link
-              href=''
+              href='#solutions'
+              className={`block px-3 py-2 text-base font-medium ${
+                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              Solutions
+            </Link>
+            <Link
+              href='#portfolio'
+              className={`block px-3 py-2 text-base font-medium ${
+                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              Portfolio
+            </Link>
+            <Link
+              href='#pricing'
               className={`block px-3 py-2 text-base font-medium ${
                 isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
@@ -124,24 +150,11 @@ const Navbar = () => {
               Pricing
             </Link>
             <Link
-              href=''
-              className={`block px-3 py-2 text-base font-medium ${
-                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
-              }`}
+              href='#faq'
+              className={`block px-3 py-2 text-base font-medium text-blue-100 hover:text-zebotix-blue`}
               onClick={() => setIsOpen(false)}
             >
-              Contact
-            </Link>
-            <Link
-              href=''
-              className={`block px-3 py-2 text-base font-medium ${
-                isActive('') || location.startsWith('/')
-                  ? 'text-zebotix-blue'
-                  : 'text-white hover:text-zebotix-blue'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              Blog
+              FAQs
             </Link>
           </div>
         </div>

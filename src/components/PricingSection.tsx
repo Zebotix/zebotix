@@ -323,7 +323,10 @@ const PricingSection = () => {
   };
 
   return (
-    <div className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black py-16 md:py-24'>
+    <div
+      id='pricing'
+      className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black py-16 md:py-24'
+    >
       <div className='section-container'>
         <div className='text-center max-w-3xl mx-auto mb-12'>
           <h2 className='text-3xl md:text-4xl font-bold mb-4'>

@@ -41,6 +41,7 @@ const HeroSection: FC<HeroSectionProps> = ({
 
   return (
     <section
+      id='home'
       aria-labelledby={titleId}
       className={`relative bg-gradient-to-b from-zebotix-black to-[#0c0e1c] overflow-hidden min-h-[90vh] flex items-center justify-center ${className}`}
     >
@@ -141,11 +142,11 @@ const HeroSection: FC<HeroSectionProps> = ({
       ></div>
       <div
         aria-hidden
-        className='absolute top-20 right-10 w-10 h-10 border border-zebotix-blue/60 rounded-full'
+        className='absolute top-20 right-10 w-10 h-10 border border-zebotix-blue/50 rounded-full'
       ></div>
       <div
         aria-hidden
-        className='absolute top-40 left-20 w-5 h-5 bg-zebotix-blue/60 rounded-full'
+        className='absolute top-40 left-20 w-5 h-5 bg-zebotix-blue/50 rounded-full'
       ></div>
       <div
         aria-hidden

@@ -186,7 +186,7 @@ const HorizontalCarousel = ({ items }: { items: typeof SOLUTIONS }) => {
           {items?.map((s: any, i: any) => (
             <article
               key={i}
-              className='min-w-[25vw] bg-gradient-to-b from-zebotix-darkGray to-zebotix-black rounded-xl space-y-6 p-5 text-center border border-gray-800'
+              className='min-w-full sm:min-w-[40vw] md:min-h-[40vh] bg-gradient-to-b from-zebotix-darkGray to-zebotix-black rounded-xl space-y-6 p-5 text-center border border-gray-800'
             >
               <header className='mb-3'>
                 <h3 className='text-lg font-semibold text-white'>{s.title}</h3>
@@ -219,7 +219,11 @@ const HorizontalCarousel = ({ items }: { items: typeof SOLUTIONS }) => {
 
 const ProductsCarouselSection = () => {
   return (
-    <section className='bg-zebotix-black py-16 md:py-24' aria-labelledby='solutions-heading'>
+    <section
+      id='solutions'
+      className='bg-zebotix-black py-16 md:py-24'
+      aria-labelledby='solutions-heading'
+    >
       <div className='section-container'>
         <div className='text-center max-w-4xl mx-auto mb-12'>
           <h2 id='solutions-heading' className='text-3xl md:text-4xl font-bold mb-3'>
