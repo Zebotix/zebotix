@@ -19,9 +19,14 @@ const Footer = () => {
           {/* Company info */}
           <div className='col-span-2 md:col-span-1'>
             <Link href='/' className='inline-block mb-4' aria-label='Zebotix homepage'>
-              <span className='text-2xl font-bold bg-gradient-to-r from-zebotix-blue to-blue-300 bg-clip-text text-transparent'>
-                Zebotix
-              </span>
+              <Image
+                src={'/Zebotix.png'}
+                alt='zebotix'
+                width={500}
+                height={500}
+                className='w-16 h-auto'
+                priority
+              />
             </Link>
 
             <p className='text-gray-400 mb-4'>

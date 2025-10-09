@@ -1,14 +1,25 @@
 import Head from 'next/head';
+import Image from 'next/image';
 
 export default function About() {
   return (
     <main className='min-h-screen py-12 px-6 lg:px-24'>
-      <article className='max-w-4xl mx-auto shadow-xl rounded-2xl p-8'>
-        <header className='mb-8'>
-          <h1 className='text-3xl font-extrabold mb-2'>About Zebotix</h1>
-          <p className='text-sm text-gray-400'>
-            Last updated: <strong>October 2025</strong>
-          </p>
+      <article className='max-w-4xl mx-auto shadow-xl rounded-2xl p-2'>
+        <header className='flex justify-between items-center'>
+          <div className='mb-8'>
+            <h1 className='text-3xl font-extrabold mb-2'>About Zebotix</h1>
+            <p className='text-sm text-gray-400'>
+              Last updated: <strong>October 2025</strong>
+            </p>
+          </div>
+          <Image
+            src={'/Zebotix.png'}
+            alt='zebotix'
+            width={500}
+            height={500}
+            className='w-16 h-auto mb-6'
+            priority
+          />
         </header>
 
         <section className='mb-6'>
@@ -131,24 +142,10 @@ export default function About() {
 
         <section className='mb-6'>
           <h2 className='text-xl font-semibold mb-2'>Contact &amp; support</h2>
-          <p className='text-sm text-gray-400'>
-            For sales and project enquiries:{' '}
-            <a href='mailto:zebotix@gmail.com' className='text-indigo-600 hover:underline'>
-              zebotix@gmail.com
-            </a>
-          </p>
-          <p className='text-sm text-gray-400 mt-2'>
-            For privacy or data matters:{' '}
-            <a href='mailto:privacy@zebotix.com' className='text-indigo-600 hover:underline'>
-              privacy@zebotix.com
-            </a>
-          </p>
-          <p className='text-sm text-gray-400 mt-2'>
-            Legal / contracts:{' '}
-            <a href='mailto:legal@zebotix.com' className='text-indigo-600 hover:underline'>
-              legal@zebotix.com
-            </a>
-          </p>
+
+          <a href='mailto:zebotix@gmail.com' className='indent-4 text-indigo-600 hover:underline'>
+            zebotix@gmail.com
+          </a>
         </section>
 
         <footer className='mt-8 border-t pt-4 text-sm text-gray-400'>
