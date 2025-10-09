@@ -115,7 +115,7 @@ const Navbar = () => {
         <div className='relative md:hidden'>
           <div className='w-full absolute bg-zebotix-black bg-opacity-90 backdrop-blur-sm px-2 pt-2 pb-3 space-y-1 sm:px-3'>
             <Link
-              href='#home'
+              href='/'
               className={`block px-3 py-2 text-base font-medium ${
                 isActive('/') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
