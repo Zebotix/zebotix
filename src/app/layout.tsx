@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import React from 'react';
 import Layout from '@/components/layout/Layout';
+import ScrollToHash from '@/hooks/useScrollhash';
 
 const SITE_URL = 'https://zebotix.netlify.app'; // <-- update to your canonical domain
 const Company = 'Zebotix';
@@ -19,6 +20,19 @@ export const metadata: Metadata = {
   applicationName: Company,
   keywords: [
     'Zebotix',
+    'e-commerce solutions',
+    'products showcasing and portfolios',
+    'clothes selling webites',
+    'business websites',
+    'responsive websites',
+    'web development services',
+    'mobile app development',
+    'web apps',
+    'web design',
+    'web development',
+    'web solutions',
+    'mobile apps',
+    'web development company',
     'software development company',
     'AI solutions',
     'web application development',
@@ -31,7 +45,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'Zebotix', url: SITE_URL }],
   icons: {
     icon: '/Zebotix.png',
-    apple: '/icons/apple-touch-icon.png',
+    shortcut: '/Zebotix.png',
+    apple: '/Zebotix.png',
   },
   robots: {
     index: true,
@@ -56,7 +71,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: `${SITE_URL}/og-image-1200x630.png`,
+        url: `${SITE_URL}/Zebotix.png`,
         width: 1200,
         height: 630,
         alt: 'Zebotix — software and AI solutions',
@@ -67,8 +82,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: `${Company} — Empowering innovation with software & AI`,
     description: SHORT_DESC,
-    images: [`${SITE_URL}/og-image-1200x630.png`],
-    creator: '@ZebotixOfficial', // update or remove
+    images: [`${SITE_URL}/Zebotix.png`],
+    creator: '@zebotix1499', // update or remove
   },
 };
 
@@ -89,7 +104,7 @@ export default function RootLayout({
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+92-XXX-XXXXXXX', // update or remove
+        telephone: '+92-337-8568671', // update or remove
         contactType: 'customer service',
         areaServed: 'PK',
         availableLanguage: 'English',
@@ -137,26 +152,13 @@ export default function RootLayout({
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content='630' />
         <meta name='twitter:card' content='summary_large_image' />
-        <meta name='twitter:site' content='@ZebotixOfficial' />
+        <meta name='twitter:site' content='@zebotix1499' />
         <meta
           name='twitter:title'
           content={`${Company} — Empowering innovation with software & AI`}
         />
         <meta name='twitter:description' content={SHORT_DESC} />
         <meta name='twitter:image' content={`${SITE_URL}/Zebotix.png`} />
-        <link rel='preconnect' href='https://fonts.googleapis.com' crossOrigin='' />
-        <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='' />
-        {/* <link
-          href='https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap'
-          rel='stylesheet'
-        />
-        <link
-          rel='preload'
-          href='/fonts/Inter-Variable.woff2'
-          as='font'
-          type='font/woff2'
-          crossOrigin='anonymous'
-        /> */}
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -170,6 +172,7 @@ export default function RootLayout({
       </head>
 
       <body className={`modal-scroll antialiased`}>
+        <ScrollToHash />
         <Layout>{children}</Layout>
       </body>
     </html>

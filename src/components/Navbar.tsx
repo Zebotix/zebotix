@@ -78,9 +78,17 @@ const Navbar = () => {
                 Pricing
               </Link>
               <Link
+                href='/contact'
+                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                }`}
+              >
+                Contact
+              </Link>
+              <Link
                 href='#faq'
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') || location.startsWith('/')
+                  isActive('') || location?.startsWith('/')
                     ? 'text-zebotix-blue'
                     : 'text-white hover:text-zebotix-blue'
                 }`}
@@ -150,6 +158,15 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
             >
               Pricing
+            </Link>
+            <Link
+              href='/contact'
+              className={`block px-3 py-2 text-base font-medium ${
+                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              Contact
             </Link>
             <Link
               href='#faq'

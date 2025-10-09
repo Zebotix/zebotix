@@ -12,3 +12,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+
+Sitemap: https://apna-campus.netlify/sitemap.xml

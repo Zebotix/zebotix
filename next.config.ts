@@ -1,7 +1,19 @@
 import type { NextConfig } from 'next';
-import { basename } from 'path';
 
 const nextConfig: NextConfig = {
+  webpack(config, { isServer }) {
+    if (!isServer) {
+      config.module.rules.push({
+        test: /(@prisma\/extension-optimize|prisma-instrumentation-5-x|@opentelemetry)/,
+        use: 'null-loader',
+      });
+    }
+    return config;
+  },
+  allowedDevOrigins: ['*.app.github.dev', '*.devtunnels.ms'],
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     remotePatterns: [
       {
