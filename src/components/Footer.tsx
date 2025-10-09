@@ -24,11 +24,11 @@ const Footer = () => {
 
             <address className='not-italic text-gray-400 mb-4'>
               <a
-                href='mailto:hello@zebotix.com'
+                href='mailto:zebotix@gmail.com'
                 className='hover:text-zebotix-blue transition-colors'
                 aria-label='Email Zebotix'
               >
-                hello@zebotix.com
+                zebotix@gmail.com
               </a>
               <span className='hidden sm:inline'> • </span>
               <Link
@@ -106,9 +106,9 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Product links */}
-          <nav aria-label='Product links'>
-            <h3 className='text-lg font-semibold mb-4'>Product</h3>
+          {/* Quick links */}
+          <nav aria-label='Quick links'>
+            <h3 className='text-lg font-semibold mb-4'>Quick links</h3>
             <ul className='space-y-3'>
               <li>
                 <Link href='/' className='text-gray-400 hover:text-zebotix-blue transition-colors'>
@@ -117,34 +117,34 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href='/roadmap'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Roadmap
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/pricing'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/docs'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/features'
+                  href='#features'
                   className='text-gray-400 hover:text-zebotix-blue transition-colors'
                 >
                   Features
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='#solutions'
+                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
+                >
+                  Solutions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='#portfolio'
+                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
+                >
+                  Portolio
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='#pricing'
+                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
+                >
+                  Pricing
                 </Link>
               </li>
             </ul>
