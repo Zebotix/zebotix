@@ -1,12 +1,11 @@
-import Head from 'next/head';
 import Image from 'next/image';
 
 export default function About() {
   return (
     <main className='min-h-screen py-12 px-6 lg:px-24'>
       <article className='max-w-4xl mx-auto shadow-xl rounded-2xl p-2'>
-        <header className='flex justify-between items-center'>
-          <div className='mb-8'>
+        <header className='min-h-[20vh] flex justify-between items-center'>
+          <div>
             <h1 className='text-3xl font-extrabold mb-2'>About Zebotix</h1>
             <p className='text-sm text-gray-400'>
               Last updated: <strong>October 2025</strong>
@@ -17,7 +16,7 @@ export default function About() {
             alt='zebotix'
             width={500}
             height={500}
-            className='w-16 h-auto mb-6'
+            className='w-16 h-auto'
             priority
           />
         </header>
