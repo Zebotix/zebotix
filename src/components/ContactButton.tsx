@@ -203,7 +203,7 @@ const ContactModal = React.memo(function ContactModal({
               />
             </div>
 
-            <div className='flex justify-end'>
+            <div className='flex justify-center'>
               <Button
                 type='submit'
                 className='bg-zebotix-blue hover:bg-zebotix-blue/90 transition-colors'

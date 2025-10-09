@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 const portfolios = [
   {
@@ -52,10 +53,13 @@ const PortfolioCard = ({
       aria-label={`Open ${item.title} project`}
     >
       <div className='w-full h-44 md:h-40 lg:h-48 overflow-hidden bg-gray-900'>
-        <img
+        <Image
           src={item.image}
           alt={item.title}
           loading='lazy'
+          width={400}
+          height={300}
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           className='w-full h-full object-cover transform hover:scale-105 transition-transform duration-300'
         />
       </div>
@@ -75,10 +79,10 @@ const PortfolioCard = ({
           ))}
         </div>
 
-        <div className='flex items-center justify-between'>
+        {/* <div className='flex items-center justify-between'>
           <span className='text-xs text-gray-400'>Case study</span>
           <span className='text-xs text-zebotix-blue font-medium'>View project →</span>
-        </div>
+        </div> */}
       </div>
     </Link>
   </article>
@@ -98,16 +102,16 @@ const PortfolioSection = () => {
               Selected <span className='gradient-text'>Portfolio</span>
             </h2>
             <p className='text-gray-400'>
-              Small selection of recent projects. Click a card to view the case study or see all
-              projects.
+              Small selection of recent projects. Cards will be open to view the case study very
+              soon in a new tab.
             </p>
           </div>
 
-          <div className='hidden sm:block'>
+          {/* <div className='hidden sm:block'>
             <Link href='/portfolios' aria-label='See all portfolios'>
               <Button className='bg-zebotix-blue hover:bg-blue-600 text-white'>See all</Button>
             </Link>
-          </div>
+          </div> */}
         </div>
 
         <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' role='list'>
@@ -119,11 +123,11 @@ const PortfolioSection = () => {
         </ul>
 
         {/* Mobile "See all" placed below grid for easier reach */}
-        <div className='mt-8 sm:hidden text-center'>
+        {/* <div className='mt-8 sm:hidden text-center'>
           <Link href='/portfolios' aria-label='See all portfolios'>
             <Button className='bg-zebotix-blue hover:bg-blue-600 text-white'>See all</Button>
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

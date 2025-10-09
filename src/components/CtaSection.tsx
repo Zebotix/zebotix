@@ -1,7 +1,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const CtaSection = () => {
+  const router = useRouter();
+
   return (
     <div id='cta' className='bg-zebotix-darkGray py-16 md:py-20'>
       <div className='section-container'>
@@ -21,10 +25,14 @@ const CtaSection = () => {
                 30-day post-launch support.
               </p>
               <div className='flex flex-col sm:flex-row gap-4'>
-                <Button className='bg-zebotix-blue hover:bg-blue-600 text-white font-semibold'>
+                <Button
+                  onClick={() => router.push('/contact')}
+                  className='bg-zebotix-blue hover:bg-blue-600 text-white font-semibold'
+                >
                   Get a free quote
                 </Button>
                 <Button
+                  onClick={() => router.push('/contact')}
                   variant='outline'
                   className='border-background text-white hover:bg-white hover:text-zebotix-black hover:border-white'
                 >
@@ -34,7 +42,10 @@ const CtaSection = () => {
             </div>
 
             <div className='md:w-1/3'>
-              <img
+              <Image
+                width={300}
+                height={300}
+                priority
                 src='https://images.unsplash.com/photo-1606857521015-7f9fcf423740?auto=format&fit=crop&w=300&h=300&q=80'
                 alt='Zebotix dashboard preview'
                 className='rounded-lg w-full card-shadow'

@@ -142,11 +142,11 @@ const HeroSection: FC<HeroSectionProps> = ({
       ></div>
       <div
         aria-hidden
-        className='absolute top-20 right-10 w-10 h-10 border border-zebotix-blue/50 rounded-full'
+        className='absolute top-20 right-10 w-10 h-10 border border-zebotix-blue/30 rounded-full'
       ></div>
       <div
         aria-hidden
-        className='absolute top-40 left-20 w-5 h-5 bg-zebotix-blue/50 rounded-full'
+        className='absolute top-40 left-20 w-5 h-5 bg-zebotix-blue/30 rounded-full'
       ></div>
       <div
         aria-hidden

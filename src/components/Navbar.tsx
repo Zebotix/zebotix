@@ -38,7 +38,7 @@ const Navbar = () => {
           <div className='hidden md:block'>
             <div className='flex items-center space-x-4'>
               <Link
-                href='#home'
+                href='/'
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   isActive('/') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Check, X } from 'lucide-react';
+import { Check, Router, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const plans = [
   {
@@ -184,6 +185,8 @@ const Modal = ({ open, onClose, content }: ModalType) => {
     }
   };
 
+  const router = useRouter();
+
   if (!open || !content) return null;
 
   return (
@@ -296,7 +299,10 @@ const Modal = ({ open, onClose, content }: ModalType) => {
             <Button onClick={onClose} className='mr-3'>
               Close
             </Button>
-            <Button className='bg-zebotix-blue hover:bg-blue-600 text-white'>
+            <Button
+              onClick={() => router.push('/contact')}
+              className='bg-zebotix-blue hover:bg-blue-600 text-white'
+            >
               Proceed / Contact Sales
             </Button>
           </div>
@@ -321,6 +327,8 @@ const PricingSection = () => {
     setModalOpen(false);
     setSelectedPlan(null);
   };
+
+  const router = useRouter();
 
   return (
     <div
@@ -377,6 +385,7 @@ const PricingSection = () => {
 
               <div className='flex flex-col gap-3'>
                 <Button
+                  onClick={() => router.push('/contact')}
                   className={`w-full ${
                     plan.name.includes('recommended')
                       ? 'bg-zebotix-blue hover:bg-blue-600 text-white'
