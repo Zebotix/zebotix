@@ -30,8 +30,8 @@ const HeroSection: FC<HeroSectionProps> = ({
     </>
   ),
   description = 'Simplify how your business operates, communicates, and evolves — all with Zebotix’s intelligent infrastructure.',
-  primaryCta = { href: '/signup', label: 'Get Started Free' },
-  secondaryCta = { href: '/book-demo', label: 'Book Demo' },
+  primaryCta = { href: '/contact', label: 'Get Started Free' },
+  secondaryCta = { href: '/contact', label: 'Book Demo' },
   heroImageSrc = '/images/hero-section-image.webp',
   className = '',
 }) => {
