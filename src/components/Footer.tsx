@@ -5,6 +5,13 @@ import React from 'react';
 const Footer = () => {
   const year = new Date().getFullYear();
 
+  const socials = {
+    twitter: 'https://x.com/zebotix1499',
+    facebook: 'https://www.facebook.com/people/Zebotix/61567313714101/',
+    instagram: 'https://www.instagram.com/zebotix',
+    github: 'https://github.com/Zebotix',
+  };
+
   return (
     <footer className='bg-zebotix-black border-t border-gray-800 pt-16 pb-8' role='contentinfo'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -41,7 +48,7 @@ const Footer = () => {
 
             <nav aria-label='Zebotix social links' className='flex space-x-4'>
               <a
-                href='https://www.facebook.com'
+                href={socials.facebook}
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='Zebotix on Facebook (opens in new tab)'
@@ -57,7 +64,7 @@ const Footer = () => {
               </a>
 
               <a
-                href='https://twitter.com'
+                href={socials.twitter}
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='Zebotix on X / Twitter (opens in new tab)'
@@ -73,7 +80,7 @@ const Footer = () => {
               </a>
 
               <a
-                href='https://www.instagram.com'
+                href={socials.instagram}
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='Zebotix on Instagram (opens in new tab)'
@@ -89,7 +96,7 @@ const Footer = () => {
               </a>
 
               <a
-                href='https://www.github.com/Zeeshan_Zk09'
+                href={socials.github}
                 target='_blank'
                 rel='noopener noreferrer'
                 aria-label='Zebotix on GitHub (opens in new tab)'
@@ -110,11 +117,6 @@ const Footer = () => {
           <nav aria-label='Quick links'>
             <h3 className='text-lg font-semibold mb-4'>Quick links</h3>
             <ul className='space-y-3'>
-              <li>
-                <Link href='/' className='text-gray-400 hover:text-zebotix-blue transition-colors'>
-                  Home
-                </Link>
-              </li>
               <li>
                 <Link
                   href='#features'
@@ -154,14 +156,14 @@ const Footer = () => {
           <nav aria-label='Company links'>
             <h3 className='text-lg font-semibold mb-4'>Company</h3>
             <ul className='space-y-3'>
-              <li>
+              {/* <li>
                 <Link
                   href='/blog'
                   className='text-gray-400 hover:text-zebotix-blue transition-colors'
                 >
                   Blog
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href='/contact'
@@ -178,14 +180,14 @@ const Footer = () => {
                   About
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href='/careers'
                   className='text-gray-400 hover:text-zebotix-blue transition-colors'
                 >
                   Careers
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
 

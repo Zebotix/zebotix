@@ -127,14 +127,14 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor='name' className='block text-sm font-medium'>
-                  Your name <span aria-hidden='true'>*</span>
+                  Name <span aria-hidden='true'>*</span>
                 </label>
                 <input
                   id='name'
                   name='name'
                   type='text'
                   required
-                  placeholder='Ali Khan'
+                  placeholder='your name'
                   className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
                 />
               </div>
