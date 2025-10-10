@@ -231,16 +231,19 @@ const Modal = ({ open, onClose, content }: ModalType) => {
               <strong>Deliverables:</strong>
               <p className='text-gray-300 mt-1'>{content.details.deliverables}</p>
             </div>
+            {content.details.content && (
+              <div>
+                <strong>Content:</strong>
+                <p className='text-gray-300 mt-1'>{content.details.content}</p>
+              </div>
+            )}
 
-            <div>
-              <strong>Content:</strong>
-              <p className='text-gray-300 mt-1'>{content.details.content}</p>
-            </div>
-
-            <div>
-              <strong>Exclusions & Hosting:</strong>
-              <p className='text-gray-300 mt-1'>{content.details.exclusions}</p>
-            </div>
+            {content.details.exclusions && (
+              <div>
+                <strong>Exclusions & Hosting:</strong>
+                <p className='text-gray-300 mt-1'>{content.details.exclusions}</p>
+              </div>
+            )}
 
             <div>
               <strong>Delivery & UAT:</strong>

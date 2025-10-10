@@ -1,18 +1,22 @@
 'use client';
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [location, setLocation] = useState('/');
+  const [mounted, setMounted] = useState(false);
 
+  React.useEffect(() => {
+    if (mounted) return;
+    setMounted(true);
+  }, []);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const location = usePathname();
+  const handleSetLocation = (path: string = '/') => setLocation(path);
 
   // Function to check if a link is active
   const isActive = (path: string) => {
@@ -27,7 +31,7 @@ const Navbar = () => {
         <div className='w-full flex justify-between h-16 items-center'>
           {/* Logo */}
           <div className='flex-shrink-0 flex items-center'>
-            <Link href='/' className='flex items-center'>
+            <Link onClick={() => handleSetLocation('/')} href='/' className='flex items-center'>
               <span className='text-2xl font-bold bg-gradient-to-r from-zebotix-blue to-blue-300 bg-clip-text text-transparent'>
                 Zebotix
               </span>
@@ -39,6 +43,7 @@ const Navbar = () => {
             <div className='flex items-center space-x-4'>
               <Link
                 href='/'
+                onClick={() => handleSetLocation('/')}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
                   isActive('/') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
@@ -47,54 +52,60 @@ const Navbar = () => {
               </Link>
               <Link
                 href='#features'
+                onClick={() => handleSetLocation('features')}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                  isActive('features') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
               >
                 Features
               </Link>
               <Link
                 href='#solutions'
+                onClick={() => handleSetLocation('solutions')}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                  isActive('solutions') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
               >
                 Solutions
               </Link>
               <Link
                 href='#portfolio'
+                onClick={() => handleSetLocation('portfolio')}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                  isActive('portfolio') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
               >
                 Portfolio
               </Link>
               <Link
                 href='#pricing'
+                onClick={() => handleSetLocation('pricing')}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                  isActive('pricing') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
               >
                 Pricing
               </Link>
               <Link
                 href='/contact'
+                onClick={() => handleSetLocation('contact')}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                  isActive('contact') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
                 }`}
               >
                 Contact
               </Link>
-              <Link
-                href='#faq'
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive('') || location?.startsWith('/')
-                    ? 'text-zebotix-blue'
-                    : 'text-white hover:text-zebotix-blue'
-                }`}
-              >
-                FAQs
-              </Link>
+              {mounted && (
+                <Link
+                  href='#faq'
+                  onClick={() => handleSetLocation('faq')}
+                  className={`px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive('faq') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                  }`}
+                >
+                  FAQs
+                </Link>
+              )}
             </div>
           </div>
 
@@ -119,61 +130,80 @@ const Navbar = () => {
               className={`block px-3 py-2 text-base font-medium ${
                 isActive('/') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleSetLocation('/');
+                setIsOpen(false);
+              }}
             >
               Home
             </Link>
             <Link
               href='#features'
               className={`block px-3 py-2 text-base font-medium ${
-                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                isActive('features') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleSetLocation('features');
+                setIsOpen(false);
+              }}
             >
               Features
             </Link>
             <Link
               href='#solutions'
               className={`block px-3 py-2 text-base font-medium ${
-                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                isActive('solutions') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleSetLocation('solutions');
+                setIsOpen(false);
+              }}
             >
               Solutions
             </Link>
             <Link
               href='#portfolio'
               className={`block px-3 py-2 text-base font-medium ${
-                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                isActive('portfolio') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleSetLocation('portfolio');
+                setIsOpen(false);
+              }}
             >
               Portfolio
             </Link>
             <Link
               href='#pricing'
               className={`block px-3 py-2 text-base font-medium ${
-                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                isActive('pricing') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleSetLocation('pricing');
+                setIsOpen(false);
+              }}
             >
               Pricing
             </Link>
             <Link
               href='/contact'
               className={`block px-3 py-2 text-base font-medium ${
-                isActive('') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                isActive('contact') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleSetLocation('contact');
+                setIsOpen(false);
+              }}
             >
               Contact
             </Link>
             <Link
               href='#faq'
               className={`block px-3 py-2 text-base font-medium ${
-                isActive('/#faq') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
+                isActive('faq') ? 'text-zebotix-blue' : 'text-white hover:text-zebotix-blue'
               }`}
               onClick={() => {
+                handleSetLocation('faq');
                 console.log('faq: ', location, isActive('#faq'));
                 return setIsOpen(false);
               }}
