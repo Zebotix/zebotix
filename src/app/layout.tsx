@@ -5,7 +5,6 @@ import Layout from '@/components/layout/Layout';
 import ScrollToHash from '@/hooks/useScrollhash';
 import StructuredData from '@/components/layout/StructuredData';
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
-import CreateVisit from '@/hooks/createVisit';
 
 const SITE_URL = 'https://zebotix.netlify.app'; // <-- update to your canonical domain
 const Company = 'Zebotix';
@@ -190,7 +189,6 @@ export default function RootLayout({
       </head>
 
       <body className={`modal-scroll antialiased`}>
-        <CreateVisit />
         <ScrollToHash />
         <Layout>{children}</Layout>
       </body>

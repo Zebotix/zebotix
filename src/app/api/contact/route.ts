@@ -1,4 +1,3 @@
-// pages/api/contact.ts (or app/api/contact/route.ts but keep your current placement)
 import nodemailer from 'nodemailer';
 import { NextRequest, NextResponse } from 'next/server';
 
