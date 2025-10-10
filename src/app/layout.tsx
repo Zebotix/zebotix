@@ -132,7 +132,7 @@ export default function RootLayout({
     <html lang='en'>
       <head>
         <StructuredData data={websiteJsonLd} />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
         <script
