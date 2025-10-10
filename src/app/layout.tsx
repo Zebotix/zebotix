@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Layout from '@/components/layout/Layout';
 import ScrollToHash from '@/hooks/useScrollhash';
+import StructuredData from '@/components/layout/StructuredData';
+import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
 
 const SITE_URL = 'https://zebotix.netlify.app'; // <-- update to your canonical domain
 const Company = 'Zebotix';
@@ -47,6 +49,10 @@ export const metadata: Metadata = {
     icon: '/Zebotix.png',
     shortcut: '/Zebotix.png',
     apple: '/Zebotix.png',
+  },
+  manifest: '/favicon/site.webmanifest',
+  verification: {
+    google: process.env.GOOGLE_CONSOLE_VERIFICATION,
   },
   robots: {
     index: true,
@@ -98,13 +104,11 @@ export default function RootLayout({
     name: Company,
     url: SITE_URL,
     logo: `${SITE_URL}/Zebotix.png`,
-    sameAs: [
-      /* add company social URLs here: "https://twitter.com/..", "https://www.linkedin.com/..", etc. */
-    ],
+    sameAs: ['https://twitter.com/zebotix1499', 'https://github.com/Zebotix'],
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+92-337-8568671', // update or remove
+        telephone: '+92-337-8568671',
         contactType: 'customer service',
         areaServed: 'PK',
         availableLanguage: 'English',
@@ -127,6 +131,17 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <head>
+        <StructuredData data={websiteJsonLd} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <GoogleAnalytics />
+        </Suspense>
+        <script
+          id='Cookiebot'
+          src='https://consent.cookiebot.com/uc.js'
+          data-cbid='c3924214-275c-42e2-9630-5f5b92def79b'
+          type='text/javascript'
+          async
+        ></script>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta name='theme-color' content='#0ea5a4' />
