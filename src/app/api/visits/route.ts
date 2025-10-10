@@ -2,19 +2,31 @@ import connectDB from '@/lib/db/connect';
 import Visit from '@/lib/models/visits';
 
 export async function POST(request: Request) {
+  // Use a timeout to ensure quick fail if DB takes too long
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Timeout connecting to DB')), 6000)
+  );
+
   try {
-    await connectDB();
+    await Promise.race([connectDB(), timeoutPromise]);
+
+    const headers = request.headers;
+    const url = new URL(request.url);
+
     await Visit.create({
-      ip: request.headers.get('x-forwarded-for') || 'Unknown',
-      referrer: request.headers.get('referer') || 'Direct',
-      path: request.url.replace(/^https?:\/\/[^\/]+/, '') || '/',
+      ip: headers.get('x-forwarded-for') || 'Unknown',
+      referrer: headers.get('referer') || 'Direct',
+      path: url.pathname,
       method: 'POST',
       status: 200,
-      userAgent: request.headers.get('user-agent') || 'Unknown',
+      userAgent: headers.get('user-agent') || 'Unknown',
     });
-    return new Response('Visit logged', { status: 200 });
-  } catch (error) {
-    console.error('Error logging visit:', error);
-    return new Response('Error logging visit', { status: 500 });
+
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (error: any) {
+    console.error('❌ Error logging visit:', error);
+    return new Response(JSON.stringify({ success: false, message: error.message }), {
+      status: 500,
+    });
   }
 }
