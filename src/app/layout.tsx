@@ -132,9 +132,7 @@ export default function RootLayout({
     <html lang='en'>
       <head>
         <StructuredData data={websiteJsonLd} />
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
+        <Suspense fallback={null}>{GoogleAnalytics && <GoogleAnalytics />}</Suspense>
         <script
           id='Cookiebot'
           src='https://consent.cookiebot.com/uc.js'

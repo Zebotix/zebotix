@@ -9,12 +9,21 @@ export const useGoogleAnalytics = () => {
 
   useEffect(() => {
     // Load gtag script
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${
-      process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55'
-    }`;
-    document.head.appendChild(script);
+    async function loadGtag() {
+      const res = await fetch(
+        `https://www.googletagmanager.com/gtag/js?id=${
+          process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55'
+        }`
+      );
+      console.log(res);
+      if (res.ok) {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-JD55RSPP55';
+        document.head.appendChild(script);
+      }
+    }
+    loadGtag();
 
     // Initialize gtag
     (window as any).dataLayer = (window as any).dataLayer || [];
@@ -32,6 +41,8 @@ export const useGoogleAnalytics = () => {
       (window as any).gtag('config', process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55', {
         page_path: url,
       });
+      console.log('success');
     }
+    console.log('failed');
   }, [pathname, searchParams]);
 };
