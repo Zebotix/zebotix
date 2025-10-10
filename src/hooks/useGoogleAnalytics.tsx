@@ -11,7 +11,9 @@ export const useGoogleAnalytics = () => {
     // Load gtag script
     const script = document.createElement('script');
     script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${
+      process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55'
+    }`;
     document.head.appendChild(script);
 
     // Initialize gtag
@@ -20,14 +22,14 @@ export const useGoogleAnalytics = () => {
       (window as any).dataLayer.push(args);
     }
     gtag('js', new Date());
-    gtag('config', process.env.NEXT_PUBLIC_GA_ID);
+    gtag('config', process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55');
   }, []);
 
   useEffect(() => {
     // Track page views
     if (typeof window !== 'undefined' && (window as any).gtag) {
       const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-      (window as any).gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
+      (window as any).gtag('config', process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55', {
         page_path: url,
       });
     }
