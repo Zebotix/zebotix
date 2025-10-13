@@ -64,7 +64,7 @@
   "related_applications": [
     {
       "platform": "web",
-      "url": "https://zebotix.netlify.app",
+      "url": "https://www.zebotix.com",
       "id": "com.zebotix.web"
     }
   ],
@@ -155,15 +155,15 @@
     "digital studio",
     "Karachi"
   ],
-  "privacy_policy": "https://zebotix.netlify.app/privacy",
-  "terms_of_service": "https://zebotix.netlify.app/terms",
+  "privacy_policy": "https://www.zebotix.com/privacy",
+  "terms_of_service": "https://www.zebotix.com/terms",
   "support": {
     "email": "zebotix@gmail.com",
-    "url": "https://zebotix.netlify.app/contact"
+    "url": "https://www.zebotix.com/contact"
   },
   "contact": {
     "email": "zebotix@gmail.com",
-    "url": "https://zebotix.netlify.app/contact"
+    "url": "https://www.zebotix.com/contact"
   },
   "social": {
     "twitter": "https://x.com/zebotix1499",

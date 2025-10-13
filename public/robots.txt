@@ -14,4 +14,4 @@ User-agent: *
 Allow: /
 
 
-Sitemap: https://apna-campus.netlify/sitemap.xml
+Sitemap: https://www.zebotix.com/sitemap.xml
