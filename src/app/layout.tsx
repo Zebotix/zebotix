@@ -146,9 +146,13 @@ export default function RootLayout({
           type='text/javascript'
           async
         ></script>
-        <meta
+        {/* <meta
           name='google-site-verification'
           content='n3zhHWv55V2TBqwJtUEVc9-YMIGteykJyrSfCzQ57ck'
+        /> */}
+        <meta
+          name='google-site-verification'
+          content='_sEcBYsGhKkYQ4FHUeOTgfQhpJk0_-d_svHHR1oJ9vQ'
         />
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
