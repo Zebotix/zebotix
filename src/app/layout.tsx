@@ -146,14 +146,11 @@ export default function RootLayout({
           type='text/javascript'
           async
         ></script>
-        {/* <meta
-          name='google-site-verification'
-          content='n3zhHWv55V2TBqwJtUEVc9-YMIGteykJyrSfCzQ57ck'
-        /> */}
         <meta
           name='google-site-verification'
-          content='_sEcBYsGhKkYQ4FHUeOTgfQhpJk0_-d_svHHR1oJ9vQ'
+          content='n3zhHWv55V2TBqwJtUEVc9-YMIGteykJyrSfCzQ57ck'
         />
+
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta name='theme-color' content='#0ea5a4' />
