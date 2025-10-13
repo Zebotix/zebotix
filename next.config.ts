@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
   webpack(config, { isServer }) {
     if (!isServer) {
@@ -28,6 +30,28 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  async headers() {
+    if (!isProduction) return [];
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: 'upgrade-insecure-requests', // Force HTTPS for all content
+          },
+        ],
+      },
+    ];
+  },
+  // Add these for better HTTPS enforcement
+  trailingSlash: true,
+  poweredByHeader: false,
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;
