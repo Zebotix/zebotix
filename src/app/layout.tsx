@@ -136,7 +136,13 @@ export default function RootLayout({
         <script
           id='Cookiebot'
           src='https://consent.cookiebot.com/uc.js'
-          data-cbid='c3924214-275c-42e2-9630-5f5b92def79b'
+          data-cbid='ac073247-713c-4261-9aac-a2e1d19d759a'
+          data-blockingmode='auto'
+          type='text/javascript'
+        ></script>
+        <script
+          id='CookieDeclaration'
+          src='https://consent.cookiebot.com/ac073247-713c-4261-9aac-a2e1d19d759a/cd.js'
           type='text/javascript'
           async
         ></script>
