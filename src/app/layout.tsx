@@ -6,7 +6,7 @@ import ScrollToHash from '@/hooks/useScrollhash';
 import StructuredData from '@/components/layout/StructuredData';
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
 
-const SITE_URL = 'https://zebotix.netlify.app'; // <-- update to your canonical domain
+const SITE_URL = 'https://zebotix.com'; // <-- update to your canonical domain
 const Company = 'Zebotix';
 const SHORT_DESC =
   'Zebotix — software & AI solutions that power modern businesses: web apps, ML, and custom IT services.';
