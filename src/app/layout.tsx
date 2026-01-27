@@ -130,7 +130,11 @@ export default function RootLayout({
 
   return (
     <html lang='en'>
-      <head>
+          <head>
+              <script>function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
+  o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
+  o.onload=function(){window.trackingFunctions.onLoad({appId:"697851b7dfd262000d555d78"})},
+  document.head.appendChild(o)}initApollo();</script>
         <StructuredData data={websiteJsonLd} />
         <Suspense fallback={null}>{GoogleAnalytics && <GoogleAnalytics />}</Suspense>
         <script
