@@ -5,6 +5,7 @@ import Layout from '@/components/layout/Layout';
 import ScrollToHash from '@/hooks/useScrollhash';
 import StructuredData from '@/components/layout/StructuredData';
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
+import Script from 'next/script';
 
 const SITE_URL = 'https://zebotix.com'; // <-- update to your canonical domain
 const Company = 'Zebotix';
@@ -130,26 +131,21 @@ export default function RootLayout({
 
   return (
     <html lang='en'>
-          <head>
-              <script>function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
-  o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
-  o.onload=function(){window.trackingFunctions.onLoad({appId:"697851b7dfd262000d555d78"})},
-  document.head.appendChild(o)}initApollo();</script>
+      <head>
         <StructuredData data={websiteJsonLd} />
         <Suspense fallback={null}>{GoogleAnalytics && <GoogleAnalytics />}</Suspense>
-        <script
+        <Script
           id='Cookiebot'
           src='https://consent.cookiebot.com/uc.js'
           data-cbid='ac073247-713c-4261-9aac-a2e1d19d759a'
           data-blockingmode='auto'
-          type='text/javascript'
-        ></script>
-        <script
+          strategy='afterInteractive'
+        />
+        <Script
           id='CookieDeclaration'
           src='https://consent.cookiebot.com/ac073247-713c-4261-9aac-a2e1d19d759a/cd.js'
-          type='text/javascript'
-          async
-        ></script>
+          strategy='lazyOnload'
+        />
         <meta
           name='google-site-verification'
           content='n3zhHWv55V2TBqwJtUEVc9-YMIGteykJyrSfCzQ57ck'
