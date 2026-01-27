@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
   experimental: {
     globalNotFound: true,
   },
+  // Provide an explicit (empty) turbopack config to avoid build errors
+  // when a custom webpack config is present. See Next.js docs for details.
+  turbopack: {},
   images: {
     remotePatterns: [
       {
@@ -26,9 +29,6 @@ const nextConfig: NextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   async headers() {
     if (!isProduction) return [];
