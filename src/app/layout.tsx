@@ -1,31 +1,28 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import React, { Suspense } from 'react';
-import Layout from '@/components/layout/Layout';
-import ScrollToHash from '@/hooks/useScrollhash';
-import StructuredData from '@/components/layout/StructuredData';
-import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
-import Script from 'next/script';
+import { Layout, StructuredData, GoogleAnalytics } from '@/components';
 
-const SITE_URL = 'https://zebotix.com'; // <-- update to your canonical domain
-const Company = 'Zebotix';
-const SHORT_DESC =
-  'Zebotix — software & AI solutions that power modern businesses: web apps, ML, and custom IT services.';
+import Script from 'next/script';
+import SmoothScrollProvider from '@/providers/SmoothScrollProvider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
+import { cn } from '@/lib/utils';
+
+import { COMPANY_NAME, SITE_URL, SHORT_DESC, SOCIAL_LINKS } from '@/lib/constants';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: `${Company} — Empowering innovation with software & AI`,
-    template: `%s | ${Company}`,
+    default: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+    template: `%s | ${COMPANY_NAME}`,
   },
-  description:
-    SHORT_DESC +
-    ' Build responsive web apps, AI-driven products, and scalable systems with our expert team.',
-  applicationName: Company,
+  description: `${SHORT_DESC} Build responsive web apps, AI-driven products, and scalable systems with our expert team.`,
+  applicationName: COMPANY_NAME,
   keywords: [
-    'Zebotix',
+    COMPANY_NAME,
     'e-commerce solutions',
     'products showcasing and portfolios',
-    'clothes selling webites',
+    'clothes selling websites',
     'business websites',
     'responsive websites',
     'web development services',
@@ -45,7 +42,9 @@ export const metadata: Metadata = {
     'product engineering',
     'full-stack development',
   ],
-  authors: [{ name: 'Zebotix', url: SITE_URL }],
+  authors: [{ name: COMPANY_NAME, url: SITE_URL }],
+  creator: COMPANY_NAME,
+  publisher: COMPANY_NAME,
   icons: {
     icon: '/Zebotix.png',
     shortcut: '/Zebotix.png',
@@ -58,7 +57,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -68,29 +66,29 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: SITE_URL,
+    canonical: './',
   },
   openGraph: {
-    title: `${Company} — Empowering innovation with software & AI`,
+    title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
     description: SHORT_DESC,
     url: SITE_URL,
-    siteName: Company,
+    siteName: COMPANY_NAME,
     type: 'website',
     images: [
       {
-        url: `${SITE_URL}/Zebotix.png`,
+        url: '/Zebotix.png',
         width: 1200,
         height: 630,
-        alt: 'Zebotix — software and AI solutions',
+        alt: `${COMPANY_NAME} — software and AI solutions`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${Company} — Empowering innovation with software & AI`,
+    title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
     description: SHORT_DESC,
-    images: [`${SITE_URL}/Zebotix.png`],
-    creator: '@zebotix1499', // update or remove
+    images: ['/Zebotix.png'],
+    creator: '@zebotix1499',
   },
 };
 
@@ -102,10 +100,10 @@ export default function RootLayout({
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: Company,
+    name: COMPANY_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/Zebotix.png`,
-    sameAs: ['https://twitter.com/zebotix1499', 'https://github.com/Zebotix'],
+    sameAs: [SOCIAL_LINKS.twitter, SOCIAL_LINKS.github],
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -121,7 +119,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     url: SITE_URL,
-    name: Company,
+    name: COMPANY_NAME,
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SITE_URL}/search?q={search_term_string}`,
@@ -130,11 +128,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <head>
         <StructuredData data={websiteJsonLd} />
         <Suspense fallback={null}>{GoogleAnalytics && <GoogleAnalytics />}</Suspense>
-        <Script
+        {/* <Script
           id='Cookiebot'
           src='https://consent.cookiebot.com/uc.js'
           data-cbid='ac073247-713c-4261-9aac-a2e1d19d759a'
@@ -145,7 +143,7 @@ export default function RootLayout({
           id='CookieDeclaration'
           src='https://consent.cookiebot.com/ac073247-713c-4261-9aac-a2e1d19d759a/cd.js'
           strategy='lazyOnload'
-        />
+        /> */}
         <meta
           name='google-site-verification'
           content='n3zhHWv55V2TBqwJtUEVc9-YMIGteykJyrSfCzQ57ck'
@@ -167,11 +165,11 @@ export default function RootLayout({
         <meta property='og:type' content='website' />
         <meta
           property='og:title'
-          content={`${Company} — Empowering innovation with software & AI`}
+          content={`${COMPANY_NAME} — Empowering innovation with software & AI`}
         />
         <meta property='og:description' content={SHORT_DESC} />
         <meta property='og:url' content={SITE_URL} />
-        <meta property='og:site_name' content={Company} />
+        <meta property='og:site_name' content={COMPANY_NAME} />
         <meta property='og:image' content={`${SITE_URL}/Zebotix.png`} />
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content='630' />
@@ -179,7 +177,7 @@ export default function RootLayout({
         <meta name='twitter:site' content='@zebotix1499' />
         <meta
           name='twitter:title'
-          content={`${Company} — Empowering innovation with software & AI`}
+          content={`${COMPANY_NAME} — Empowering innovation with software & AI`}
         />
         <meta name='twitter:description' content={SHORT_DESC} />
         <meta name='twitter:image' content={`${SITE_URL}/Zebotix.png`} />
@@ -195,9 +193,12 @@ export default function RootLayout({
         <meta name='mobile-web-app-capable' content='yes' />
       </head>
 
-      <body className={`modal-scroll antialiased`}>
-        <ScrollToHash />
-        <Layout>{children}</Layout>
+      <body className={cn('modal-scroll antialiased')}>
+        <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
+          <SmoothScrollProvider>
+            <Layout>{children}</Layout>
+          </SmoothScrollProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

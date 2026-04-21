@@ -2,87 +2,52 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { PORTFOLIOS } from '@/lib/constants';
+import { cn } from '@/lib/utils';
+import { Reveal } from '@/components/animations';
+import { ArrowRight } from 'lucide-react';
 
-const portfolios = [
-  {
-    title: 'Zebotix E-Commerce',
-    slug: 'zebotix-ecommerce',
-    summary:
-      'A fast, responsive e-commerce storefront with CMS-driven product pages and Stripe checkout.',
-    image:
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=60',
-    tags: ['E-commerce', 'Stripe', 'PWA'],
-  },
-  {
-    title: 'TeamTracker App',
-    slug: 'teamtracker-app',
-    summary:
-      'Project & task dashboard with role-based access, progress tracking and real-time updates.',
-    image:
-      'https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=800&q=60',
-    tags: ['Dashboard', 'Auth', 'Realtime'],
-  },
-  {
-    title: 'LocalBiz Landing',
-    slug: 'localbiz-landing',
-    summary:
-      '10-page responsive website for a local business with lead capture and performance optimizations.',
-    image:
-      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=60',
-    tags: ['Responsive', 'SEO', 'Lead Capture'],
-  },
-];
+type PortfolioItem = (typeof PORTFOLIOS)[number];
 
-const PortfolioCard = ({
-  item,
-}: {
-  item: {
-    title: string;
-    slug: string;
-    summary: string;
-    image: string;
-    tags: string[];
-  };
-}) => (
-  <article className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black border border-gray-800 rounded-xl overflow-hidden shadow-sm'>
+const PortfolioCard = ({ item }: { item: PortfolioItem }) => (
+  <article className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black border border-gray-800 rounded-2xl overflow-hidden shadow-2xl hover:border-zebotix-blue/40 transition-all duration-500 group'>
     <Link
-      href={`/portfolios/${item.slug}`}
+      href={`/work/${item.slug}`}
       className='block'
       aria-label={`Open ${item.title} project`}
     >
-      <div className='w-full h-44 md:h-40 lg:h-48 overflow-hidden bg-gray-900'>
+      <div className='relative w-full h-56 overflow-hidden bg-gray-900'>
         <Image
           src={item.image}
           alt={item.title}
-          loading='lazy'
-          width={400}
-          height={300}
+          fill
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-          className='w-full h-full object-cover transform hover:scale-105 transition-transform duration-300'
+          className='object-cover transform group-hover:scale-110 transition-transform duration-700'
         />
+        <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6'>
+          <span className='text-white font-medium flex items-center gap-2'>
+            View Case Study <ArrowRight className='h-4 w-4' />
+          </span>
+        </div>
       </div>
 
-      <div className='p-5'>
-        <h3 className='text-lg font-semibold text-white mb-1'>{item.title}</h3>
-        <p className='text-gray-300 text-sm mb-3'>{item.summary}</p>
-
+      <div className='p-6'>
         <div className='flex flex-wrap gap-2 mb-4'>
           {item.tags.map((t) => (
             <span
               key={t}
-              className='text-xs px-2 py-1 rounded bg-white/5 text-gray-300 border border-transparent'
+              className='text-[10px] uppercase tracking-widest px-2 py-1 rounded-md bg-zebotix-blue/10 text-zebotix-blue border border-zebotix-blue/20'
             >
               {t}
             </span>
           ))}
         </div>
-
-        {/* <div className='flex items-center justify-between'>
-          <span className='text-xs text-gray-400'>Case study</span>
-          <span className='text-xs text-zebotix-blue font-medium'>View project →</span>
-        </div> */}
+        
+        <h3 className='text-2xl font-bold text-white mb-2 group-hover:text-zebotix-blue transition-colors'>
+          {item.title}
+        </h3>
+        <p className='text-gray-400 leading-relaxed line-clamp-2'>{item.summary}</p>
       </div>
     </Link>
   </article>
@@ -92,42 +57,43 @@ const PortfolioSection = () => {
   return (
     <section
       id='portfolio'
-      className='bg-zebotix-black py-16 md:py-24'
+      className='bg-zebotix-black py-16 md:py-24 overflow-hidden'
       aria-labelledby='portfolio-heading'
     >
       <div className='section-container'>
-        <div className='flex items-center justify-between mb-8'>
-          <div className='max-w-2xl'>
-            <h2 id='portfolio-heading' className='text-3xl md:text-4xl font-bold mb-2'>
-              Selected <span className='gradient-text'>Portfolio</span>
+        <div className='mb-16'>
+          <Reveal>
+            <h2 id='portfolio-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
+              Selected <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Portfolio</span>
             </h2>
-            <p className='text-gray-400'>
-              Small selection of recent projects. Cards will be open to view the case study very
-              soon in a new tab.
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className='text-gray-400 text-lg max-w-2xl'>
+              A showcase of our recent work in AI, e-commerce, and custom software development. 
+              We turn complex problems into elegant digital experiences.
             </p>
-          </div>
-
-          {/* <div className='hidden sm:block'>
-            <Link href='/portfolios' aria-label='See all portfolios'>
-              <Button className='bg-zebotix-blue hover:bg-blue-600 text-white'>See all</Button>
-            </Link>
-          </div> */}
+          </Reveal>
         </div>
 
         <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' role='list'>
-          {portfolios.map((p) => (
+          {PORTFOLIOS.map((p, index) => (
             <li key={p.slug}>
-              <PortfolioCard item={p} />
+              <Reveal delay={0.1 * index} distance={40}>
+                <PortfolioCard item={p} />
+              </Reveal>
             </li>
           ))}
         </ul>
-
-        {/* Mobile "See all" placed below grid for easier reach */}
-        {/* <div className='mt-8 sm:hidden text-center'>
-          <Link href='/portfolios' aria-label='See all portfolios'>
-            <Button className='bg-zebotix-blue hover:bg-blue-600 text-white'>See all</Button>
+        
+        <Reveal delay={0.5} className="mt-16 text-center">
+          <Link 
+            href="/work" 
+            className="inline-flex items-center gap-2 text-white font-semibold hover:text-zebotix-blue transition-colors group"
+          >
+            View All Projects 
+            <ArrowRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
           </Link>
-        </div> */}
+        </Reveal>
       </div>
     </section>
   );
