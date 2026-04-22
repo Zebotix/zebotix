@@ -5,6 +5,7 @@ import Layout from '@/components/layout/Layout';
 import ScrollToHash from '@/hooks/useScrollhash';
 import StructuredData from '@/components/layout/StructuredData';
 import GoogleAnalytics from '@/components/layout/GoogleAnalytics';
+import Script from 'next/script';
 
 const SITE_URL = 'https://zebotix.com'; // <-- update to your canonical domain
 const Company = 'Zebotix';
@@ -133,19 +134,18 @@ export default function RootLayout({
       <head>
         <StructuredData data={websiteJsonLd} />
         <Suspense fallback={null}>{GoogleAnalytics && <GoogleAnalytics />}</Suspense>
-        <script
+        <Script
           id='Cookiebot'
           src='https://consent.cookiebot.com/uc.js'
           data-cbid='ac073247-713c-4261-9aac-a2e1d19d759a'
           data-blockingmode='auto'
-          type='text/javascript'
-        ></script>
-        <script
+          strategy='afterInteractive'
+        />
+        <Script
           id='CookieDeclaration'
           src='https://consent.cookiebot.com/ac073247-713c-4261-9aac-a2e1d19d759a/cd.js'
-          type='text/javascript'
-          async
-        ></script>
+          strategy='lazyOnload'
+        />
         <meta
           name='google-site-verification'
           content='n3zhHWv55V2TBqwJtUEVc9-YMIGteykJyrSfCzQ57ck'
