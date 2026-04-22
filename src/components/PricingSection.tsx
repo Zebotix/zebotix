@@ -9,7 +9,7 @@ const plans = [
   {
     id: 'starter',
     name: 'Starter',
-    pricePKR: 'PKR 4,999',
+    pricePKR: 'PKR 19,999',
     short: 'Simple, fast launch for small businesses — responsive site + basic PWA/wrapper.',
     features: [
       'Up to 10 responsive pages',
@@ -41,7 +41,7 @@ const plans = [
   {
     id: 'business',
     name: 'Business (recommended)',
-    pricePKR: 'PKR 14,999',
+    pricePKR: 'PKR 39,999',
     short: 'Content editing, staging, and a small admin panel for growing businesses.',
     features: [
       'Simple admin panel (lightweight CMS)',
@@ -73,7 +73,7 @@ const plans = [
   {
     id: 'enterprise',
     name: 'Enterprise',
-    pricePKR: 'PKR 34,999',
+    pricePKR: 'Contact Sales',
     short: 'Full delivery with repo access, CI/CD, analytics, and security checklist.',
     features: [
       'Source code & repo access (after final payment)',
@@ -372,11 +372,12 @@ const PricingSection = () => {
               <h3 className='text-2xl font-bold mb-2'>{plan.name}</h3>
               <p className='text-gray-400 mb-4'>{plan.short}</p>
 
-              <div className='mb-6'>
-                <span className='text-2xl font-bold'>{plan.pricePKR}</span>
-                <span className='text-gray-400'> • One-time / starting price</span>
-              </div>
-
+              {plan.id !== 'enterprise' && (
+                <div className='mb-6'>
+                  <span className='text-2xl font-bold'>{plan.pricePKR}</span>
+                  {/* <span className='text-gray-400 text-sm'> • One-time / starting price</span> */}
+                </div>
+              )}
               <ul className='space-y-3 mb-6'>
                 {plan.features.map((feature, i) => (
                   <li key={i} className='flex items-start'>

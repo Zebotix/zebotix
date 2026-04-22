@@ -129,7 +129,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <head>
         <StructuredData data={websiteJsonLd} />
         <Suspense fallback={null}>{GoogleAnalytics && <GoogleAnalytics />}</Suspense>
@@ -195,7 +195,7 @@ export default function RootLayout({
         <meta name='mobile-web-app-capable' content='yes' />
       </head>
 
-      <body className={`modal-scroll antialiased`}>
+      <body className={`modal-scroll antialiased`} suppressHydrationWarning>
         <ScrollToHash />
         <Layout>{children}</Layout>
       </body>
