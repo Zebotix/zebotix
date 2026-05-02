@@ -15,10 +15,16 @@ declare global {
   var prismaPg: PrismaClient | undefined;
 }
 
-const connectionString = `${process.env.DATABASE_URL}`;
+const connectionString = process.env.DATABASE_URL;
 let prisma: PrismaClient;
 
-if (process.env.NODE_ENV === 'development') {
+if (!connectionString) {
+  if (process.env.NODE_ENV === 'production') {
+    console.warn('WARNING: DATABASE_URL is not set. Database operations will fail.');
+  }
+  // Initialize with a dummy or let it throw a clearer error on use
+  prisma = new PrismaClient();
+} else if (process.env.NODE_ENV === 'development') {
   // Use @prisma/adapter-pg for local Postgres
   if (!global.prismaPg) {
     const pool = new Pool({ connectionString });
