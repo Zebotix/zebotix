@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Layout, GoogleAnalytics, WebVitalsReporter } from '@/components';
 
 import SmoothScrollProvider from '@/providers/SmoothScrollProvider';
@@ -135,13 +135,22 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <GoogleAnalytics />
-        <WebVitalsReporter />
-        <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
-          <SmoothScrollProvider>
-            <Layout>{children}</Layout>
-          </SmoothScrollProvider>
-        </ThemeProvider>
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
+        <Suspense fallback={null}>
+          <WebVitalsReporter />
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='dark'
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SmoothScrollProvider>
+              <Layout>{children}</Layout>
+            </SmoothScrollProvider>
+          </ThemeProvider>
+        </Suspense>
       </body>
     </html>
   );
