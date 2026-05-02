@@ -17,7 +17,7 @@ export default function ContactPage() {
   const CONTACT = {
     phone: '+92-337-8568671',
     email: 'zebotix@gmail.com',
-    addressLine: 'Karachi, Pakistan',
+    addressLine: 'Sector 11, Block B, Flat no 3, Saeedabad, Baldia Town, Karachi, Pakistan',
     mapQuery: 'Zebotix,+Karachi+Pakistan',
     socials: {
       twitter: 'https://x.com/zebotix1499',
@@ -227,31 +227,37 @@ export default function ContactPage() {
 
               <dl className='space-y-3'>
                 <div>
-                  <dt className='text-xs font-medium text-gray-300'>Phone</dt>
+                  <dt className='text-base font-medium text-gray-300'>Phone / Whatsapp</dt>
                   <dd>
-                    <a href={`tel:${CONTACT.phone}`} className='text-indigo-300 hover:underline'>
+                    <a
+                      href={`tel:${CONTACT.phone}`}
+                      className='text-sm text-indigo-300 hover:underline indent-4'
+                    >
                       {CONTACT.phone}
                     </a>
                   </dd>
                 </div>
 
                 <div>
-                  <dt className='text-xs font-medium text-gray-300'>Email</dt>
+                  <dt className='text-base font-medium text-gray-300'>Email</dt>
                   <dd>
-                    <a href={`mailto:${CONTACT.email}`} className='text-indigo-300 hover:underline'>
+                    <a
+                      href={`mailto:${CONTACT.email}`}
+                      className='text-indigo-300 hover:underline indent-4 text-sm'
+                    >
                       {CONTACT.email}
                     </a>
                   </dd>
                 </div>
 
                 <div>
-                  <dt className='text-xs font-medium text-gray-300'>Address</dt>
-                  <dd className='text-gray-300'>{CONTACT.addressLine}</dd>
+                  <dt className='text-base font-medium text-gray-300'>Address</dt>
+                  <dd className='text-sm text-gray-300 indent-4'>{CONTACT.addressLine}</dd>
                 </div>
               </dl>
 
               <div className='mt-4'>
-                <h3 className='text-sm font-medium text-gray-300 mb-2'>Follow</h3>
+                <h3 className='text-base font-medium text-gray-300 mb-2'>Follow</h3>
                 <div className='flex gap-3'>
                   {/* Accessible social links */}
                   <a

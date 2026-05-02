@@ -193,12 +193,18 @@ export default function RootLayout({
         <meta name='mobile-web-app-capable' content='yes' />
       </head>
 
+<<<<<<< HEAD
       <body className={cn('modal-scroll antialiased')}>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
           <SmoothScrollProvider>
             <Layout>{children}</Layout>
           </SmoothScrollProvider>
         </ThemeProvider>
+=======
+      <body className={`modal-scroll antialiased`} suppressHydrationWarning>
+        <ScrollToHash />
+        <Layout>{children}</Layout>
+>>>>>>> 4c66256f69216bc8e9534e10def70f1c356b6776
       </body>
     </html>
   );

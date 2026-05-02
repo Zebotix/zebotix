@@ -42,9 +42,18 @@ const Modal = ({ open, onClose, content }: ModalType) => {
       );
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-      if (!first) { e.preventDefault(); return; }
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      if (!first) {
+        e.preventDefault();
+        return;
+      }
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   };
 
@@ -53,7 +62,11 @@ const Modal = ({ open, onClose, content }: ModalType) => {
 
   return (
     <>
-      <div className='fixed inset-0 bg-black/80 backdrop-blur-xs z-40' onClick={onClose} aria-hidden='true' />
+      <div
+        className='fixed inset-0 bg-black/80 backdrop-blur-xs z-40'
+        onClick={onClose}
+        aria-hidden='true'
+      />
       <div
         role='dialog'
         aria-modal='true'
@@ -84,37 +97,37 @@ const Modal = ({ open, onClose, content }: ModalType) => {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-8 text-sm'>
-            <div className="space-y-6">
+            <div className='space-y-6'>
               <div>
-                <strong className="text-white block mb-2">Deliverables</strong>
+                <strong className='text-white block mb-2'>Deliverables</strong>
                 <p className='text-gray-400 leading-relaxed'>{content.details.deliverables}</p>
               </div>
               {content.details.content && (
                 <div>
-                  <strong className="text-white block mb-2">Content Strategy</strong>
+                  <strong className='text-white block mb-2'>Content Strategy</strong>
                   <p className='text-gray-400 leading-relaxed'>{content.details.content}</p>
                 </div>
               )}
               {content.details.exclusions && (
                 <div>
-                  <strong className="text-white block mb-2">Exclusions & Hosting</strong>
+                  <strong className='text-white block mb-2'>Exclusions & Hosting</strong>
                   <p className='text-gray-400 leading-relaxed'>{content.details.exclusions}</p>
                 </div>
               )}
             </div>
 
-            <div className="space-y-6">
+            <div className='space-y-6'>
               <div>
-                <strong className="text-white block mb-2">Delivery & Support</strong>
+                <strong className='text-white block mb-2'>Delivery & Support</strong>
                 <p className='text-gray-400 leading-relaxed'>{content.details.delivery}</p>
                 <p className='text-gray-400 leading-relaxed mt-2'>{content.details.support}</p>
               </div>
               <div>
-                <strong className="text-white block mb-2">Optional Add-ons</strong>
+                <strong className='text-white block mb-2'>Optional Add-ons</strong>
                 <ul className='space-y-2 text-gray-400'>
                   {content.details.addons.map((a, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-zebotix-blue mt-1.5 shrink-0" />
+                    <li key={i} className='flex items-start gap-2'>
+                      <span className='w-1.5 h-1.5 rounded-full bg-zebotix-blue mt-1.5 shrink-0' />
                       {a}
                     </li>
                   ))}
@@ -124,7 +137,7 @@ const Modal = ({ open, onClose, content }: ModalType) => {
           </div>
 
           <div className='mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-end gap-4'>
-            <Button variant="ghost" onClick={onClose} className='text-gray-400 hover:text-white'>
+            <Button variant='ghost' onClick={onClose} className='text-gray-400 hover:text-white'>
               Go Back
             </Button>
             <Button
@@ -166,19 +179,24 @@ const PricingSection = () => {
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <Reveal>
             <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Simple, <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Transparent</span> Pricing
+              Simple,{' '}
+              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
+                Transparent
+              </span>{' '}
+              Pricing
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p className='text-gray-400 text-lg'>
-              Choose the plan that fits your business stage. No hidden costs, just pure digital growth.
+              Choose the plan that fits your business stage. No hidden costs, just pure digital
+              growth.
             </p>
           </Reveal>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
           {PRICING_PLANS.map((plan, index) => (
-            <Reveal key={plan.id} delay={0.1 * index} distance={40} className="h-full">
+            <Reveal key={plan.id} delay={0.1 * index} distance={40} className='h-full'>
               <div
                 className={cn(
                   'flex flex-col justify-between rounded-3xl p-8 h-full transition-all duration-500 shadow-2xl',
@@ -199,7 +217,9 @@ const PricingSection = () => {
 
                   <div className='mb-8'>
                     <div className='text-3xl font-black text-white'>{plan.pricePKR}</div>
-                    <div className='text-[10px] uppercase tracking-widest text-gray-500 mt-1'>Starting price / One-time</div>
+                    <div className='text-[10px] uppercase tracking-widest text-gray-500 mt-1'>
+                      Starting price / One-time
+                    </div>
                   </div>
 
                   <ul className='space-y-4 mb-10'>
@@ -216,7 +236,7 @@ const PricingSection = () => {
 
                 <div className='flex flex-col gap-3'>
                   <Button
-                    size="lg"
+                    size='lg'
                     onClick={() => router.push('/contact')}
                     className={cn(
                       'w-full h-12 rounded-xl font-bold transition-all',

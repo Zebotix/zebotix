@@ -1,5 +1,3 @@
-import Head from 'next/head';
-
 export default function Terms() {
   return (
     <main className='min-h-screen py-12 px-6 lg:px-24'>
