@@ -387,6 +387,8 @@
   scrollbar-gutter: stable both-edges; /* prevents layout shift when scroll appears */
   -webkit-overflow-scrolling: touch; /* smooth momentum on iOS */
   overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb) var(--sb-track);
 }
 
 /* WebKit browsers (Chrome, Edge, Safari) */
@@ -408,12 +410,6 @@
   background: var(--sb-thumb-hover);
 }
 
-/* Firefox */
-.modal-scroll {
-  scrollbar-width: thin; /* or auto */
-  scrollbar-color: var(--sb-thumb) var(--sb-track);
-}
-
 .modal-gradient {
   position: absolute;
   left: 0;
@@ -426,11 +422,9 @@
 
 .modal-gradient.top {
   top: 0;
-  /* background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent); */
 }
 .modal-gradient.bottom {
   bottom: 0;
-  /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent); */
 }
 
 /* show when active */

@@ -22,37 +22,40 @@ const FeaturesSection = () => {
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <Reveal>
             <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Powerful <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Features</span> to Grow Your Business
+              Powerful{' '}
+              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
+                Features
+              </span>{' '}
+              to Grow Your Business
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p className='text-gray-400 text-lg'>
               Discover an all-in-one platform designed to simplify your workflows, enhance
-              collaboration, and help your business scale faster with smart automation and analytics.
+              collaboration, and help your business scale faster with smart automation and
+              analytics.
             </p>
           </Reveal>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {FEATURES.map((feature, index) => (
-            <Reveal 
-              key={index} 
-              delay={0.1 * (index % 3)} 
-              distance={30}
-              className="h-full"
-            >
-              <div
+            <Reveal key={index} delay={0.1 * (index % 3)} distance={30} className='h-full'>
+              <article
                 className={cn(
                   'bg-zebotix-darkGray p-8 rounded-2xl border border-gray-800 h-full',
                   'hover:border-zebotix-blue/50 transition-all duration-300 shadow-xl group'
                 )}
               >
-                <div className='bg-zebotix-blue/10 w-14 h-14 flex items-center justify-center rounded-xl mb-6 group-hover:bg-zebotix-blue/20 transition-colors'>
+                <div
+                  className='bg-zebotix-blue/10 w-14 h-14 flex items-center justify-center rounded-xl mb-6 group-hover:bg-zebotix-blue/20 transition-colors'
+                  aria-hidden='true'
+                >
                   {iconMap[feature.iconName]}
                 </div>
                 <h3 className='text-2xl font-semibold mb-3 text-white'>{feature.title}</h3>
                 <p className='text-gray-400 leading-relaxed'>{feature.description}</p>
-              </div>
+              </article>
             </Reveal>
           ))}
         </div>

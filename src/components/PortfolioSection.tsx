@@ -15,19 +15,22 @@ const PortfolioCard = ({ item }: { item: PortfolioItem }) => (
     <Link
       href={`/work/${item.slug}`}
       className='block'
-      aria-label={`Open ${item.title} project`}
+      aria-label={`Open ${item.title} project case study`}
     >
       <div className='relative w-full h-56 overflow-hidden bg-gray-900'>
         <Image
           src={item.image}
-          alt={item.title}
+          alt={`${item.title} - ${item.summary}`}
           fill
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           className='object-cover transform group-hover:scale-110 transition-transform duration-700'
         />
-        <div className='absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6'>
+        <div
+          className='absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6'
+          aria-hidden='true'
+        >
           <span className='text-white font-medium flex items-center gap-2'>
-            View Case Study <ArrowRight className='h-4 w-4' />
+            View Case Study <ArrowRight className='h-4 w-4' aria-hidden='true' />
           </span>
         </div>
       </div>
@@ -43,7 +46,7 @@ const PortfolioCard = ({ item }: { item: PortfolioItem }) => (
             </span>
           ))}
         </div>
-        
+
         <h3 className='text-2xl font-bold text-white mb-2 group-hover:text-zebotix-blue transition-colors'>
           {item.title}
         </h3>
@@ -64,13 +67,16 @@ const PortfolioSection = () => {
         <div className='mb-16'>
           <Reveal>
             <h2 id='portfolio-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Selected <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Portfolio</span>
+              Selected{' '}
+              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
+                Portfolio
+              </span>
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p className='text-gray-400 text-lg max-w-2xl'>
-              A showcase of our recent work in AI, e-commerce, and custom software development. 
-              We turn complex problems into elegant digital experiences.
+              A showcase of our recent work in AI, e-commerce, and custom software development. We
+              turn complex problems into elegant digital experiences.
             </p>
           </Reveal>
         </div>
@@ -84,14 +90,14 @@ const PortfolioSection = () => {
             </li>
           ))}
         </ul>
-        
-        <Reveal delay={0.5} className="mt-16 text-center">
-          <Link 
-            href="/work" 
-            className="inline-flex items-center gap-2 text-white font-semibold hover:text-zebotix-blue transition-colors group"
+
+        <Reveal delay={0.5} className='mt-16 text-center'>
+          <Link
+            href='/work'
+            className='inline-flex items-center gap-2 text-white font-semibold hover:text-zebotix-blue transition-colors group'
           >
-            View All Projects 
-            <ArrowRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+            View All Projects
+            <ArrowRight className='h-5 w-5 transform group-hover:translate-x-1 transition-transform' />
           </Link>
         </Reveal>
       </div>

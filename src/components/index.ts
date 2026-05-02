@@ -14,3 +14,4 @@ export { default as MobileMenu } from './MobileMenu';
 export { default as Layout } from './Layout';
 export { default as GoogleAnalytics } from './GoogleAnalytics';
 export { default as StructuredData } from './StructuredData';
+export { WebVitalsReporter } from './WebVitalsReporter';

@@ -23,6 +23,7 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -61,6 +62,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
+      aria-label='Primary navigation'
       className={cn(
         'fixed top-0 left-0 right-0 z-90 transition-all duration-500 border-b',
         scrolled
@@ -102,9 +104,13 @@ const Navbar = () => {
           {/* Mobile Menu Toggle */}
           <div className='md:hidden flex items-center'>
             <button
+              type='button'
               onClick={toggleMenu}
               className='p-3 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-all border border-white/5 focus:outline-hidden'
-              aria-label='Toggle menu'
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isOpen}
+              aria-controls='mobile-navigation'
+              aria-haspopup='dialog'
             >
               <Menu className='h-6 w-6' />
             </button>

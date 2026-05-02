@@ -1,21 +1,14 @@
 import React from 'react';
-import { Toaster } from '@/components/ui/toaster';
-import { Toaster as Sonner } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import ContactButton from '../ContactButton';
+import { Toaster } from '../ui';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  //   const queryClient = new QueryClient();
-
+export default function Layout({ children }: { readonly children: React.ReactNode }) {
   return (
-    // <QueryClientProvider client={queryClient}>
-    //   <TooltipProvider>
     <>
       <Toaster />
-      <Sonner />
+      {/* <Sonner /> */}
       <Navbar />
       <main className='min-h-screen bg-zebotix-black text-white'>
         {children}

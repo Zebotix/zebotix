@@ -36,7 +36,6 @@ export * from './Sheet';
 export * from './Sidebar';
 export * from './Skeleton';
 export * from './Slider';
-export * from './Sonner';
 export * from './Switch';
 export * from './Table';
 export * from './Tabs';

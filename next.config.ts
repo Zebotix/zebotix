@@ -13,8 +13,12 @@ const nextConfig: NextConfig = {
     return config;
   },
   allowedDevOrigins: ['*.app.github.dev', '*.devtunnels.ms'],
+  // Enable Cache Components for instant navigation and performance
+  cacheComponents: true,
   experimental: {
     globalNotFound: true,
+    // Enable instant navigation validation in development
+    instantNavigationDevToolsToggle: true,
   },
   // Provide an explicit (empty) turbopack config to avoid build errors
   // when a custom webpack config is present. See Next.js docs for details.
@@ -26,6 +30,8 @@ const nextConfig: NextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+    // Optimize image formats automatically
+    formats: ['image/webp', 'image/avif'],
   },
   typescript: {
     ignoreBuildErrors: true,

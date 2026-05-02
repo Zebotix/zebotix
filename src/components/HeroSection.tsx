@@ -17,8 +17,6 @@ export interface HeroSectionProps {
   description?: string;
   primaryCta?: { href: string; label: string };
   secondaryCta?: { href: string; label: string };
-  stats?: HeroStat[];
-  avatars?: { src: string; alt?: string }[];
   heroImageSrc?: string;
   className?: string;
 }
@@ -42,24 +40,26 @@ const HeroSection: FC<HeroSectionProps> = ({
   const id = useId();
   const eyebrowId = `${id}-eyebrow`;
   const titleId = `${id}-title`;
+  const descriptionId = `${id}-description`;
 
   return (
     <section
       id='home'
       aria-labelledby={titleId}
+      aria-describedby={descriptionId}
       className={cn(
         'relative bg-linear-to-b from-zebotix-black to-[#0c0e1c] overflow-hidden min-h-[90vh] flex items-center justify-center',
         className
       )}
     >
-      {/* Decorative glows */}
+      {/* Decorative glows - marked as decorative for accessibility */}
       <div
-        aria-hidden
-        className='absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-zebotix-blue opacity-10 rounded-full blur-[100px]'
+        aria-hidden='true'
+        className='absolute top-1/3 left-1/2 -translate-x-1/2 w-125 h-125 bg-zebotix-blue opacity-10 rounded-full blur-[100px]'
       ></div>
       <div
-        aria-hidden
-        className='absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-blue-700 opacity-15 rounded-full blur-[80px]'
+        aria-hidden='true'
+        className='absolute bottom-0 left-1/4 w-75 h-75 bg-blue-700 opacity-15 rounded-full blur-[80px]'
       ></div>
 
       <div className='section-container relative z-10 text-center px-4'>
@@ -84,7 +84,10 @@ const HeroSection: FC<HeroSectionProps> = ({
             </Reveal>
 
             <Reveal delay={0.6}>
-              <p className='text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto'>
+              <p
+                id={descriptionId}
+                className='text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto'
+              >
                 {description}
               </p>
             </Reveal>
@@ -93,50 +96,52 @@ const HeroSection: FC<HeroSectionProps> = ({
               <div className='flex flex-col md:flex-row gap-4 justify-center'>
                 <Button
                   asChild
-                  size="lg"
+                  size='lg'
                   className='bg-zebotix-blue hover:bg-blue-600 text-white font-semibold rounded-lg h-12 px-8'
                 >
                   <Link href={primaryCta.href}>
                     {primaryCta.label}
-                    <ArrowRight className='ml-2 h-5 w-5' aria-hidden />
+                    <ArrowRight className='ml-2 h-5 w-5' aria-hidden='true' />
                   </Link>
                 </Button>
 
                 <Button
                   asChild
-                  variant="outline"
-                  size="lg"
+                  variant='outline'
+                  size='lg'
                   className='h-12 px-8 border-white/20 text-white hover:bg-white/10'
                 >
-                  <Link href={secondaryCta.href}>
-                    {secondaryCta.label}
-                  </Link>
+                  <Link href={secondaryCta.href}>{secondaryCta.label}</Link>
                 </Button>
               </div>
             </Reveal>
           </div>
 
-          <Reveal delay={1} distance={50} className="w-full mt-16">
+          <Reveal delay={1} distance={50} className='w-full mt-16'>
             <div className='relative max-w-4xl mx-auto'>
               <div
-                aria-hidden
+                aria-hidden='true'
                 className='absolute inset-0 bg-linear-to-r from-zebotix-blue to-blue-700 blur-2xl opacity-20 rounded-xl'
               ></div>
 
-              <article
-                className='relative bg-zebotix-darkGray rounded-xl border border-zebotix-blue/20 p-2 shadow-2xl transform transition-all duration-500 hover:scale-[1.01]'
-              >
+              <figure className='relative bg-zebotix-darkGray rounded-xl border border-zebotix-blue/20 p-2 shadow-2xl transform transition-all duration-500 hover:scale-[1.01]'>
                 <div className='rounded-lg w-full overflow-hidden'>
                   <Image
                     src={heroImageSrc}
-                    alt='Modern dashboard interface preview'
+                    alt='Modern dashboard interface preview showing real-time analytics and data management'
                     width={1200}
                     height={600}
+                    sizes='(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px'
                     className='w-full h-auto rounded-lg'
                     priority
+                    loading='eager'
                   />
                 </div>
-              </article>
+                <figcaption className='sr-only'>
+                  Dashboard preview demonstrating {COMPANY_NAME}&apos;s interface for business
+                  management
+                </figcaption>
+              </figure>
             </div>
           </Reveal>
         </div>

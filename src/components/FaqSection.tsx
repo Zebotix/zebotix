@@ -1,12 +1,7 @@
 'use client';
 
 import React from 'react';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui';
 import { FAQS } from '@/lib/constants';
 import { Reveal } from '@/components/animations';
 
@@ -15,11 +10,12 @@ const FaqSection = () => {
     <section
       id='faq'
       className='bg-zebotix-black py-16 md:py-24 border-t border-white/5 overflow-hidden'
+      aria-labelledby='faq-heading'
     >
       <div className='section-container'>
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <Reveal>
-            <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
+            <h2 id='faq-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
               Frequently Asked{' '}
               <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
                 Questions
