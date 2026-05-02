@@ -22,7 +22,7 @@ export default async function BlogPage() {
         <header className="mb-16">
           <Reveal>
             <h1 className="text-4xl md:text-6xl font-black mb-6 text-white">
-              Latest <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Insights</span>
+              Latest <span className="bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Insights</span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
@@ -45,7 +45,7 @@ export default async function BlogPage() {
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                   </Link>
-                  <div className="p-8 flex-grow flex flex-col">
+                  <div className="p-8 grow flex flex-col">
                     <div className="flex gap-4 mb-4">
                       {post.tags.map((tag: string) => (
                         <span key={tag} className="text-[10px] uppercase tracking-widest text-zebotix-blue font-bold">

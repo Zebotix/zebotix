@@ -11,7 +11,7 @@ import { ArrowRight } from 'lucide-react';
 type PortfolioItem = (typeof PORTFOLIOS)[number];
 
 const PortfolioCard = ({ item }: { item: PortfolioItem }) => (
-  <article className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black border border-gray-800 rounded-2xl overflow-hidden shadow-2xl hover:border-zebotix-blue/40 transition-all duration-500 group'>
+  <article className='bg-linear-to-b from-zebotix-darkGray to-zebotix-black border border-gray-800 rounded-2xl overflow-hidden shadow-2xl hover:border-zebotix-blue/40 transition-all duration-500 group'>
     <Link
       href={`/work/${item.slug}`}
       className='block'
@@ -25,7 +25,7 @@ const PortfolioCard = ({ item }: { item: PortfolioItem }) => (
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           className='object-cover transform group-hover:scale-110 transition-transform duration-700'
         />
-        <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6'>
+        <div className='absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6'>
           <span className='text-white font-medium flex items-center gap-2'>
             View Case Study <ArrowRight className='h-4 w-4' />
           </span>
@@ -64,7 +64,7 @@ const PortfolioSection = () => {
         <div className='mb-16'>
           <Reveal>
             <h2 id='portfolio-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Selected <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Portfolio</span>
+              Selected <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Portfolio</span>
             </h2>
           </Reveal>
           <Reveal delay={0.2}>

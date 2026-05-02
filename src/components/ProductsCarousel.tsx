@@ -25,7 +25,7 @@ const HorizontalCarousel = ({ items }: { items: typeof SOLUTIONS }) => {
           onClick={() => scroll('left')}
           variant='outline'
           size='icon'
-          className='hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 z-20 bg-zebotix-black/80 backdrop-blur-sm border-white/10 hover:border-zebotix-blue text-white rounded-full'
+          className='hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 z-20 bg-zebotix-black/80 backdrop-blur-xs border-white/10 hover:border-zebotix-blue text-white rounded-full'
           aria-label='Scroll left'
         >
           <ChevronLeft className='h-6 w-6' />
@@ -40,7 +40,7 @@ const HorizontalCarousel = ({ items }: { items: typeof SOLUTIONS }) => {
           {items?.map((s, i) => (
             <article
               key={i}
-              className='flex flex-col justify-between min-w-[85%] sm:min-w-[45%] lg:min-w-[30%] snap-center bg-gradient-to-br from-zebotix-darkGray to-zebotix-black rounded-3xl p-8 border border-gray-800 hover:border-zebotix-blue/40 transition-all duration-500 shadow-xl group/card'
+              className='flex flex-col justify-between min-w-[85%] sm:min-w-[45%] lg:min-w-[30%] snap-center bg-linear-to-br from-zebotix-darkGray to-zebotix-black rounded-3xl p-8 border border-gray-800 hover:border-zebotix-blue/40 transition-all duration-500 shadow-xl group/card'
             >
               <div>
                 <h3 className='text-2xl font-bold text-white mb-3 group-hover/card:text-zebotix-blue transition-colors'>
@@ -76,7 +76,7 @@ const HorizontalCarousel = ({ items }: { items: typeof SOLUTIONS }) => {
           onClick={() => scroll('right')}
           variant='outline'
           size='icon'
-          className='hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 z-20 bg-zebotix-black/80 backdrop-blur-sm border-white/10 hover:border-zebotix-blue text-white rounded-full'
+          className='hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 z-20 bg-zebotix-black/80 backdrop-blur-xs border-white/10 hover:border-zebotix-blue text-white rounded-full'
           aria-label='Scroll right'
         >
           <ChevronRight className='h-6 w-6' />
@@ -97,7 +97,7 @@ const ProductsCarouselSection = () => {
         <div className='mb-12'>
           <Reveal>
             <h2 id='solutions-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Scalable <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Business Solutions</span>
+              Scalable <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Business Solutions</span>
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
@@ -133,7 +133,7 @@ const ProductsCarouselSection = () => {
         </div>
 
         <Reveal delay={0.6} className='mt-16 text-center'>
-          <div className='p-12 rounded-3xl bg-gradient-to-r from-blue-900/20 to-transparent border border-blue-500/10'>
+          <div className='p-12 rounded-3xl bg-linear-to-r from-blue-900/20 to-transparent border border-blue-500/10'>
             <h4 className='text-2xl font-bold text-white mb-4'>Ready to digitize your vision?</h4>
             <p className='text-gray-400 mb-8 max-w-xl mx-auto'>
               Book a consultation with our technology architects to map out your digital roadmap.

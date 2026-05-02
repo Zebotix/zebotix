@@ -21,7 +21,7 @@ const FaqSection = () => {
           <Reveal>
             <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
               Frequently Asked{' '}
-              <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
+              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
                 Questions
               </span>
             </h2>

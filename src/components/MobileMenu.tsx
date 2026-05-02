@@ -17,13 +17,13 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
   return (
     <div
       className={cn(
-        'fixed inset-0 z-[100] md:hidden transition-all duration-300',
+        'fixed inset-0 z-100 md:hidden transition-all duration-300',
         isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
       )}
     >
       {/* Overlay */}
       <div 
-        className='absolute inset-0 bg-black/60 backdrop-blur-sm' 
+        className='absolute inset-0 bg-black/60 backdrop-blur-xs' 
         onClick={onClose} 
       />
 

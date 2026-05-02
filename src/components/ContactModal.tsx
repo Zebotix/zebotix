@@ -96,7 +96,7 @@ const ContactModal = ({ open, onClose }: ContactModalProps) => {
   return createPortal(
     <>
       <div
-        className='fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] transition-opacity'
+        className='fixed inset-0 bg-black/60 backdrop-blur-xs z-100 transition-opacity'
         onClick={onClose}
         aria-hidden='true'
       />
@@ -105,7 +105,7 @@ const ContactModal = ({ open, onClose }: ContactModalProps) => {
         role='dialog'
         aria-modal='true'
         aria-labelledby='contact-modal-title'
-        className='fixed inset-0 z-[101] flex items-center justify-center p-4 overflow-y-auto'
+        className='fixed inset-0 z-101 flex items-center justify-center p-4 overflow-y-auto'
         onKeyDown={handleKeyDown}
       >
         <div
@@ -113,14 +113,14 @@ const ContactModal = ({ open, onClose }: ContactModalProps) => {
           tabIndex={-1}
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            'relative w-full max-w-lg bg-zebotix-darkGray rounded-2xl p-8 shadow-2xl text-gray-100 focus:outline-none',
+            'relative w-full max-w-lg bg-zebotix-darkGray rounded-2xl p-8 shadow-2xl text-gray-100 focus:outline-hidden',
             'max-h-[90vh] overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-200'
           )}
         >
           <button
             onClick={onClose}
             aria-label='Close contact form'
-            className='absolute top-4 right-4 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-zebotix-blue rounded-full p-1'
+            className='absolute top-4 right-4 text-gray-400 hover:text-white focus:outline-hidden focus:ring-2 focus:ring-zebotix-blue rounded-full p-1'
           >
             <X className='w-5 h-5' aria-hidden='true' />
           </button>

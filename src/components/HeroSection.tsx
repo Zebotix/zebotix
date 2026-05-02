@@ -28,7 +28,7 @@ const HeroSection: FC<HeroSectionProps> = ({
   title = (
     <>
       Transform Your Business With Our{' '}
-      <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
+      <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
         Solutions
       </span>
     </>
@@ -48,7 +48,7 @@ const HeroSection: FC<HeroSectionProps> = ({
       id='home'
       aria-labelledby={titleId}
       className={cn(
-        'relative bg-gradient-to-b from-zebotix-black to-[#0c0e1c] overflow-hidden min-h-[90vh] flex items-center justify-center',
+        'relative bg-linear-to-b from-zebotix-black to-[#0c0e1c] overflow-hidden min-h-[90vh] flex items-center justify-center',
         className
       )}
     >
@@ -120,7 +120,7 @@ const HeroSection: FC<HeroSectionProps> = ({
             <div className='relative max-w-4xl mx-auto'>
               <div
                 aria-hidden
-                className='absolute inset-0 bg-gradient-to-r from-zebotix-blue to-blue-700 blur-2xl opacity-20 rounded-xl'
+                className='absolute inset-0 bg-linear-to-r from-zebotix-blue to-blue-700 blur-2xl opacity-20 rounded-xl'
               ></div>
 
               <article

@@ -27,26 +27,33 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useGSAP(() => {
-    const tl = gsap.timeline();
-    
-    tl.from(navRef.current, {
-      y: -100,
-      opacity: 0,
-      duration: 1,
-      ease: 'power4.out'
-    });
+  useGSAP(
+    () => {
+      const tl = gsap.timeline();
 
-    if (linksRef.current) {
-      tl.from(linksRef.current.children, {
+      tl.from(navRef.current, {
+        y: -100,
         opacity: 0,
-        y: -10,
-        stagger: 0.1,
-        duration: 0.8,
-        ease: 'power3.out'
-      }, "-=0.5");
-    }
-  }, { scope: navRef });
+        duration: 1,
+        ease: 'power4.out',
+      });
+
+      if (linksRef.current) {
+        tl.from(
+          linksRef.current.children,
+          {
+            opacity: 0,
+            y: -10,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+          '-=0.5'
+        );
+      }
+    },
+    { scope: navRef }
+  );
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
@@ -55,9 +62,9 @@ const Navbar = () => {
     <nav
       ref={navRef}
       className={cn(
-        'fixed top-0 left-0 right-0 z-[90] transition-all duration-500 border-b',
-        scrolled 
-          ? 'bg-zebotix-black/90 backdrop-blur-xl py-3 border-white/10 shadow-2xl' 
+        'fixed top-0 left-0 right-0 z-90 transition-all duration-500 border-b',
+        scrolled
+          ? 'bg-background/90 backdrop-blur-xl py-3 border-border shadow-2xl'
           : 'bg-transparent py-6 border-transparent'
       )}
     >
@@ -65,10 +72,10 @@ const Navbar = () => {
         <div className='flex justify-between items-center'>
           {/* Logo */}
           <Link href='/' className='group flex items-center gap-3' onClick={closeMenu}>
-            <div className='w-10 h-10 bg-zebotix-blue rounded-xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-500 shadow-lg shadow-zebotix-blue/30'>
+            <div className='w-10 h-10 bg-zebotix-blue rounded-xl flex items-center justify-center transform group-hover:rotate-15 transition-all duration-500 shadow-lg shadow-zebotix-blue/30'>
               <span className='text-white font-black text-2xl'>Z</span>
             </div>
-            <span className='text-2xl font-black tracking-tighter text-white group-hover:text-zebotix-blue transition-colors'>
+            <span className='text-2xl font-black tracking-tighter text-foreground group-hover:text-zebotix-blue transition-colors'>
               {COMPANY_NAME}
             </span>
           </Link>
@@ -76,15 +83,18 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div ref={linksRef} className='hidden md:flex items-center gap-2'>
             {NAV_LINKS.map((link) => (
-              <NavLink 
-                key={link.href} 
+              <NavLink
+                key={link.href}
                 href={link.href}
-                active={pathname === link.href || (link.href !== '/' && pathname.includes(link.href.replace('#', '')))}
+                active={
+                  pathname === link.href ||
+                  (link.href !== '/' && pathname.includes(link.href.replace('#', '')))
+                }
               >
                 {link.name}
               </NavLink>
             ))}
-            <div className="ml-2 pl-2 border-l border-white/10">
+            <div className='ml-2 pl-2 border-l border-white/10'>
               <ThemeToggle />
             </div>
           </div>
@@ -93,7 +103,7 @@ const Navbar = () => {
           <div className='md:hidden flex items-center'>
             <button
               onClick={toggleMenu}
-              className='p-3 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-all border border-white/5 focus:outline-none'
+              className='p-3 rounded-xl bg-white/5 text-white hover:bg-white/10 transition-all border border-white/5 focus:outline-hidden'
               aria-label='Toggle menu'
             >
               <Menu className='h-6 w-6' />
@@ -102,11 +112,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <MobileMenu 
-        isOpen={isOpen} 
-        onClose={closeMenu} 
-        activePath={pathname} 
-      />
+      <MobileMenu isOpen={isOpen} onClose={closeMenu} activePath={pathname} />
     </nav>
   );
 };

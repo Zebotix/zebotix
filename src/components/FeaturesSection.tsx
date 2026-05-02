@@ -22,7 +22,7 @@ const FeaturesSection = () => {
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <Reveal>
             <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Powerful <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Features</span> to Grow Your Business
+              Powerful <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Features</span> to Grow Your Business
             </h2>
           </Reveal>
           <Reveal delay={0.2}>

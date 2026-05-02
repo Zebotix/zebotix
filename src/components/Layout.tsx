@@ -16,7 +16,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
         <Toaster />
         <Sonner />
         <Navbar />
-        <main className='min-h-screen bg-zebotix-black text-white selection:bg-zebotix-blue/30'>
+        <main className='min-h-screen bg-background text-foreground selection:bg-primary/30'>
           {children}
           <ContactButton />
         </main>

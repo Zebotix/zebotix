@@ -14,7 +14,7 @@ const CtaSection = () => {
     <section id='cta' className='bg-zebotix-darkGray py-16 md:py-24 overflow-hidden'>
       <div className='section-container'>
         <Reveal distance={40}>
-          <div className='bg-gradient-to-br from-blue-900/20 to-zebotix-black rounded-3xl p-8 md:p-16 relative overflow-hidden border border-white/5 shadow-2xl'>
+          <div className='bg-linear-to-br from-blue-900/20 to-zebotix-black rounded-3xl p-8 md:p-16 relative overflow-hidden border border-white/5 shadow-2xl'>
             {/* Abstract glow effects */}
             <div className='absolute -top-24 -right-24 w-96 h-96 bg-zebotix-blue opacity-10 rounded-full blur-[100px]'></div>
             <div className='absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600 opacity-5 rounded-full blur-[100px]'></div>
@@ -22,7 +22,7 @@ const CtaSection = () => {
             <div className='relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12'>
               <div className='lg:w-3/5'>
                 <h2 className='text-4xl md:text-5xl font-bold mb-6 text-white leading-tight'>
-                  Build faster. <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Launch confidently.</span>
+                  Build faster. <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Launch confidently.</span>
                 </h2>
                 <p className='text-gray-400 text-lg mb-10 max-w-xl leading-relaxed'>
                   {COMPANY_NAME} designs and delivers web and mobile solutions — from fast landing pages and
@@ -50,7 +50,7 @@ const CtaSection = () => {
 
               <div className='lg:w-2/5 w-full'>
                 <div className='relative'>
-                  <div className='absolute -inset-1 bg-gradient-to-r from-zebotix-blue to-blue-600 rounded-2xl blur opacity-20'></div>
+                  <div className='absolute -inset-1 bg-linear-to-r from-zebotix-blue to-blue-600 rounded-2xl blur-sm opacity-20'></div>
                   <Image
                     width={500}
                     height={400}

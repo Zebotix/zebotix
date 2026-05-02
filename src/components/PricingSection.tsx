@@ -53,7 +53,7 @@ const Modal = ({ open, onClose, content }: ModalType) => {
 
   return (
     <>
-      <div className='fixed inset-0 bg-black/80 backdrop-blur-sm z-40' onClick={onClose} aria-hidden='true' />
+      <div className='fixed inset-0 bg-black/80 backdrop-blur-xs z-40' onClick={onClose} aria-hidden='true' />
       <div
         role='dialog'
         aria-modal='true'
@@ -160,13 +160,13 @@ const PricingSection = () => {
   return (
     <section
       id='pricing'
-      className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black py-16 md:py-24 overflow-hidden'
+      className='bg-linear-to-b from-zebotix-darkGray to-zebotix-black py-16 md:py-24 overflow-hidden'
     >
       <div className='section-container'>
         <div className='text-center max-w-3xl mx-auto mb-16'>
           <Reveal>
             <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Simple, <span className='bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Transparent</span> Pricing
+              Simple, <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>Transparent</span> Pricing
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
@@ -183,7 +183,7 @@ const PricingSection = () => {
                 className={cn(
                   'flex flex-col justify-between rounded-3xl p-8 h-full transition-all duration-500 shadow-2xl',
                   plan.name.includes('recommended')
-                    ? 'bg-gradient-to-b from-blue-900/20 to-zebotix-black border-2 border-zebotix-blue relative'
+                    ? 'bg-linear-to-b from-blue-900/20 to-zebotix-black border-2 border-zebotix-blue relative'
                     : 'bg-zebotix-darkGray border border-gray-800'
                 )}
               >

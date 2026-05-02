@@ -21,7 +21,7 @@ export default function NotFound() {
   return (
     <html lang='en'>
       <body>
-        <main className='min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-gray-100 flex items-center'>
+        <main className='min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-900 text-gray-100 flex items-center'>
           <div className='w-full max-w-5xl mx-auto px-6 py-20'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-10 items-center'>
               <section className='space-y-6'>
@@ -102,7 +102,7 @@ export default function NotFound() {
                       id='site-search'
                       name='q'
                       placeholder='Search services, e.g. e‑commerce, LMS, hotel'
-                      className='w-full bg-transparent placeholder-gray-400 text-gray-100 outline-none px-3 py-2'
+                      className='w-full bg-transparent placeholder-gray-400 text-gray-100 outline-hidden px-3 py-2'
                     />
                     <button className='inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md px-4 py-2 text-sm'>
                       Search
@@ -114,7 +114,7 @@ export default function NotFound() {
                 </div>
               </section>
 
-              <aside className='p-6 rounded-2xl bg-gradient-to-br from-indigo-900/30 to-black/40 border border-white/5'>
+              <aside className='p-6 rounded-2xl bg-linear-to-br from-indigo-900/30 to-black/40 border border-white/5'>
                 <div className='flex items-center justify-between mb-4'>
                   <div>
                     <h3 className='text-sm text-indigo-300 font-semibold'>Quick Links</h3>
