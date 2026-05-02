@@ -38,7 +38,7 @@ export function reportWebVital(metric: WebVital) {
       non_interaction: true,
     };
 
-    (window as any).gtag.event(metric.name, vitals);
+    (window as any).gtag('event', metric.name, vitals);
   }
 
   // Send to custom endpoint
