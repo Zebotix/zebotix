@@ -1,248 +1,177 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { COMPANY_NAME, SOCIAL_LINKS, NAV_LINKS, CONTACT_EMAIL } from '@/lib/constants';
+import { cn } from '@/lib/utils';
+import { Reveal } from '@/components/animations';
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
-  const socials = {
-    twitter: 'https://x.com/zebotix1499',
-    facebook: 'https://www.facebook.com/people/Zebotix/61567313714101/',
-    instagram: 'https://www.instagram.com/zebotix',
-    github: 'https://github.com/Zebotix',
-  };
+  const legalLinks = [
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms & Conditions', href: '/terms' },
+    { name: 'Cookie Policy', href: '/cookie-policy' },
+    { name: 'GDPR', href: '/gdpr' },
+  ];
+
+  const companyLinks = [
+    { name: 'Contact', href: '/contact' },
+    { name: 'About', href: '/about' },
+    { name: 'Blog', href: '/blog' },
+  ];
 
   return (
-    <footer className='bg-zebotix-black border-t border-gray-800 pt-16 pb-8' role='contentinfo'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='grid grid-cols-2 xl:grid-cols-4 gap-10'>
+    <footer
+      className='bg-zebotix-black border-t border-white/5 pt-20 pb-10 overflow-hidden'
+      role='contentinfo'
+    >
+      <div className='max-w-7xl mx-auto px-6 sm:px-8 lg:px-12'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8'>
           {/* Company info */}
-          <div className='col-span-2 md:col-span-1'>
-            <Link href='/' className='inline-block mb-4' aria-label='Zebotix homepage'>
-              <Image
-                src={'/Zebotix.png'}
-                alt='zebotix'
-                width={500}
-                height={500}
-                className='w-16 h-auto'
-                priority
-              />
-            </Link>
-
-            <p className='text-gray-400 mb-4'>
-              We build web and mobile solutions — responsive websites, PWAs, admin panels, and
-              integrations that help companies scale with confidence.
-            </p>
-
-            <address className='not-italic text-gray-400 mb-4'>
-              <a
-                href='mailto:zebotix@gmail.com'
-                className='hover:text-zebotix-blue transition-colors'
-                aria-label='Email Zebotix'
-              >
-                zebotix@gmail.com
-              </a>
-              <span className='hidden sm:inline'> • </span>
+          <Reveal distance={30} className='col-span-1 sm:col-span-2 lg:col-span-1'>
+            <div>
               <Link
-                href='/contact'
-                className='hidden sm:inline text-gray-400 hover:text-zebotix-blue'
+                href='/'
+                className='inline-block mb-8 group'
+                aria-label={`${COMPANY_NAME} homepage`}
               >
-                Contact
+                <Image
+                  src='/Zebotix.png'
+                  alt={COMPANY_NAME}
+                  width={80}
+                  height={80}
+                  sizes='80px'
+                  className='w-20 h-auto grayscale brightness-200 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500'
+                />
               </Link>
-            </address>
 
-            <nav aria-label='Zebotix social links' className='flex space-x-4'>
-              <a
-                href={socials.facebook}
-                target='_blank'
-                rel='noopener noreferrer'
-                aria-label='Zebotix on Facebook (opens in new tab)'
-                className='inline-flex items-center'
-              >
-                <Image
-                  src={'/icons/facebook.svg'}
-                  alt='Facebook'
-                  width={20}
-                  height={20}
-                  className='rounded-full bg-gray-400 hover:bg-zebotix-blue transition-colors'
-                />
-              </a>
+              <p className='text-gray-400 mb-8 text-base leading-relaxed max-w-sm'>
+                Empowering businesses with intelligent software & AI solutions. We architect digital
+                products that scale with your vision.
+              </p>
 
-              <a
-                href={socials.twitter}
-                target='_blank'
-                rel='noopener noreferrer'
-                aria-label='Zebotix on X / Twitter (opens in new tab)'
-                className='inline-flex items-center'
-              >
-                <Image
-                  src={'/icons/x.png'}
-                  alt='X / Twitter'
-                  width={20}
-                  height={20}
-                  className='rounded-[4px] bg-gray-400 hover:bg-zebotix-blue transition-colors'
-                />
-              </a>
+              <address className='not-italic mb-8'>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className='text-white hover:text-zebotix-blue font-medium transition-colors block text-lg'
+                  aria-label={`Email ${COMPANY_NAME}`}
+                >
+                  {CONTACT_EMAIL}
+                </a>
+              </address>
 
-              <a
-                href={socials.instagram}
-                target='_blank'
-                rel='noopener noreferrer'
-                aria-label='Zebotix on Instagram (opens in new tab)'
-                className='inline-flex items-center'
-              >
-                <Image
-                  src={'/icons/instagram.svg'}
-                  alt='Instagram'
-                  width={20}
-                  height={20}
-                  className='rounded-[6px] bg-gray-400 hover:bg-zebotix-blue transition-colors'
-                />
-              </a>
+              <nav aria-label={`${COMPANY_NAME} social links`} className='flex space-x-6'>
+                {Object.entries(SOCIAL_LINKS).map(([platform, url]) => (
+                  <a
+                    key={platform}
+                    href={url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label={`${COMPANY_NAME} on ${platform} (opens in new tab)`}
+                    className='text-gray-500 hover:text-white transition-all transform hover:scale-110'
+                  >
+                    <Image
+                      src={`/icons/${platform === 'twitter' ? 'x' : platform}${platform === 'twitter' ? '.png' : '.svg'}`}
+                      alt=''
+                      aria-hidden='true'
+                      width={24}
+                      height={24}
+                      sizes='24px'
+                      className={cn(
+                        'w-6 h-6 grayscale brightness-150 hover:grayscale-0 hover:brightness-100 transition-all opacity-60 hover:opacity-100',
+                        platform === 'twitter' ? 'rounded-[4px]' : 'rounded-full'
+                      )}
+                    />
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </Reveal>
 
-              <a
-                href={socials.github}
-                target='_blank'
-                rel='noopener noreferrer'
-                aria-label='Zebotix on GitHub (opens in new tab)'
-                className='inline-flex items-center'
-              >
-                <Image
-                  src={'/icons/github.svg'}
-                  alt='GitHub'
-                  width={20}
-                  height={20}
-                  className='rounded-full bg-gray-400 hover:bg-zebotix-blue transition-colors'
-                />
-              </a>
+          {/* Solutions links */}
+          <Reveal delay={0.1} distance={30}>
+            <nav aria-label='Quick links'>
+              <h3 className='text-white font-black text-xs uppercase tracking-widest mb-8'>
+                Solutions
+              </h3>
+              <ul className='space-y-4'>
+                {NAV_LINKS.filter((link) => link.href.startsWith('#')).map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className='text-gray-500 hover:text-zebotix-blue transition-colors text-sm font-medium'
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </nav>
-          </div>
-
-          {/* Quick links */}
-          <nav aria-label='Quick links'>
-            <h3 className='text-lg font-semibold mb-4'>Quick links</h3>
-            <ul className='space-y-3'>
-              <li>
-                <Link
-                  href='#features'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='#solutions'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Solutions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='#portfolio'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Portolio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='#pricing'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Pricing
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          </Reveal>
 
           {/* Company links */}
-          <nav aria-label='Company links'>
-            <h3 className='text-lg font-semibold mb-4'>Company</h3>
-            <ul className='space-y-3'>
-              {/* <li>
-                <Link
-                  href='/blog'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Blog
-                </Link>
-              </li> */}
-              <li>
-                <Link
-                  href='/contact'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/about'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  About
-                </Link>
-              </li>
-              {/* <li>
-                <Link
-                  href='/careers'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Careers
-                </Link>
-              </li> */}
-            </ul>
-          </nav>
+          <Reveal delay={0.2} distance={30}>
+            <nav aria-label='Company links'>
+              <h3 className='text-white font-black text-xs uppercase tracking-widest mb-8'>
+                Company
+              </h3>
+              <ul className='space-y-4'>
+                {companyLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className='text-gray-500 hover:text-zebotix-blue transition-colors text-sm font-medium'
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Reveal>
 
           {/* Legal links */}
-          <nav aria-label='Legal links'>
-            <h3 className='text-lg font-semibold mb-4'>Legal</h3>
-            <ul className='space-y-3'>
-              <li>
-                <Link
-                  href='/privacy'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/terms'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/cookie-policy'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  Cookie Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/gdpr'
-                  className='text-gray-400 hover:text-zebotix-blue transition-colors'
-                >
-                  GDPR
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <Reveal delay={0.3} distance={30}>
+            <nav aria-label='Legal links'>
+              <h3 className='text-white font-black text-xs uppercase tracking-widest mb-8'>
+                Legal
+              </h3>
+              <ul className='space-y-4'>
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className='text-gray-500 hover:text-zebotix-blue transition-colors text-sm font-medium'
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </Reveal>
         </div>
 
         {/* Copyright */}
-        <div className='mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm'>
-          <p>
-            © {year} <span className='font-medium'>Zebotix</span>. All rights reserved.{' '}
-            <span className='sr-only'>Company registration and legal disclaimers apply.</span>
-          </p>
-        </div>
+        <Reveal delay={0.5} className='mt-20 pt-10 border-t border-white/5'>
+          <div className='flex flex-col md:flex-row justify-between items-center gap-6'>
+            <p className='text-gray-500 text-xs tracking-widest uppercase'>
+              © {year} <span className='text-white font-black'>{COMPANY_NAME}</span>. ALL RIGHTS
+              RESERVED.
+            </p>
+            <div className='flex gap-8'>
+              <p className='text-[10px] text-gray-600 uppercase tracking-widest'>
+                Designed by Zebotix Studio
+              </p>
+              <p className='text-[10px] text-gray-600 uppercase tracking-widest'>
+                Built with Next.js 16 + React 19
+              </p>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </footer>
   );

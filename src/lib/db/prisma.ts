@@ -1,0 +1,35 @@
+import { neonConfig } from '@neondatabase/serverless';
+import { PrismaNeon } from '@prisma/adapter-neon';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
+import ws from 'ws';
+import { PrismaClient } from '@/generated/prisma';
+
+neonConfig.webSocketConstructor = ws;
+
+// To work in edge environments (Cloudflare Workers, Vercel Edge, etc.), enable querying over fetch
+neonConfig.poolQueryViaFetch = true;
+
+// Type definitions
+declare global {
+  var prismaPg: PrismaClient | undefined;
+}
+
+const connectionString = `${process.env.DATABASE_URL}`;
+let prisma: PrismaClient;
+
+if (process.env.NODE_ENV === 'development') {
+  // Use @prisma/adapter-pg for local Postgres
+  if (!global.prismaPg) {
+    const pool = new Pool({ connectionString });
+    const adapter = new PrismaPg(pool);
+    global.prismaPg = new PrismaClient({ adapter });
+  }
+  prisma = global.prismaPg;
+} else {
+  // Use Neon for production
+  const adapter = new PrismaNeon({ connectionString });
+  prisma = new PrismaClient({ adapter });
+}
+
+export default prisma;

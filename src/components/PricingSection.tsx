@@ -1,146 +1,25 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Check, Router, X } from 'lucide-react';
+import { Button } from '@/components/ui';
+import { Check, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-const plans = [
-  {
-    id: 'starter',
-    name: 'Starter',
-    pricePKR: 'PKR 19,999',
-    short: 'Simple, fast launch for small businesses — responsive site + basic PWA/wrapper.',
-    features: [
-      'Up to 10 responsive pages',
-      'Basic contact form (emails forwarded)',
-      '1 simple logo (free)',
-      'PWA / wrapper (not a native app)',
-      'Content upload guidance',
-    ],
-    details: {
-      deliverables:
-        '1 responsive website (up to 10 pages), basic contact form (emails forwarded to client), 1 simple logo, Progressive Web App (PWA) or wrapper for Android/iOS — not a native app unless explicitly scoped.',
-      content:
-        'Client supplies all content (images, copy). Content upload allowed to local storage only. We provide upload instructions; optional upload-for-you service available for an extra fee on request.',
-      exclusions:
-        'No source code / no repo access included. Hosting is not included by default; hosting available for an additional monthly fee (quoted separately).',
-      delivery: 'Delivery within 2 business days after we receive required content and deposit.',
-      revisions:
-        'Up to 5 UI revisions included (minor edits: text, images, colors, layout tweaks). Major scope changes (new pages, new features) will be quoted separately.',
-      support:
-        '30-day limited bug-fix window after delivery. Response SLA: critical issues within 48 hours; non-critical within 5 business days.',
-      note: 'Starter is intended for quick launches and small sites. If you need server-side admin or custom integrations, choose Business or Enterprise.',
-      addons: [
-        'Role-based access: +PKR 2,999 (up to 3 roles; custom roles quoted separately)',
-        'Payment gateway / e-commerce basics: +PKR 1,999 (Stripe recommended; gateway fees & PCI compliance are client responsibility)',
-        'Source code transfer: +PKR 4,999 (delivered after final payment and repo handover)',
-      ],
-    },
-  },
-  {
-    id: 'business',
-    name: 'Business (recommended)',
-    pricePKR: 'PKR 39,999',
-    short: 'Content editing, staging, and a small admin panel for growing businesses.',
-    features: [
-      'Simple admin panel (lightweight CMS)',
-      'Email/password auth + reset',
-      'Image optimization & CDN',
-      'Staging environment',
-      'UAT with 5 business days acceptance',
-    ],
-    details: {
-      deliverables:
-        'Responsive website with a lightweight admin panel for editing content (titles, images, basic pages). Tech: lightweight headless or in-app editor (e.g., Next.js + headless CMS or similar) — focused on content updates, not a full enterprise CMS.',
-      auth: 'Basic email/password login with secure password reset via email. Passwords are stored hashed; standard security measures applied (rate limits, secure cookies). For SSO or enterprise auth, choose Enterprise.',
-      performance:
-        'We will implement image optimization (e.g., next/image or build-time optimizations), caching recommendations, and CDN setup where applicable. This is implemented as part of the deliverable (not just recommended).',
-      staging_uat:
-        'A staging environment is provided for review. One round of User Acceptance Testing (UAT) is included. Client has 5 business days to provide feedback; after that, changes follow the revision policy.',
-      delivery:
-        'Delivery timeline depends on scope and content — typical delivery quoted on acceptance. Includes basic QA and one UAT round.',
-      support:
-        '30-day bug-fix window included. Response SLA: critical within 24–48 hours; non-critical within 3–5 business days.',
-      addons: [
-        'Role-based access: +PKR 2,999 (up to 5 roles; complexity caps apply — custom roles require quote)',
-        'Payment gateway / e-commerce basics: +PKR 1,999 (Stripe; client pays gateway fees; PCI compliance considerations apply)',
-        'Source code transfer: +PKR 4,999 (after final payment & license checks)',
-        'Advanced SEO / performance: quoted per page or fixed package — includes audit, prioritized fixes, and a report.',
-      ],
-    },
-  },
-  {
-    id: 'enterprise',
-    name: 'Enterprise',
-    pricePKR: 'Contact Sales',
-    short: 'Full delivery with repo access, CI/CD, analytics, and security checklist.',
-    features: [
-      'Source code & repo access (after final payment)',
-      'Basic CI/CD setup (Vercel/Netlify)',
-      'Analytics + GTM setup',
-      'Security checklist delivered',
-      'Custom integrations (quoted separately)',
-    ],
-    details: {
-      deliverables:
-        'Full project delivery with code repository access and a basic CI/CD pipeline (Vercel / Netlify or equivalent). Analytics and Google Tag Manager (GTM) setup included. A concise security checklist will be provided.',
-      source_code:
-        'Source code transfer is provided only after final payment is cleared and confirmation of required third-party licenses. We will grant repo access (Git) once payment and license checks are complete.',
-      ci_cd:
-        'Basic CI/CD setup for automatic deploys (branch → staging / branch → production workflows). Further automation or complex pipelines are scoped separately.',
-      integrations:
-        'Enterprise integrations (ERP, payment platforms, CRMs) require separate scoping and quote — not included in the base price.',
-      delivery:
-        'Delivery timeline depends on final scope and integrations. Exact timelines provided after scoping.',
-      support:
-        'Enterprise-level SLAs available — contact sales for dedicated support and options (on-call, faster response times).',
-      addons: [
-        'Role-based access: +PKR 2,999 (complexity caps; custom RBAC quoted separately)',
-        'Payment gateway / e-commerce basics: +PKR 1,999 (Stripe; gateway fees & PCI/merchant responsibilities apply)',
-        'Source code transfer: +PKR 4,999 (transfer terms: post-payment & repo handover)',
-        'Advanced SEO / performance: custom quote (site audit, fixes, and reporting).',
-      ],
-    },
-  },
-];
+import { cn } from '@/lib/utils';
+import { PRICING_PLANS } from '@/lib/constants';
+import { Reveal } from '@/components/animations';
 
 type ModalType = {
   open: boolean;
   onClose: () => void;
-  content: {
-    id: string;
-    name: string;
-    pricePKR: string;
-    short: string;
-    features: string[];
-    details: {
-      deliverables: string;
-      source_code: string;
-      ci_cd: string;
-      integrations: string;
-      delivery: string;
-      support: string;
-      exclusions: string;
-      content: string;
-      revisions: string;
-      auth: string;
-      addons: string[];
-    };
-  };
+  content: (typeof PRICING_PLANS)[number];
 };
 
 const Modal = ({ open, onClose, content }: ModalType) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
-
-    // Focus the modal container for screen readers / keyboard users
-    const el = modalRef.current;
-    (el as any)?.focus();
-
-    // Prevent background scrolling while modal is open
+    modalRef.current?.focus();
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -148,8 +27,7 @@ const Modal = ({ open, onClose, content }: ModalType) => {
     };
   }, [open]);
 
-  // Basic focus-trap & Escape handling
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       e.stopPropagation();
       onClose();
@@ -159,25 +37,19 @@ const Modal = ({ open, onClose, content }: ModalType) => {
     if (e.key === 'Tab') {
       const container = modalRef.current;
       if (!container) return;
-
-      const focusable = (container as any)?.querySelectorAll(
+      const focusable = container.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
       );
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
-
       if (!first) {
         e.preventDefault();
         return;
       }
-
-      // If Shift+Tab on first element, move to last
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
       }
-
-      // If Tab on last element, move to first
       if (!e.shiftKey && document.activeElement === last) {
         e.preventDefault();
         first.focus();
@@ -186,15 +58,15 @@ const Modal = ({ open, onClose, content }: ModalType) => {
   };
 
   const router = useRouter();
-
   if (!open || !content) return null;
 
   return (
     <>
-      {/* Overlay */}
-      <div className='fixed inset-0 bg-black/60 z-40' onClick={onClose} aria-hidden='true' />
-
-      {/* Wrapper: fixed full-screen, allows scrolling if content taller than viewport */}
+      <div
+        className='fixed inset-0 bg-black/80 backdrop-blur-xs z-40'
+        onClick={onClose}
+        aria-hidden='true'
+      />
       <div
         role='dialog'
         aria-modal='true'
@@ -202,111 +74,77 @@ const Modal = ({ open, onClose, content }: ModalType) => {
         className='fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 overflow-auto'
         onKeyDown={handleKeyDown}
       >
-        {/* Panel: stops propagation so clicking inside doesn't close modal.
-            max-h + overflow-auto makes the panel content scrollable */}
         <div
           ref={modalRef}
           tabIndex={-1}
           onClick={(e) => e.stopPropagation()}
-          className='modal-scroll w-full max-w-3xl mx-auto bg-zebotix-darkGray rounded-2xl p-6 shadow-xl text-gray-200 max-h-[90vh] overflow-auto'
+          className='modal-scroll w-full max-w-3xl mx-auto bg-zebotix-darkGray rounded-3xl p-8 shadow-2xl text-gray-200 max-h-[90vh] overflow-auto border border-white/10'
         >
-          <div className='flex items-start justify-between'>
+          <div className='flex items-start justify-between mb-8'>
             <div>
-              <h3 id='plan-modal-title' className='text-2xl font-bold mb-1'>
+              <h3 id='plan-modal-title' className='text-3xl font-bold text-white mb-2'>
                 {content.name} — {content.pricePKR}
               </h3>
-              <p className='text-gray-400 text-sm'>{content.short}</p>
+              <p className='text-gray-400'>{content.short}</p>
             </div>
             <button
               onClick={onClose}
               aria-label='Close details'
-              className='p-2 rounded-md hover:bg-white/5'
+              className='p-2 rounded-full hover:bg-white/10 transition-colors'
             >
-              <X className='h-5 w-5' />
+              <X className='h-6 w-6' />
             </button>
           </div>
 
-          <div className='mt-4 space-y-4 text-sm'>
-            <div>
-              <strong>Deliverables:</strong>
-              <p className='text-gray-300 mt-1'>{content.details.deliverables}</p>
-            </div>
-            {content.details.content && (
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-8 text-sm'>
+            <div className='space-y-6'>
               <div>
-                <strong>Content:</strong>
-                <p className='text-gray-300 mt-1'>{content.details.content}</p>
+                <strong className='text-white block mb-2'>Deliverables</strong>
+                <p className='text-gray-400 leading-relaxed'>{content.details.deliverables}</p>
               </div>
-            )}
-
-            {content.details.exclusions && (
-              <div>
-                <strong>Exclusions & Hosting:</strong>
-                <p className='text-gray-300 mt-1'>{content.details.exclusions}</p>
-              </div>
-            )}
-
-            <div>
-              <strong>Delivery & UAT:</strong>
-              <p className='text-gray-300 mt-1'>{content.details.delivery}</p>
+              {content.details.content && (
+                <div>
+                  <strong className='text-white block mb-2'>Content Strategy</strong>
+                  <p className='text-gray-400 leading-relaxed'>{content.details.content}</p>
+                </div>
+              )}
+              {content.details.exclusions && (
+                <div>
+                  <strong className='text-white block mb-2'>Exclusions & Hosting</strong>
+                  <p className='text-gray-400 leading-relaxed'>{content.details.exclusions}</p>
+                </div>
+              )}
             </div>
 
-            <div>
-              <strong>Revisions & Support:</strong>
-              <p className='text-gray-300 mt-1'>
-                {content.details.revisions || content.details.support}
-              </p>
-            </div>
-
-            {content.details.auth && (
+            <div className='space-y-6'>
               <div>
-                <strong>Authentication / Security:</strong>
-                <p className='text-gray-300 mt-1'>{content.details.auth}</p>
+                <strong className='text-white block mb-2'>Delivery & Support</strong>
+                <p className='text-gray-400 leading-relaxed'>{content.details.delivery}</p>
+                <p className='text-gray-400 leading-relaxed mt-2'>{content.details.support}</p>
               </div>
-            )}
-
-            {content.details.ci_cd && (
               <div>
-                <strong>CI / CD & Repo:</strong>
-                <p className='text-gray-300 mt-1'>{content.details.ci_cd}</p>
+                <strong className='text-white block mb-2'>Optional Add-ons</strong>
+                <ul className='space-y-2 text-gray-400'>
+                  {content.details.addons.map((a, i) => (
+                    <li key={i} className='flex items-start gap-2'>
+                      <span className='w-1.5 h-1.5 rounded-full bg-zebotix-blue mt-1.5 shrink-0' />
+                      {a}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            )}
-
-            {content.details.integrations && (
-              <div>
-                <strong>Integrations:</strong>
-                <p className='text-gray-300 mt-1'>{content.details.integrations}</p>
-              </div>
-            )}
-
-            <div>
-              <strong>Support SLA:</strong>
-              <p className='text-gray-300 mt-1'>{content.details.support}</p>
-            </div>
-
-            <div>
-              <strong>Add-ons (optional):</strong>
-              <ul className='list-disc list-inside mt-1 text-gray-300'>
-                {content.details.addons.map((a, i) => (
-                  <li key={i}>{a}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className='text-xs text-gray-400 mt-2'>
-              <strong>Note:</strong> Enterprise integrations (ERP, advanced APIs) require separate
-              scoping and a custom quote.
             </div>
           </div>
 
-          <div className='mt-6 flex justify-end'>
-            <Button onClick={onClose} className='mr-3'>
-              Close
+          <div className='mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-end gap-4'>
+            <Button variant='ghost' onClick={onClose} className='text-gray-400 hover:text-white'>
+              Go Back
             </Button>
             <Button
               onClick={() => router.push('/contact')}
-              className='bg-zebotix-blue hover:bg-blue-600 text-white'
+              className='bg-zebotix-blue hover:bg-blue-600 text-white px-8 h-12'
             >
-              Proceed / Contact Sales
+              Proceed with {content.name}
             </Button>
           </div>
         </div>
@@ -316,13 +154,12 @@ const Modal = ({ open, onClose, content }: ModalType) => {
 };
 
 const PricingSection = () => {
-  const [isAnnual] = useState(true); // retained UI toggle for looks (no price change here)
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<ModalType | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
   const openDetails = (planId: string) => {
-    const p = plans.find((x) => x.id === planId);
-    setSelectedPlan(p as any);
+    const p = PRICING_PLANS.find((x) => x.id === planId);
+    setSelectedPlan(p);
     setModalOpen(true);
   };
 
@@ -334,85 +171,98 @@ const PricingSection = () => {
   const router = useRouter();
 
   return (
-    <div
+    <section
       id='pricing'
-      className='bg-gradient-to-b from-zebotix-darkGray to-zebotix-black py-16 md:py-24'
+      className='bg-linear-to-b from-zebotix-darkGray to-zebotix-black py-16 md:py-24 overflow-hidden'
     >
       <div className='section-container'>
-        <div className='text-center max-w-3xl mx-auto mb-12'>
-          <h2 className='text-3xl md:text-4xl font-bold mb-4'>
-            Simple, <span className='gradient-text'>Transparent</span> Pricing
-          </h2>
-          <p className='text-gray-400 mb-8'>
-            Choose the plan that fits your business needs. No hidden fees — basic add-ons available.
-          </p>
-
-          {/* Pricing toggle (visual only) */}
-          <div className='flex items-center justify-center space-x-4 mb-12'>
-            <span className={`text-sm font-medium text-zebotix-blue`}>One-time / Fixed</span>
-          </div>
+        <div className='text-center max-w-3xl mx-auto mb-16'>
+          <Reveal>
+            <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
+              Simple,{' '}
+              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
+                Transparent
+              </span>{' '}
+              Pricing
+            </h2>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <p className='text-gray-400 text-lg'>
+              Choose the plan that fits your business stage. No hidden costs, just pure digital
+              growth.
+            </p>
+          </Reveal>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-          {plans.map((plan, index) => (
-            <div
-              key={plan.id}
-              className={` flex flex-col justify-between rounded-2xl p-8 transition-all duration-300 ${
-                plan.name.includes('recommended')
-                  ? 'bg-gradient-to-b from-zebotix-blue/20 to-zebotix-black border border-zebotix-blue/30 transform hover:-translate-y-2'
-                  : 'bg-zebotix-darkGray border border-gray-800 transform hover:-translate-y-1'
-              }`}
-            >
-              {plan.name.includes('recommended') && (
-                <span className='w-fit bg-zebotix-blue text-zebotix-black text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block'>
-                  Recommended
-                </span>
-              )}
+          {PRICING_PLANS.map((plan, index) => (
+            <Reveal key={plan.id} delay={0.1 * index} distance={40} className='h-full'>
+              <div
+                className={cn(
+                  'flex flex-col justify-between rounded-3xl p-8 h-full transition-all duration-500 shadow-2xl',
+                  plan.name.includes('recommended')
+                    ? 'bg-linear-to-b from-blue-900/20 to-zebotix-black border-2 border-zebotix-blue relative'
+                    : 'bg-zebotix-darkGray border border-gray-800'
+                )}
+              >
+                {plan.name.includes('recommended') && (
+                  <span className='absolute -top-4 left-1/2 -translate-x-1/2 bg-zebotix-blue text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-tighter'>
+                    Most Popular
+                  </span>
+                )}
 
-              <h3 className='text-2xl font-bold mb-2'>{plan.name}</h3>
-              <p className='text-gray-400 mb-4'>{plan.short}</p>
+                <div>
+                  <h3 className='text-2xl font-bold mb-2 text-white'>{plan.name}</h3>
+                  <p className='text-gray-400 text-sm mb-6 leading-relaxed'>{plan.short}</p>
 
-              {plan.id !== 'enterprise' && (
-                <div className='mb-6'>
-                  <span className='text-2xl font-bold'>{plan.pricePKR}</span>
-                  {/* <span className='text-gray-400 text-sm'> • One-time / starting price</span> */}
+                  <div className='mb-8'>
+                    <div className='text-3xl font-black text-white'>{plan.pricePKR}</div>
+                    <div className='text-[10px] uppercase tracking-widest text-gray-500 mt-1'>
+                      Starting price / One-time
+                    </div>
+                  </div>
+
+                  <ul className='space-y-4 mb-10'>
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className='flex items-start text-sm'>
+                        <div className='bg-zebotix-blue/20 rounded-full p-1 mr-3 mt-0.5'>
+                          <Check className='h-3 w-3 text-zebotix-blue' />
+                        </div>
+                        <span className='text-gray-300'>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              )}
-              <ul className='space-y-3 mb-6'>
-                {plan.features.map((feature, i) => (
-                  <li key={i} className='flex items-start'>
-                    <Check className='h-5 w-5 text-zebotix-blue mr-2 shrink-0' />
-                    <span className='text-gray-300'>{feature}</span>
-                  </li>
-                ))}
-              </ul>
 
-              <div className='flex flex-col gap-3'>
-                <Button
-                  onClick={() => router.push('/contact')}
-                  className={`w-full ${
-                    plan.name.includes('recommended')
-                      ? 'bg-zebotix-blue hover:bg-blue-600 text-white'
-                      : 'bg-zebotix-black hover:bg-blue-700 border border-zebotix-blue/30 hover:border-zebotix-blue text-white'
-                  }`}
-                >
-                  {plan.name === 'Enterprise' ? 'Contact Sales' : `Start with ${plan.name}`}
-                </Button>
+                <div className='flex flex-col gap-3'>
+                  <Button
+                    size='lg'
+                    onClick={() => router.push('/contact')}
+                    className={cn(
+                      'w-full h-12 rounded-xl font-bold transition-all',
+                      plan.name.includes('recommended')
+                        ? 'bg-zebotix-blue hover:bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                        : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
+                    )}
+                  >
+                    {plan.name === 'Enterprise' ? 'Custom Quote' : 'Get Started'}
+                  </Button>
 
-                <button
-                  onClick={() => openDetails(plan.id)}
-                  className='w-full mt-1 text-sm py-2 rounded-md border border-gray-700 hover:bg-white/3'
-                >
-                  Read details
-                </button>
+                  <button
+                    onClick={() => openDetails(plan.id)}
+                    className='w-full text-xs font-medium text-gray-500 hover:text-white transition-colors py-2'
+                  >
+                    View Full Scope & Add-ons
+                  </button>
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
 
-      <Modal open={modalOpen} onClose={closeModal} content={selectedPlan as any} />
-    </div>
+      <Modal open={modalOpen} onClose={closeModal} content={selectedPlan} />
+    </section>
   );
 };
 

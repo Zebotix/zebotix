@@ -1,43 +1,42 @@
-// import axios from 'axios';
 import { MetadataRoute } from 'next';
+import { SITE_URL, NAV_LINKS, PORTFOLIOS, SOLUTIONS } from '@/lib/constants';
 
-const baseUrl = 'https://www.zebotix.com';
-
-function getStaticPaths(): string[] {
-  // manually or programmatically generate list of all page paths
-  const paths = ['/', '/about', '/contact', '/cookie-policy', '/gdpr', '/privacy', '/terms'];
-  return paths;
-}
-
-export const revalidate = 60;
-
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const staticPaths = getStaticPaths();
-  // const dynamicPaths = await getDynamicSlugs();
-  const allPaths = [...staticPaths];
-
-  return allPaths.map((path) => ({
-    url: `${baseUrl}${path}`,
+export default function sitemap(): MetadataRoute.Sitemap {
+  // Main navigation routes
+  const routes = NAV_LINKS.filter((l) => !l.href.startsWith('#')).map((l) => ({
+    url: `${SITE_URL}${l.href === '/' ? '' : l.href}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: path === '/' ? 1 : 0.7,
+    changeFrequency: 'weekly' as const,
+    priority: l.href === '/' ? 1 : 0.8,
+    images: l.href === '/' ? [`${SITE_URL}/Zebotix.png`] : [],
   }));
-}
 
-// async function getDynamicSlugs(): Promise<string[]> {
-//   try {
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/posts`,
-//       {
-//         // 👇 prevents Next.js from trying to prerender stale data
-//         cache: 'no-store',
-//       }
-//     );
-//     if (!res.ok) return [];
-//     const posts = await res.json();
-//     return posts.map((p: any) => `/blog/${p.slug}`);
-//   } catch (err) {
-//     console.error('Failed to fetch posts:', err);
-//     return [];
-//   }
-// }
+  // Portfolio/Work routes with images
+  const portfolioRoutes = PORTFOLIOS.map((p) => ({
+    url: `${SITE_URL}/work/${p.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+    images: p.image ? [p.image] : [],
+  }));
+
+  // Solutions routes
+  const solutionRoutes = SOLUTIONS.map((s) => ({
+    url: `${SITE_URL}/solutions/${s.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  // Static legal/policy routes
+  const staticRoutes = ['/privacy', '/terms', '/cookie-policy', '/gdpr', '/contact', '/about'].map(
+    (route) => ({
+      url: `${SITE_URL}${route}`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    })
+  );
+
+  return [...routes, ...portfolioRoutes, ...solutionRoutes, ...staticRoutes];
+}

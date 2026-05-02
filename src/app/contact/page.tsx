@@ -135,7 +135,7 @@ export default function ContactPage() {
                   type='text'
                   required
                   placeholder='your name'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
                 />
               </div>
 
@@ -149,7 +149,7 @@ export default function ContactPage() {
                   type='email'
                   required
                   placeholder='you@example.com'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
                 />
               </div>
 
@@ -162,7 +162,7 @@ export default function ContactPage() {
                   name='subject'
                   type='text'
                   placeholder='Project: e-commerce website'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
                 />
               </div>
 
@@ -176,7 +176,7 @@ export default function ContactPage() {
                   rows={6}
                   required
                   placeholder='Tell us about your project and timeline...'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
                 />
               </div>
 
