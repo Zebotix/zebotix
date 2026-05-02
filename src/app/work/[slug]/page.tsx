@@ -13,8 +13,7 @@ interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Enable instant navigation for smooth client-side transitions
-export const unstable_instant = { prefetch: 'static' };
+export const unstable_instant = false;
 
 export async function generateStaticParams() {
   return PORTFOLIOS.map((p) => ({
@@ -69,7 +68,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     project.title,
     project.summary,
     project.image,
-    new Date(),
+    new Date('2025-01-01T00:00:00.000Z'),
     `${SITE_URL}/work/${project.slug}`
   );
 

@@ -7,7 +7,7 @@ import PortfolioSection from '@/components/PortfolioSection';
 import FaqSection from '@/components/FaqSection';
 import CtaSection from '@/components/CtaSection';
 import ProductsCarouselSection from '@/components/ProductsCarousel';
-import { Skeleton } from '@/components/ui';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { COMPANY_NAME, SHORT_DESC, SITE_URL } from '@/lib/constants';
 import { getSanitizedSchema, generateLocalBusinessSchema } from '@/lib/schemas';
 

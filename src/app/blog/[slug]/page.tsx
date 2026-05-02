@@ -7,18 +7,7 @@ import { generateBlogPostingSchema, getSanitizedSchema } from '@/lib/schemas';
 import { Reveal } from '@/components/animations';
 import { COMPANY_NAME, SITE_URL } from '@/lib/constants';
 
-export const dynamic = 'force-static';
-
-// Enable instant navigation for smooth client-side transitions
-export const unstable_instant = { prefetch: 'static' };
-
-export async function generateStaticParams() {
-  const posts = await getAllPosts();
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
-}
+export const unstable_instant = false;
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;

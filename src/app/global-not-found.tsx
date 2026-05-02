@@ -1,13 +1,17 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 import './globals.css';
+import { CurrentYear } from '@/components/ui/CurrentYear';
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+};
 
 export const metadata: Metadata = {
   title: '404 — Page Not Found • Zebotix',
   description:
     "The page you are looking for can't be found. Explore Zebotix services or contact us.",
   robots: 'noindex,follow',
-  themeColor: '#000000',
   icons: {
     icon: '/Zebotix.png',
     shortcut: '/Zebotix.png',
@@ -186,7 +190,7 @@ export default function NotFound() {
 
             <div className='mt-12 text-center text-xs text-gray-500'>
               <p>
-                © {new Date().getFullYear()} Zebotix. All rights reserved. View our{' '}
+                © <CurrentYear /> Zebotix. All rights reserved. View our{' '}
                 <Link href='/terms' className='text-indigo-300 hover:underline'>
                   Terms
                 </Link>{' '}
