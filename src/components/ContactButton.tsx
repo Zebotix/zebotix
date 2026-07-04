@@ -1,9 +1,12 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
 import { Mail } from 'lucide-react';
-import { Button } from '@/components/ui';
+import React, { useCallback, useState } from 'react';
+
 import ContactModal from './ContactModal';
+
+import { Button } from '@/components/ui';
+
 
 export default function ContactButton() {
   const [modalOpen, setModalOpen] = useState(false);

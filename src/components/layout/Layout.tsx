@@ -1,7 +1,8 @@
 import React from 'react';
+
+import ContactButton from '../ContactButton';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
-import ContactButton from '../ContactButton';
 import { Toaster } from '../ui';
 
 export default function Layout({ children }: { readonly children: React.ReactNode }) {

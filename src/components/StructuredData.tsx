@@ -1,4 +1,4 @@
-import { ScriptHTMLAttributes } from 'react';
+import { type ScriptHTMLAttributes } from 'react';
 
 type StructuredDataProps = Readonly<
   ScriptHTMLAttributes<HTMLScriptElement> & {

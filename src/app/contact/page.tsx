@@ -1,349 +1,233 @@
-'use client';
-import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
+import React, { useState, useRef } from "react";
+
+import { submitContactForm } from "../actions/contact";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
-  const [message, setMessage] = useState('');
-  const [mounted, setMounted] = useState(false);
-  const liveRef = useRef(null);
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [message, setMessage] = useState("");
+  const liveRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (mounted) return;
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-  const CONTACT = {
-    phone: '+92-337-8568671',
-    email: 'zebotix@gmail.com',
-    addressLine: 'Sector 11, Block B, Flat no 3, Saeedabad, Baldia Town, Karachi, Pakistan',
-    mapQuery: 'Zebotix,+Karachi+Pakistan',
-    socials: {
-      twitter: 'https://x.com/zebotix1499',
-      facebook: 'https://www.facebook.com/people/Zebotix/61567313714101/',
-      instagram: 'https://www.instagram.com/zebotix',
-      github: 'https://github.com/Zebotix',
-    },
-  };
-
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus('sending');
-    setMessage('');
+    setStatus("sending");
+    setMessage("");
 
-    const data = {
-      name: e.target.name.value.trim(),
-      email: e.target.email.value.trim(),
-      subject: e.target.subject.value.trim(),
-      message: e.target.message.value.trim(),
-      page: window.location.href,
-    };
+    const formData = new FormData(e.currentTarget);
+    const result = await submitContactForm(formData);
 
-    // Basic validation
-    if (!data.name || !data.email || !data.message) {
-      setStatus('error');
-      setMessage('Please fill name, email, and message.');
-      (liveRef as any).current?.focus();
-      return;
+    if (result.success) {
+      setStatus("success");
+      setMessage("Thanks — your message was sent. We will reply soon.");
+      (e.target as HTMLFormElement).reset();
+    } else {
+      setStatus("error");
+      setMessage(result.error || "Something went wrong.");
     }
-
-    // Try sending to your API route first (if you implement /api/contact)
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) {
-        setStatus('success');
-        setMessage('Thanks — your message was sent. We will reply soon.');
-        e.target.reset();
-        (liveRef as any).current?.focus();
-        return;
-      }
-      // if API not available or returns non-2xx, fallback:
-      throw new Error('API failed');
-    } catch (err) {
-      // Fallback to mailto if API not implemented
-      const mailto = `mailto:${CONTACT.email}?subject=${encodeURIComponent(
-        data.subject || 'New contact from website'
-      )}&body=${encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`)}`;
-      window.location.href = mailto;
-      setStatus('idle');
-      return;
-    }
+    liveRef.current?.focus();
   }
 
   return (
     <>
-      {/* JSON-LD structured data for LocalBusiness */}
-      <script
-        type='application/ld+json'
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            name: 'Zebotix',
-            telephone: CONTACT.phone,
-            email: CONTACT.email,
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: 'Karachi',
-              addressCountry: 'PK',
-            },
-            url:
-              typeof window !== 'undefined'
-                ? window.location.origin
-                : 'https://zebotix.netlify.app',
-            sameAs: Object.values(CONTACT.socials).filter(Boolean),
-          }),
-        }}
-      />
-
-      <main className='min-h-screen py-12 px-6 lg:px-20'>
-        <div className='max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-start'>
-          {/* LEFT: Contact Form */}
-          <section
-            aria-labelledby='contact-heading'
-            className='bg-white/5 p-6 rounded-2xl shadow-md'
-          >
-            <h1 id='contact-heading' className='text-2xl md:text-3xl font-extrabold mb-2'>
-              Get in touch
-            </h1>
-            <p className='text-sm text-gray-300 mb-6'>
-              Have a project or question? Send us a message — we typically reply within 1-2 business
-              days.
-            </p>
-
-            <form
-              onSubmit={handleSubmit}
-              className='space-y-4'
-              aria-describedby='contact-form-desc'
-            >
-              <p id='contact-form-desc' className='sr-only'>
-                Required fields are name, email and message.
-              </p>
-
-              <div>
-                <label htmlFor='name' className='block text-sm font-medium'>
-                  Name <span aria-hidden='true'>*</span>
-                </label>
-                <input
-                  id='name'
-                  name='name'
-                  type='text'
-                  required
-                  placeholder='your name'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
-                />
-              </div>
-
-              <div>
-                <label htmlFor='email' className='block text-sm font-medium'>
-                  Email <span aria-hidden='true'>*</span>
-                </label>
-                <input
-                  id='email'
-                  name='email'
-                  type='email'
-                  required
-                  placeholder='you@example.com'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
-                />
-              </div>
-
-              <div>
-                <label htmlFor='subject' className='block text-sm font-medium'>
-                  Subject
-                </label>
-                <input
-                  id='subject'
-                  name='subject'
-                  type='text'
-                  placeholder='Project: e-commerce website'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
-                />
-              </div>
-
-              <div>
-                <label htmlFor='message' className='block text-sm font-medium'>
-                  Message <span aria-hidden='true'>*</span>
-                </label>
-                <textarea
-                  id='message'
-                  name='message'
-                  rows={6}
-                  required
-                  placeholder='Tell us about your project and timeline...'
-                  className='mt-1 block w-full rounded-md border border-gray-700 bg-transparent px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-indigo-500'
-                />
-              </div>
-
-              <div className='flex items-center gap-3'>
-                <button
-                  type='submit'
-                  className='inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md px-4 py-2 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300'
-                  aria-disabled={status === 'sending'}
-                  disabled={status === 'sending'}
-                >
-                  {status === 'sending' ? 'Sending…' : 'Send Message'}
-                </button>
-
-                <button
-                  type='button'
-                  onClick={() => {
-                    document.getElementById('name')?.focus();
-                  }}
-                  className='text-sm text-gray-300 underline'
-                >
-                  Reset focus
-                </button>
-              </div>
-
-              {/* status message for screen readers and visible users */}
-              <div
-                role='status'
-                aria-live='polite'
-                tabIndex={-1}
-                ref={liveRef}
-                className={`text-sm mt-2 ${
-                  status === 'success'
-                    ? 'text-green-400'
-                    : status === 'error'
-                    ? 'text-rose-400'
-                    : 'text-gray-300'
-                }`}
-              >
-                {message}
-              </div>
-            </form>
-          </section>
-
-          {/* RIGHT: Contact details + map */}
-          <aside className='space-y-6'>
-            <div className='bg-white/5 p-6 rounded-2xl shadow-md'>
-              <h2 className='text-lg font-semibold mb-3'>Contact details</h2>
-
-              <dl className='space-y-3'>
-                <div>
-                  <dt className='text-base font-medium text-gray-300'>Phone / Whatsapp</dt>
-                  <dd>
-                    <a
-                      href={`tel:${CONTACT.phone}`}
-                      className='text-sm text-indigo-300 hover:underline indent-4'
-                    >
-                      {CONTACT.phone}
-                    </a>
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className='text-base font-medium text-gray-300'>Email</dt>
-                  <dd>
-                    <a
-                      href={`mailto:${CONTACT.email}`}
-                      className='text-indigo-300 hover:underline indent-4 text-sm'
-                    >
-                      {CONTACT.email}
-                    </a>
-                  </dd>
-                </div>
-
-                <div>
-                  <dt className='text-base font-medium text-gray-300'>Address</dt>
-                  <dd className='text-sm text-gray-300 indent-4'>{CONTACT.addressLine}</dd>
-                </div>
-              </dl>
-
-              <div className='mt-4'>
-                <h3 className='text-base font-medium text-gray-300 mb-2'>Follow</h3>
-                <div className='flex gap-3'>
-                  {/* Accessible social links */}
-                  <a
-                    href={CONTACT.socials.twitter}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label='X / Twitter'
-                    className='invert p-2 rounded-md bg-white/3 hover:bg-black/5'
-                  >
-                    <Image src={'/icons/x.png'} alt='X / Twitter' width={18} height={18} priority />
-                  </a>
-
-                  <a
-                    href={CONTACT.socials.facebook}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label='LinkedIn'
-                    className='invert p-2 rounded-md bg-white/3 hover:bg-black/5'
-                  >
-                    <Image
-                      src='/icons/facebook.svg'
-                      alt='Facebook'
-                      width={18}
-                      height={18}
-                      priority
-                    />
-                  </a>
-
-                  <a
-                    href={CONTACT.socials.instagram}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label='Instagram'
-                    className='invert p-2 rounded-md bg-white/3 hover:bg-black/5'
-                  >
-                    <Image
-                      src='/icons/instagram.svg'
-                      alt='Instagram'
-                      width={18}
-                      height={18}
-                      priority
-                    />
-                  </a>
-
-                  <a
-                    href={CONTACT.socials.github}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label='GitHub'
-                    className='invert p-2 rounded-md bg-white/3 hover:bg-black/5'
-                  >
-                    <Image src='/icons/github.svg' alt='GitHub' width={18} height={18} priority />
-                  </a>
-                </div>
-              </div>
-            </div>
-            {/* Map card */}
-            <div className='rounded-2xl overflow-hidden border border-white/6'>
-              <h3 className='px-4 pt-4 text-sm font-medium text-gray-300'>Our location</h3>
-              <div className='h-56 md:h-72 w-full' role='region' aria-label='Zebotix location map'>
-                <iframe
-                  title='Zebotix location — Karachi'
-                  src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.119119060057!2d66.9517913743672!3d24.92801164255311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb36b3db19b7841%3A0x9235016aac7382a7!2sPolice%20family%20quater!5e0!3m2!1sen!2s!4v1760044931444!5m2!1sen!2s`}
-                  width='100%'
-                  height='100%'
-                  style={{ border: 0 }}
-                  loading='lazy'
-                  referrerPolicy='no-referrer-when-downgrade'
-                />
-              </div>
-            </div>
-
-            {/* Small trust / compliance note */}
-            <div className='text-xs text-gray-400'>
-              <p>
-                We use secure channels for messages and do not store payment card details. For
-                privacy and legal information, see our{' '}
-                <a href='/privacy' className='text-indigo-300 hover:underline'>
-                  Privacy Policy
-                </a>
-                .
-              </p>
-            </div>
-          </aside>
+      {/* Hero Section */}
+      <section className="relative w-full h-[50vh] min-h-[400px] flex items-center justify-center bg-zinc-950 overflow-hidden">
+        <Image
+          src="/images/contact-hero.webp"
+          alt="Contact Us Background"
+          fill
+          priority
+          className="object-cover opacity-40 mix-blend-overlay"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
+        <div className="relative z-10 text-center max-w-3xl px-4 mt-20">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
+            Get in Touch
+          </h1>
+          <p className="text-lg md:text-xl text-zinc-300">
+            Have a project in mind or need enterprise support? Our team is ready to help you build
+            the future.
+          </p>
         </div>
-      </main>
+      </section>
+
+      {/* Main Content Section */}
+      <section className="bg-zinc-950 text-zinc-300 py-20 px-6 lg:px-8 border-t border-zinc-800">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+            {/* Form Column */}
+            <div className="bg-zinc-900 border border-zinc-800 p-8 md:p-12 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+                <svg
+                  className="w-32 h-32 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="square"
+                    strokeLinejoin="miter"
+                    strokeWidth={0.5}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+
+              <h2 className="text-3xl font-bold text-white mb-8 tracking-tight">
+                Send us a message
+              </h2>
+
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
+                      placeholder="Jane Doe"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-zinc-400 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
+                      placeholder="jane@company.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-zinc-400 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
+                      placeholder="+1 (555) 000-0000"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="company"
+                      className="block text-sm font-medium text-zinc-400 mb-2"
+                    >
+                      Company Name
+                    </label>
+                    <input
+                      type="text"
+                      id="company"
+                      name="company"
+                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
+                      placeholder="Acme Corp"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-zinc-400 mb-2">
+                    How can we help you? *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors resize-none"
+                    placeholder="Tell us about your project, timeline, and goals..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full bg-white text-black font-semibold py-4 px-8 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                >
+                  {status === "sending" ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 text-black"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    "Submit Request"
+                  )}
+                </button>
+
+                {/* Status Message (Live Region) */}
+                <div ref={liveRef} aria-live="polite" tabIndex={-1} className="outline-none">
+                  {status === "success" && (
+                    <div className="mt-4 p-4 bg-green-950/50 border border-green-900 text-green-400 text-sm">
+                      {message}
+                    </div>
+                  )}
+                  {status === "error" && (
+                    <div className="mt-4 p-4 bg-red-950/50 border border-red-900 text-red-400 text-sm">
+                      {message}
+                    </div>
+                  )}
+                </div>
+              </form>
+            </div>
+
+            {/* Image Column */}
+            <div className="relative h-[600px] lg:h-[700px] w-full bg-zinc-900 border border-zinc-800 group">
+              <Image
+                src="/images/contact-hr.webp"
+                alt="HR Representative"
+                fill
+                className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              {/* Overlay styling for a premium touch */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-zinc-950/80 via-zinc-950/20 to-transparent mix-blend-multiply" />
+
+              <div className="absolute bottom-0 left-0 p-8 md:p-12 z-10">
+                <p className="text-2xl md:text-3xl font-light text-white leading-tight">
+                  "We are here to listen, understand, and deliver excellence."
+                </p>
+                <div className="mt-6 flex items-center gap-4">
+                  <div className="w-12 h-[1px] bg-zinc-500" />
+                  <span className="text-zinc-400 font-medium tracking-wider uppercase text-sm">
+                    Client Relations Team
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

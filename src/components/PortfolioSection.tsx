@@ -1,103 +1,175 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { PORTFOLIOS } from '@/lib/constants';
-import { cn } from '@/lib/utils';
-import { Reveal } from '@/components/animations';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useRef } from 'react';
 
-type PortfolioItem = (typeof PORTFOLIOS)[number];
+import { Reveal } from '@/components/animations';
+import { Button } from '@/components/ui';
+import { PORTFOLIOS } from '@/lib/mockData';
 
-const PortfolioCard = ({ item }: { item: PortfolioItem }) => (
-  <article className='bg-linear-to-b from-zebotix-darkGray to-zebotix-black border border-gray-800 rounded-2xl overflow-hidden shadow-2xl hover:border-zebotix-blue/40 transition-all duration-500 group'>
-    <Link
-      href={`/work/${item.slug}`}
-      className='block'
-      aria-label={`Open ${item.title} project case study`}
-    >
-      <div className='relative w-full h-56 overflow-hidden bg-gray-900'>
-        <Image
-          src={item.image}
-          alt={`${item.title} - ${item.summary}`}
-          fill
-          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-          className='object-cover transform group-hover:scale-110 transition-transform duration-700'
-        />
-        <div
-          className='absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6'
-          aria-hidden='true'
-        >
-          <span className='text-white font-medium flex items-center gap-2'>
-            View Case Study <ArrowRight className='h-4 w-4' aria-hidden='true' />
-          </span>
-        </div>
-      </div>
+gsap.registerPlugin(ScrollTrigger);
 
-      <div className='p-6'>
-        <div className='flex flex-wrap gap-2 mb-4'>
-          {item.tags.map((t) => (
-            <span
-              key={t}
-              className='text-[10px] uppercase tracking-widest px-2 py-1 rounded-md bg-zebotix-blue/10 text-zebotix-blue border border-zebotix-blue/20'
-            >
-              {t}
-            </span>
-          ))}
-        </div>
+interface PortfolioItem {
+  id?: string;
+  title: string;
+  slug: string;
+  summary?: string;
+  problem?: string;
+  image?: string;
+  gallery?: string[];
+  tags?: string[];
+  techStack?: string[];
+  description?: string;
+  challenges?: string;
+  results?: unknown;
+}
 
-        <h3 className='text-2xl font-bold text-white mb-2 group-hover:text-zebotix-blue transition-colors'>
-          {item.title}
-        </h3>
-        <p className='text-gray-400 leading-relaxed line-clamp-2'>{item.summary}</p>
-      </div>
-    </Link>
-  </article>
-);
+interface PortfolioSectionProps {
+  portfolios?: PortfolioItem[];
+}
 
-const PortfolioSection = () => {
+const PortfolioSection = ({ portfolios }: PortfolioSectionProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const items = ((portfolios || PORTFOLIOS) as PortfolioItem[]).slice(0, 3); // Take top 3 for stacking layout
+
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
+      const cards = gsap.utils.toArray<HTMLElement>('.portfolio-stack-card');
+      cards.forEach((card, index) => {
+        if (index === cards.length - 1) return; // Skip last card
+
+        gsap.to(card, {
+          scale: 0.94,
+          opacity: 0.4,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top top+=140',
+            end: 'bottom top+=140',
+            scrub: true,
+          },
+        });
+      });
+    },
+    { scope: containerRef }
+  );
+
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   return (
     <section
-      id='portfolio'
-      className='bg-zebotix-black py-16 md:py-24 overflow-hidden'
-      aria-labelledby='portfolio-heading'
+      ref={containerRef}
+      id="portfolio"
+      className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden"
+      aria-labelledby="portfolio-heading"
     >
-      <div className='section-container'>
-        <div className='mb-16'>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-24">
           <Reveal>
-            <h2 id='portfolio-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Selected{' '}
-              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
-                Portfolio
-              </span>
+            <span className="text-xs uppercase tracking-widest text-blue-500 font-black mb-4 block">
+              Case Studies
+            </span>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <h2 id="portfolio-heading" className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter">
+              Featured Deliveries
             </h2>
           </Reveal>
-          <Reveal delay={0.2}>
-            <p className='text-gray-400 text-lg max-w-2xl'>
-              A showcase of our recent work in AI, e-commerce, and custom software development. We
-              turn complex problems into elegant digital experiences.
+          <Reveal delay={0.3}>
+            <p className="text-zinc-400 text-lg leading-relaxed">
+              Explore how we design and deploy scalable digital systems for innovators and leading brands.
             </p>
           </Reveal>
         </div>
 
-        <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' role='list'>
-          {PORTFOLIOS.map((p, index) => (
-            <li key={p.slug}>
-              <Reveal delay={0.1 * index} distance={40}>
-                <PortfolioCard item={p} />
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+        {/* Stacked Cards Container */}
+        <div className="relative space-y-0 pb-12">
+          {items.map((project, index) => {
+            const summary = project.summary || project.problem || '';
+            const image = project.image || (project.gallery && project.gallery[0]) || '';
+            const tags = project.tags || project.techStack || [];
 
-        <Reveal delay={0.5} className='mt-16 text-center'>
+            return (
+              <div
+                key={project.slug}
+                className="portfolio-stack-card sticky top-24 md:top-32 w-full min-h-[480px] md:min-h-[560px] bg-zinc-900 border border-zinc-800 flex flex-col md:flex-row justify-between mb-12 sm:mb-16 shadow-[0_-20px_50px_rgba(0,0,0,0.4)] will-change-transform select-none rounded-none"
+                style={{
+                  zIndex: index + 1,
+                }}
+              >
+                {/* Details Side */}
+                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between h-full min-h-[240px] md:min-h-[560px] z-10 bg-zinc-900 rounded-none">
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-blue-500 mb-6 block">
+                      Case Study 0{index + 1}
+                    </span>
+                    <h3 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+                      {project.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed mb-8 max-w-md line-clamp-3">
+                      {summary}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {tags.slice(0, 4).map((t: string) => (
+                        <span
+                          key={t}
+                          className="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-blue-500/5 text-blue-500 border border-blue-500/10 rounded-none"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-zinc-850 rounded-none">
+                    <Button
+                      asChild
+                      className="bg-white hover:bg-zinc-200 text-black font-bold h-11 px-6 flex items-center gap-2 w-fit rounded-none"
+                    >
+                      <Link href={`/work/${project.slug}`}>
+                        Read Case Study <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Mock Image Side */}
+                <div className="w-full md:w-1/2 relative min-h-[240px] md:min-h-[560px] overflow-hidden border-t md:border-t-0 md:border-l border-zinc-850 rounded-none">
+                  {image ? (
+                    <Image
+                      src={image}
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-700 hover:scale-103 rounded-none grayscale brightness-90 hover:grayscale-0 hover:brightness-100"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-zinc-800 flex items-center justify-center text-zinc-550 font-bold rounded-none">
+                      Zebotix Case Study
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-zinc-950/20 via-transparent to-transparent pointer-events-none rounded-none" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <Reveal delay={0.4} className="mt-20 text-center">
           <Link
-            href='/work'
-            className='inline-flex items-center gap-2 text-white font-semibold hover:text-zebotix-blue transition-colors group'
+            href="/work"
+            className="inline-flex items-center gap-2 text-white font-semibold hover:text-blue-500 transition-colors group text-sm uppercase tracking-wider font-black"
           >
-            View All Projects
-            <ArrowRight className='h-5 w-5 transform group-hover:translate-x-1 transition-transform' />
+            Explore Complete Works
+            <ArrowRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </Reveal>
       </div>

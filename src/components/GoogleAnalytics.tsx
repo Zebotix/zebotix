@@ -1,6 +1,7 @@
 'use client';
-import { useGoogleAnalytics } from '@/hooks/useGoogleAnalytics';
 import { useEffect } from 'react';
+
+import { useGoogleAnalytics } from '@/hooks/useGoogleAnalytics';
 
 export default function GoogleAnalytics() {
   useGoogleAnalytics();

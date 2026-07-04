@@ -1,5 +1,7 @@
-import { MetadataRoute } from 'next';
-import { SITE_URL, NAV_LINKS, PORTFOLIOS, SOLUTIONS } from '@/lib/constants';
+import { type MetadataRoute } from 'next';
+
+import { SITE_URL } from '@/lib/constants';
+import { NAV_LINKS, PORTFOLIOS, SOLUTIONS } from '@/lib/mockData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Main navigation routes
@@ -8,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: l.href === '/' ? 1 : 0.8,
-    images: l.href === '/' ? [`${SITE_URL}/Zebotix.png`] : [],
+    images: l.href === '/' ? [`${SITE_URL}/Zebotix.webp`] : [],
   }));
 
   // Portfolio/Work routes with images

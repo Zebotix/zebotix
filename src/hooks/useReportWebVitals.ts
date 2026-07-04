@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { reportWebVital, getMetricRating, WebVital } from '@/lib/web-vitals';
+
+import { reportWebVital, getMetricRating, type WebVital } from '@/lib/web-vitals';
 
 /**
  * Hook to report Core Web Vitals metrics

@@ -3,24 +3,230 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
+// ═══ CONTENT MODELS ═══
+
+model Solution {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  tagline     String
+  description String    // Rich text
+  icon        String?
+  image       String?
+  benefits    Json      // Array of benefit objects
+  process     Json?     // Custom process steps
+  technologies Json?    // Tech stack array
+  faq         Json?     // Page-specific FAQs
+  order       Int       @default(0)
+  isPublished Boolean   @default(false)
+  seo         Json?     // SEO overrides
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  portfolios  Portfolio[]
+}
+
+model Portfolio {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  client      String?
+  industry    String?
+  problem     String    // Rich text
+  solution    String    // Rich text
+  techStack   String[]
+  gallery     String[]  // Image URLs
+  results     Json?     // Key metrics
+  testimonial String?
+  isFeatured  Boolean   @default(false)
+  isPublished Boolean   @default(false)
+  seo         Json?
+  solutionId  String?
+  solution_rel Solution? @relation(fields: [solutionId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 model BlogPost {
   id          String    @id @default(cuid())
   title       String
   slug        String    @unique
-  content     String
-  summary     String
+  content     String    // Rich text
+  excerpt     String
   author      String    @default("Zebotix Team")
+  category    String?
   tags        String[]
   image       String?
+  isFeatured  Boolean   @default(false)
   isPublished Boolean   @default(false)
+  seo         Json?
   publishedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model Testimonial {
+  id          String    @id @default(cuid())
+  name        String
+  role        String
+  company     String?
+  content     String
+  rating      Int       @default(5) // 1-5
+  avatar      String?
+  isVideo     Boolean   @default(false)
+  videoUrl    String?
+  isFeatured  Boolean   @default(false)
+  isPublished Boolean   @default(false)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ═══ LEAD MANAGEMENT ═══
+
+model QuickQuote {
+  id            String    @id @default(cuid())
+  projectType   String
+  businessType  String
+  colorThemes   String[]
+  features      String[]
+  budget        String
+  timeline      String
+  details       String?
+  referenceUrls String[]
+  attachments   String[]
+  name          String
+  email         String
+  phone         String?
+  company       String?
+  status        String    @default("new") // new, reviewed, contacted, closed
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ContactSubmission {
+  id        String    @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  status    String    @default("new")
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// ═══ CMS MODELS ═══
+
+model LegalPage {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique // privacy, terms, cookie-policy, gdpr
+  content     String    // Rich text
+  seo         Json?
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  revisions   Revision[]
+}
+
+model FAQ {
+  id          String    @id @default(cuid())
+  question    String
+  answer      String
+  category    String?   // general, solutions, pricing, etc.
+  page        String?   // Which page to show on (null = global)
+  order       Int       @default(0)
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Revision {
+  id          String    @id @default(cuid())
+  content     String
+  legalPageId String
+  legalPage   LegalPage @relation(fields: [legalPageId], references: [id])
+  createdAt   DateTime  @default(now())
+}
+
+// ═══ SETTINGS & CONFIGURATION ═══
+
+model SiteSetting {
+  id        String    @id @default(cuid())
+  key       String    @unique
+  value     Json
+  group     String    @default("general") // general, seo, theme, contact, social, analytics
+  updatedAt DateTime  @updatedAt
+}
+
+model NavigationItem {
+  id        String    @id @default(cuid())
+  label     String
+  href      String
+  parentId  String?
+  parent    NavigationItem? @relation("NavChildren", fields: [parentId], references: [id])
+  children  NavigationItem[] @relation("NavChildren")
+  order     Int       @default(0)
+  isVisible Boolean   @default(true)
+  location  String    @default("header") // header, footer
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model MediaFile {
+  id        String    @id @default(cuid())
+  filename  String
+  url       String
+  mimeType  String
+  size      Int
+  alt       String?
+  folder    String    @default("/")
+  createdAt DateTime  @default(now())
+}
+
+model AnnouncementBar {
+  id        String    @id @default(cuid())
+  message   String
+  link      String?
+  linkText  String?
+  isActive  Boolean   @default(false)
+  bgColor   String    @default("#0ea5a4")
+  textColor String    @default("#ffffff")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// ═══ AUTH & AUDIT ═══
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String    @default("admin") // admin, editor
+  isActive     Boolean   @default(true)
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  auditLogs    AuditLog[]
+}
+
+model AuditLog {
+  id        String    @id @default(cuid())
+  action    String    // create, update, delete, login, logout
+  entity    String    // blog, solution, setting, etc.
+  entityId  String?
+  details   Json?
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  ipAddress String?
+  createdAt DateTime  @default(now())
 }

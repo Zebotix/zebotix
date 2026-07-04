@@ -1,7 +1,8 @@
+import { type NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { NextRequest, NextResponse } from 'next/server';
-import { escapeHtml, getRequestMetadata, getTimestamp } from '@/lib/server/utils';
+
 import { COMPANY_NAME, CONTACT_EMAIL } from '@/lib/constants';
+import { escapeHtml, getRequestMetadata, getTimestamp } from '@/lib/server/utils';
 
 export async function POST(request: NextRequest) {
   try {

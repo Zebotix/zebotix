@@ -1,18 +1,28 @@
-import { Suspense } from 'react';
-import type { Metadata } from 'next';
-import HeroSection from '@/components/HeroSection';
-import FeaturesSection from '@/components/FeaturesSection';
-import PricingSection from '@/components/PricingSection';
-import PortfolioSection from '@/components/PortfolioSection';
-import FaqSection from '@/components/FaqSection';
-import CtaSection from '@/components/CtaSection';
-import ProductsCarouselSection from '@/components/ProductsCarousel';
-import { Skeleton } from '@/components/ui/Skeleton';
-import { COMPANY_NAME, SHORT_DESC, SITE_URL } from '@/lib/constants';
-import { getSanitizedSchema, generateLocalBusinessSchema } from '@/lib/schemas';
+import { Suspense } from "react";
+
+import type { Metadata } from "next";
+
+import { getBlogsAction } from "@/app/actions/blogs";
+import { getFeaturedPortfoliosAction } from "@/app/actions/portfolio";
+import { getSolutionsAction } from "@/app/actions/solutions";
+import { getTestimonialsAction } from "@/app/actions/testimonials";
+import BlogSection from "@/components/BlogSection";
+import CtaSection from "@/components/CtaSection";
+import FeaturesSection from "@/components/FeaturesSection";
+import HeroSection from "@/components/HeroSection";
+import OurProcess from "@/components/OurProcess";
+import PortfolioSection from "@/components/PortfolioSection";
+import ProductsCarouselSection from "@/components/ProductsCarousel";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import TrustedBy from "@/components/TrustedBy";
+import { COMPANY_NAME, SHORT_DESC, SITE_URL } from "@/lib/constants";
+import { getSanitizedSchema, generateLocalBusinessSchema } from "@/lib/schemas";
+
+// Server Actions
 
 // Enable instant navigation for this page
-export const unstable_instant = { prefetch: 'static' };
+// eslint-disable-next-line camelcase
+export const unstable_instant = { prefetch: "static" };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -24,12 +34,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
     description: SHORT_DESC,
-    type: 'website',
+    type: "website",
     url: SITE_URL,
     siteName: COMPANY_NAME,
     images: [
       {
-        url: `${SITE_URL}/Zebotix.png`,
+        url: `${SITE_URL}/Zebotix.webp`,
         width: 1200,
         height: 630,
         alt: `${COMPANY_NAME} — software and AI solutions`,
@@ -37,46 +47,83 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
     description: SHORT_DESC,
-    images: [`${SITE_URL}/Zebotix.png`],
+    images: [`${SITE_URL}/Zebotix.webp`],
   },
 };
 
 function LoadingFallback() {
-  return <Skeleton className='w-full h-96' />;
+  return <div className="w-full h-96 bg-zinc-900 border border-zinc-800 animate-pulse" />;
 }
 
-export default function Home() {
+async function SolutionsWrapper() {
+  const res = await getSolutionsAction();
+  const solutions = res.success ? res.data : [];
+  return <ProductsCarouselSection solutions={solutions} />;
+}
+
+async function PortfoliosWrapper() {
+  const res = await getFeaturedPortfoliosAction();
+  const portfolios = res.success ? res.data : [];
+  return <PortfolioSection portfolios={portfolios} />;
+}
+
+async function TestimonialsWrapper() {
+  const res = await getTestimonialsAction(true);
+  const testimonials = res.success ? res.data : [];
+  return <TestimonialsSection testimonials={testimonials} />;
+}
+
+async function BlogsWrapper() {
+  const res = await getBlogsAction(true);
+  const blogs = res.success ? res.data : [];
+  return <BlogSection blogs={blogs} />;
+}
+
+export default async function Home() {
   const localBusinessSchema = generateLocalBusinessSchema();
 
   return (
-    <main id='main-content'>
+    <main id="main-content">
       <script
-        type='application/ld+json'
+        type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(localBusinessSchema),
         }}
       />
       <Suspense fallback={<LoadingFallback />}>
-        <HeroSection />
+        <HeroSection
+          primaryCta={{ href: "/quick-quote", label: "Get a Quick Quote" }}
+          secondaryCta={{ href: "/contact", label: "Contact Us" }}
+        />
       </Suspense>
+
+      <TrustedBy />
+
       <Suspense fallback={<LoadingFallback />}>
         <FeaturesSection />
       </Suspense>
+
       <Suspense fallback={<LoadingFallback />}>
-        <ProductsCarouselSection />
+        <SolutionsWrapper />
       </Suspense>
+
+      <OurProcess />
+
       <Suspense fallback={<LoadingFallback />}>
-        <PortfolioSection />
+        <PortfoliosWrapper />
       </Suspense>
+
       <Suspense fallback={<LoadingFallback />}>
-        <PricingSection />
+        <TestimonialsWrapper />
       </Suspense>
+
       <Suspense fallback={<LoadingFallback />}>
-        <FaqSection />
+        <BlogsWrapper />
       </Suspense>
+
       <Suspense fallback={<LoadingFallback />}>
         <CtaSection />
       </Suspense>

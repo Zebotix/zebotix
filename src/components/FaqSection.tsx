@@ -1,29 +1,42 @@
 'use client';
 
 import React from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui';
-import { FAQS } from '@/lib/constants';
-import { Reveal } from '@/components/animations';
 
-const FaqSection = () => {
+import { Reveal } from '@/components/animations';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui';
+import { FAQS } from '@/lib/mockData';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface FaqSectionProps {
+  faqs?: FaqItem[];
+}
+
+const FaqSection = ({ faqs }: FaqSectionProps) => {
+  const items = faqs || FAQS;
   return (
     <section
-      id='faq'
-      className='bg-zebotix-black py-16 md:py-24 border-t border-white/5 overflow-hidden'
-      aria-labelledby='faq-heading'
+      id="faq"
+      className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden"
+      aria-labelledby="faq-heading"
     >
-      <div className='section-container'>
-        <div className='text-center max-w-3xl mx-auto mb-16'>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="text-center max-w-3xl mx-auto mb-16">
           <Reveal>
-            <h2 id='faq-heading' className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Frequently Asked{' '}
-              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
-                Questions
-              </span>
+            <span className="text-xs uppercase tracking-widest text-blue-500 font-black mb-4 block">
+              Support
+            </span>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <h2 id="faq-heading" className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter">
+              Frequently Asked Questions
             </h2>
           </Reveal>
-          <Reveal delay={0.2}>
-            <p className='text-gray-400 text-lg'>
+          <Reveal delay={0.3}>
+            <p className="text-zinc-400 text-lg leading-relaxed">
               Find answers to common questions about our methodology and delivery. Can't find what
               you need? We're just a message away.
             </p>
@@ -31,18 +44,18 @@ const FaqSection = () => {
         </div>
 
         <Reveal delay={0.4} distance={40}>
-          <div className='max-w-3xl mx-auto bg-zebotix-darkGray rounded-3xl p-6 md:p-10 border border-gray-800 shadow-2xl'>
-            <Accordion type='single' collapsible className='space-y-2'>
-              {FAQS.map((faq, index) => (
+          <div className="max-w-3xl mx-auto bg-zinc-900 rounded-none p-8 md:p-10 border border-zinc-800 shadow-2xl">
+            <Accordion type="single" collapsible className="space-y-2">
+              {items.map((faq, index) => (
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className='border-b border-white/5 last:border-0'
+                  className="border-b border-zinc-850 last:border-0 rounded-none"
                 >
-                  <AccordionTrigger className='text-left text-lg font-semibold text-white hover:text-zebotix-blue py-6 transition-all'>
+                  <AccordionTrigger className="text-left text-base font-black text-white hover:text-blue-500 py-6 transition-all uppercase tracking-tight rounded-none border-0">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className='text-gray-400 text-base leading-relaxed pb-6'>
+                  <AccordionContent className="text-zinc-400 text-sm leading-relaxed pb-6 rounded-none">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>

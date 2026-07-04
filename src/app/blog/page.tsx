@@ -1,9 +1,10 @@
-import React from 'react';
-import { Metadata } from 'next';
-import Link from 'next/link';
+import { type Metadata } from 'next';
 import Image from 'next/image';
-import { getAllPosts } from '@/lib/blog';
+import Link from 'next/link';
+import React from 'react';
+
 import { Reveal } from '@/components/animations';
+import { getAllPosts } from '@/lib/blog';
 import { COMPANY_NAME } from '@/lib/constants';
 
 export const metadata: Metadata = {

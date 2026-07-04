@@ -1,18 +1,23 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/ui';
 import { Check, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { PRICING_PLANS } from '@/lib/constants';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { Reveal } from '@/components/animations';
+import { Button } from '@/components/ui';
+import { PRICING_PLANS } from '@/lib/mockData';
+import { cn } from '@/lib/utils';
 
 type ModalType = {
   open: boolean;
   onClose: () => void;
-  content: (typeof PRICING_PLANS)[number];
+  content: any;
 };
+
+interface PricingSectionProps {
+  pricingPlans?: any[];
+}
 
 const Modal = ({ open, onClose, content }: ModalType) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -125,7 +130,7 @@ const Modal = ({ open, onClose, content }: ModalType) => {
               <div>
                 <strong className='text-white block mb-2'>Optional Add-ons</strong>
                 <ul className='space-y-2 text-gray-400'>
-                  {content.details.addons.map((a, i) => (
+                  {content.details.addons.map((a: string, i: number) => (
                     <li key={i} className='flex items-start gap-2'>
                       <span className='w-1.5 h-1.5 rounded-full bg-zebotix-blue mt-1.5 shrink-0' />
                       {a}
@@ -153,12 +158,13 @@ const Modal = ({ open, onClose, content }: ModalType) => {
   );
 };
 
-const PricingSection = () => {
+const PricingSection = ({ pricingPlans }: PricingSectionProps) => {
+  const plans = pricingPlans || PRICING_PLANS;
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
 
   const openDetails = (planId: string) => {
-    const p = PRICING_PLANS.find((x) => x.id === planId);
+    const p = plans.find((x: any) => x.id === planId);
     setSelectedPlan(p);
     setModalOpen(true);
   };
@@ -195,7 +201,7 @@ const PricingSection = () => {
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-          {PRICING_PLANS.map((plan, index) => (
+          {plans.map((plan: any, index: number) => (
             <Reveal key={plan.id} delay={0.1 * index} distance={40} className='h-full'>
               <div
                 className={cn(
@@ -223,7 +229,7 @@ const PricingSection = () => {
                   </div>
 
                   <ul className='space-y-4 mb-10'>
-                    {plan.features.map((feature, i) => (
+                    {plan.features.map((feature: string, i: number) => (
                       <li key={i} className='flex items-start text-sm'>
                         <div className='bg-zebotix-blue/20 rounded-full p-1 mr-3 mt-0.5'>
                           <Check className='h-3 w-3 text-zebotix-blue' />

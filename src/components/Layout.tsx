@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import { Toaster, TooltipProvider } from '@/components/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
+
 import { Navbar, Footer, ContactButton } from '@/components';
+import { Toaster, TooltipProvider } from '@/components/ui';
 import { useScrollHash } from '@/hooks/useScrollHash';
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {

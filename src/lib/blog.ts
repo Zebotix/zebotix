@@ -1,5 +1,6 @@
-import prisma from '@/lib/db/prisma';
 import { unstable_cache } from 'next/cache';
+
+import prisma from '@/lib/db/prisma';
 
 /**
  * Fetches all published blog posts.

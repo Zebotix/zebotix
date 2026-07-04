@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+
+import { COMPANY_NAME } from '@/lib/constants';
 import { upsertVisit } from '@/lib/data/visitsUtil';
 import { escapeHtml, getRequestMetadata } from '@/lib/server/utils';
-import { COMPANY_NAME } from '@/lib/constants';
 
 export async function POST(request: Request) {
   try {

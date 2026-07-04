@@ -28,7 +28,7 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     name: COMPANY_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/Zebotix.png`,
+    logo: `${SITE_URL}/Zebotix.webp`,
     description: SHORT_DESC,
     sameAs: [
       SOCIAL_LINKS.twitter,
@@ -115,7 +115,7 @@ export function generateBlogPostingSchema(
       name: COMPANY_NAME,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/Zebotix.png`,
+        url: `${SITE_URL}/Zebotix.webp`,
       },
     },
     mainEntityOfPage: {
@@ -195,7 +195,7 @@ export function generateLocalBusinessSchema() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: COMPANY_NAME,
-    image: `${SITE_URL}/Zebotix.png`,
+    image: `${SITE_URL}/Zebotix.webp`,
     description: SHORT_DESC,
     url: SITE_URL,
     telephone: CONTACT_PHONE,
