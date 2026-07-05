@@ -1,41 +1,42 @@
-import { type MetadataRoute } from 'next';
+import { type MetadataRoute } from "next";
 
-import { SITE_URL } from '@/lib/constants';
-import { NAV_LINKS, PORTFOLIOS, SOLUTIONS } from '@/lib/mockData';
+import { NAV_LINKS, PORTFOLIOS, SOLUTIONS } from "@/lib/mockData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.zebotix.com";
+
   // Main navigation routes
-  const routes = NAV_LINKS.filter((l) => !l.href.startsWith('#')).map((l) => ({
-    url: `${SITE_URL}${l.href === '/' ? '' : l.href}`,
+  const routes = NAV_LINKS.filter((l) => !l.href.startsWith("#")).map((l) => ({
+    url: `${baseUrl}${l.href}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: l.href === '/' ? 1 : 0.8,
-    images: l.href === '/' ? [`${SITE_URL}/Zebotix.webp`] : [],
+    changeFrequency: "weekly" as const,
+    priority: l.href === "/" ? 1 : 0.8,
+    images: l.href === "/" ? [`${baseUrl}/Zebotix.webp`] : [],
   }));
 
   // Portfolio/Work routes with images
   const portfolioRoutes = PORTFOLIOS.map((p) => ({
-    url: `${SITE_URL}/work/${p.slug}`,
+    url: `${baseUrl}/work/${p.slug}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
+    changeFrequency: "monthly" as const,
     priority: 0.7,
-    images: p.image ? [p.image] : [],
+    images: p.image ? [p.image.replace(/&/g, "&amp;")] : [],
   }));
 
   // Solutions routes
   const solutionRoutes = SOLUTIONS.map((s) => ({
-    url: `${SITE_URL}/solutions/${s.id}`,
+    url: `${baseUrl}/solutions/${s.id}`,
     lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
+    changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
 
   // Static legal/policy routes
-  const staticRoutes = ['/privacy', '/terms', '/cookie-policy', '/gdpr', '/contact', '/about'].map(
+  const staticRoutes = ["/privacy", "/terms", "/cookie-policy", "/gdpr", "/contact", "/about"].map(
     (route) => ({
-      url: `${SITE_URL}${route}`,
+      url: `${baseUrl}${route}`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: "yearly" as const,
       priority: 0.3,
     })
   );
