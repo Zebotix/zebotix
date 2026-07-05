@@ -1,13 +1,19 @@
-'use client';
+"use client";
 
-import { X, ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import { X } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
-import { ThemeToggle } from './ThemeToggle';
+// import { ThemeToggle } from "./ThemeToggle";
 
-import { Button } from '@/components/ui/Button';
-import { cn } from '@/lib/utils';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/Accordion";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -16,16 +22,13 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
-  const [solutionsExpanded, setSolutionsExpanded] = useState(false);
-  const [companyExpanded, setCompanyExpanded] = useState(false);
-
   const solutions = [
     { name: "Custom Software Engineering", href: "/solutions/custom-software-engineering" },
     { name: "AI-Driven Automation", href: "/solutions/ai-driven-automation" },
     { name: "High-Performance E-Commerce", href: "/solutions/high-performance-ecommerce" },
     { name: "Intelligent Workflows & APIs", href: "/solutions/intelligent-workflows-api" },
     { name: "Cloud Infrastructure & DevOps", href: "/solutions/cloud-infrastructure-devops" },
-    { name: "Database Architecture & Design", href: "/solutions/database-architecture-design" }
+    { name: "Database Architecture & Design", href: "/solutions/database-architecture-design" },
   ];
 
   const handleLinkClick = () => {
@@ -35,8 +38,8 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
   return (
     <div
       className={cn(
-        'fixed inset-0 z-[100] md:hidden transition-all duration-300',
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        "fixed inset-0 z-[100] md:hidden transition-all duration-300 h-[100vh]",
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
       )}
     >
       {/* Overlay Background */}
@@ -49,8 +52,8 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
       {/* Menu Panel Drawer */}
       <div
         className={cn(
-          'absolute right-0 top-0 bottom-0 w-full sm:w-80 bg-zinc-950 border-l border-zinc-900 shadow-2xl transition-transform duration-300 transform p-6 flex flex-col rounded-none overflow-y-auto z-10',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          "absolute right-0 top-0 bottom-0 w-full  sm:w-80 bg-zinc-950 border-l border-zinc-900 shadow-2xl transition-transform duration-300 transform p-6 flex flex-col rounded-none overflow-y-auto z-10",
+          isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         {/* Header Row */}
@@ -62,10 +65,10 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
             variant="outline"
             size="icon"
             onClick={onClose}
-            className="rounded-none bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-850 transition-colors"
+            className="rounded-none bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-850 transition-colors w-10 h-10 sm:w-12 sm:h-12"
             aria-label="Close menu"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 sm:h-6 sm:w-6" />
           </Button>
         </div>
 
@@ -82,83 +85,75 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
             Home
           </Link>
 
-          {/* Solutions Dropdown Menu */}
-          <div>
-            <Button
-              variant="ghost"
-              onClick={() => setSolutionsExpanded(!solutionsExpanded)}
-              className="w-full flex justify-between items-center text-sm font-black uppercase tracking-wider py-6 px-0 text-zinc-300 hover:text-white hover:bg-transparent transition-colors"
-            >
-              <span>Solutions</span>
-              {solutionsExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </Button>
-            <div
-              className={cn(
-                "pl-4 flex flex-col gap-2 overflow-hidden transition-all duration-300",
-                solutionsExpanded ? "max-h-96 mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-              )}
-            >
-              {solutions.map((s) => (
-                <Link
-                  key={s.href}
-                  href={s.href}
-                  onClick={handleLinkClick}
-                  className={cn(
-                    "text-xs font-black uppercase tracking-wider py-2 border-l border-zinc-900 pl-3 transition-colors",
-                    activePath === s.href ? "text-blue-500 border-blue-500" : "text-zinc-550 hover:text-zinc-300"
-                  )}
-                >
-                  {s.name}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <Accordion type="multiple" className="w-full">
+            <AccordionItem value="solutions" className="border-none">
+              <AccordionTrigger className="hover:no-underline py-2 px-0">
+                <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
+                  Solutions
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pb-0 pt-2">
+                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
+                  {solutions.map((s) => (
+                    <Link
+                      key={s.href}
+                      href={s.href}
+                      onClick={handleLinkClick}
+                      className={cn(
+                        "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                        activePath === s.href
+                          ? "text-blue-500"
+                          : "text-zinc-550 hover:text-zinc-300"
+                      )}
+                    >
+                      {s.name}
+                    </Link>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Company Dropdown Menu */}
-          <div>
-            <Button
-              variant="ghost"
-              onClick={() => setCompanyExpanded(!companyExpanded)}
-              className="w-full flex justify-between items-center text-sm font-black uppercase tracking-wider py-6 px-0 text-zinc-300 hover:text-white hover:bg-transparent transition-colors"
-            >
-              <span>Company</span>
-              {companyExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </Button>
-            <div
-              className={cn(
-                "pl-4 flex flex-col gap-2 overflow-hidden transition-all duration-300",
-                companyExpanded ? "max-h-48 mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-              )}
-            >
-              <Link
-                href="/about"
-                onClick={handleLinkClick}
-                className={cn(
-                  "text-xs font-black uppercase tracking-wider py-2 border-l border-zinc-900 pl-3 transition-colors",
-                  activePath === "/about" ? "text-blue-500 border-blue-500" : "text-zinc-550 hover:text-zinc-300"
-                )}
-              >
-                Who we are
-              </Link>
-              <Link
-                href="/#testimonials"
-                onClick={handleLinkClick}
-                className="text-xs font-black uppercase tracking-wider py-2 border-l border-zinc-900 pl-3 text-zinc-550 hover:text-zinc-300 transition-colors"
-              >
-                Testimonials
-              </Link>
-              <Link
-                href="/blog"
-                onClick={handleLinkClick}
-                className={cn(
-                  "text-xs font-black uppercase tracking-wider py-2 border-l border-zinc-900 pl-3 transition-colors",
-                  activePath === "/blog" ? "text-blue-500 border-blue-500" : "text-zinc-550 hover:text-zinc-300"
-                )}
-              >
-                Blogs
-              </Link>
-            </div>
-          </div>
+            <AccordionItem value="company" className="border-none">
+              <AccordionTrigger className="hover:no-underline py-2 px-0">
+                <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
+                  Company
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pb-0 pt-2">
+                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
+                  <Link
+                    href="/about"
+                    onClick={handleLinkClick}
+                    className={cn(
+                      "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                      activePath === "/about"
+                        ? "text-blue-500"
+                        : "text-zinc-550 hover:text-zinc-300"
+                    )}
+                  >
+                    Who we are
+                  </Link>
+                  <Link
+                    href="/#testimonials"
+                    onClick={handleLinkClick}
+                    className="text-xs font-black uppercase tracking-wider py-2 pl-3 text-zinc-550 hover:text-zinc-300 transition-colors"
+                  >
+                    Testimonials
+                  </Link>
+                  <Link
+                    href="/blog"
+                    onClick={handleLinkClick}
+                    className={cn(
+                      "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                      activePath === "/blog" ? "text-blue-500" : "text-zinc-550 hover:text-zinc-300"
+                    )}
+                  >
+                    Blogs
+                  </Link>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           <Link
             href="/contact"
@@ -173,12 +168,12 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
         </nav>
 
         {/* Footer Area */}
-        <div className="mt-auto pt-6 border-t border-zinc-900 flex items-center justify-between">
+        {/* <div className="mt-auto pt-6 border-t border-zinc-900 flex items-center justify-between">
           <span className="text-xs font-black uppercase tracking-wider text-zinc-550">
             Appearance
           </span>
           <ThemeToggle />
-        </div>
+        </div> */}
       </div>
     </div>
   );

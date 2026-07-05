@@ -19,7 +19,7 @@ const Footer = () => {
   const legalLinks = [
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms & Conditions", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookies" },
+    { name: "Cookie Policy", href: "/cookie-policy" },
     { name: "GDPR Compliance", href: "/gdpr" },
   ];
 

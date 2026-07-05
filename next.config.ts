@@ -135,8 +135,8 @@ const nextConfig: NextConfig = {
               "form-action 'self'",
               "frame-ancestors 'none'",
               process.env.NODE_ENV === "development"
-                ? `connect-src 'self' ${cloudflareTurnstileOrigin} ws://127.0.0.1:* ws://localhost:* https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io`
-                : `connect-src 'self' ${cloudflareTurnstileOrigin} https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io`,
+                ? `connect-src 'self' ${cloudflareTurnstileOrigin} ws://127.0.0.1:* ws://localhost:* https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io https://aplo-evnt.com https://*.aplo-evnt.com`
+                : `connect-src 'self' ${cloudflareTurnstileOrigin} https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io https://aplo-evnt.com https://*.aplo-evnt.com`,
             ].join("; "),
           },
         ],
