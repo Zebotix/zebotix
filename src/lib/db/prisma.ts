@@ -36,7 +36,9 @@ if (!connectionString) {
   prisma = global.prismaPg;
 } else {
   // Use Neon for production
-  const adapter = new PrismaNeon({ connectionString });
+  const { Pool: NeonPool } = require("@neondatabase/serverless");
+  const pool = new NeonPool({ connectionString });
+  const adapter = new PrismaNeon(pool);
   prisma = new PrismaClient({ adapter });
 }
 

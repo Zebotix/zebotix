@@ -197,7 +197,7 @@ const HeroSection: FC<HeroSectionProps> = ({
         <Reveal delay={0.7} distance={40} className="w-full mt-12 sm:mt-16 md:mt-24 relative z-20">
           <figure
             ref={imageFigureRef}
-            className="relative p-1 md:p-2 bg-white/2 backdrop-blur-3xl rounded-[1.25rem] sm:rounded-[2.25rem] shadow-[0_0_120px_-20px_rgba(59,130,246,0.15)] group max-w-6xl mx-auto ring-1 ring-white/5"
+            className="relative overflow-hidden p-1 md:p-2 bg-white/2 backdrop-blur-3xl rounded-[1.25rem] sm:rounded-[2.25rem] shadow-[0_0_120px_-20px_rgba(59,130,246,0.15)] group max-w-6xl mx-auto ring-1 ring-white/5"
             style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           >
             {/* Top Browser Bar */}

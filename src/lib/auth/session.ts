@@ -1,12 +1,14 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 
 import { cookies, headers } from "next/headers";
 
 import { encrypt, decrypt } from "./session.edge";
-import redis from "../db/redis";
 
 const ABSOLUTE_TIMEOUT_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+
+// In-memory revocation list since Redis is removed
+const revokedTokens = new Map<string, NodeJS.Timeout>();
 
 export async function generateFingerprint() {
   const headersList = await headers();
@@ -43,8 +45,11 @@ export async function deleteSession() {
   if (sessionToken) {
     const payload = await decrypt(sessionToken);
     if (payload?.jti) {
-      // Revoke in Redis (blacklist)
-      await redis.setex(`revoked:${payload.jti}`, Math.floor(ABSOLUTE_TIMEOUT_MS / 1000), "1");
+      // Revoke in memory
+      const timeoutId = setTimeout(() => {
+        revokedTokens.delete(payload.jti as string);
+      }, ABSOLUTE_TIMEOUT_MS);
+      revokedTokens.set(payload.jti, timeoutId);
     }
   }
 
@@ -57,18 +62,12 @@ export async function getSession() {
   if (!sessionToken) return null;
 
   const payload = await decrypt(sessionToken);
-  if (!payload || !payload.jti) return null;
+  if (!payload?.jti) return null;
 
-  // 1. Check if token is revoked in Redis
-  try {
-    const isRevoked = await redis.get(`revoked:${payload.jti}`);
-    if (isRevoked) {
-      await deleteSession();
-      return null;
-    }
-  } catch (e) {
-    // If Redis fails, fail open or closed depending on risk appetite. Here we fail open to prevent total outage.
-    console.error("Redis revocation check failed", e);
+  // 1. Check if token is revoked in memory
+  if (revokedTokens.has(payload.jti)) {
+    await deleteSession();
+    return null;
   }
 
   // 2. Check fingerprint
