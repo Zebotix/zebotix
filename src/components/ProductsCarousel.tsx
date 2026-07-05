@@ -122,6 +122,7 @@ const ProductsCarouselSection = ({ solutions }: ProductsCarouselSectionProps) =>
                   <div className="pt-6 border-t border-zinc-850 relative z-10">
                     <Link
                       href={`/solutions/${slug}`}
+                      aria-label={`Explore ${title} Solution`}
                       className="w-full text-white font-bold hover:text-blue-500 transition-colors flex items-center justify-between group/link"
                     >
                       Explore Solution

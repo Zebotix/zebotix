@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { type FC, useId, useRef, useState, useEffect } from "react";
+import React, { type FC, useId, useRef } from "react";
 
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui";
@@ -37,11 +37,6 @@ const HeroSection: FC<HeroSectionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const imageFigureRef = useRef<HTMLElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useGSAP(
     () => {
@@ -108,20 +103,19 @@ const HeroSection: FC<HeroSectionProps> = ({
     >
       {/* Cinematic Radial Wash Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {mounted && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="none"
-            className="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-screen pointer-events-none z-0"
-            style={{ transform: "translateZ(0)" }}
-          >
-            <source src="/videos/bg-3-opt.webm" type="video/webm" />
-            <source src="/videos/bg-3-opt.mp4" type="video/mp4" />
-          </video>
-        )}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="none"
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-screen pointer-events-none z-0"
+          style={{ transform: "translateZ(0)" }}
+        >
+          <source src="/videos/bg-3-opt.webm" type="video/webm" />
+          <source src="/videos/bg-3-opt.mp4" type="video/mp4" />
+        </video>
         <div
           ref={glowRef}
           aria-hidden="true"
@@ -154,7 +148,7 @@ const HeroSection: FC<HeroSectionProps> = ({
                 <>
                   We build{" "}
                   <span
-                    className="inline-block w-16 sm:w-24 lg:w-32 h-8 sm:h-12 lg:h-16 border border-white/10 align-middle bg-cover bg-center mx-2 grayscale brightness-125 hover:grayscale-0 transition-all duration-500"
+                    className="inline-block w-16 sm:w-24 lg:w-32 h-8 sm:h-12 lg:h-16 border border-white/10 align-middle bg-cover bg-center mx-2 sm:grayscale sm:brightness-125 sm:hover:grayscale-0 sm:transition-all sm:duration-500"
                     style={{
                       backgroundImage: "url(/images/hero-section-image.webp)",
                     }}

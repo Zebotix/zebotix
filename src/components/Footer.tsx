@@ -260,7 +260,7 @@ const Footer = () => {
         </div>
         {/* Giant Typographic Signature */}
         <div className="select-none text-center  mt-8 pt-8 border-t border-zinc-900 hidden sm:block">
-          <span className="font-black text-[10vw] text-zinc-900 uppercase tracking-tighter leading-none block select-none">
+          <span aria-hidden="true" className="font-black text-[10vw] text-zinc-900 uppercase tracking-tighter leading-none block select-none">
             {COMPANY_NAME}
           </span>
         </div>
