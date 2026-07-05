@@ -201,7 +201,7 @@ const HeroSection: FC<HeroSectionProps> = ({
             style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           >
             {/* Top Browser Bar */}
-            <div className="flex items-center px-4 py-3 sm:py-4 bg-zinc-950/90 rounded-t-xl sm:rounded-t-4xl border-b border-white/5 relative z-10">
+            <div className="flex items-center px-4 py-3 sm:py-4 bg-zinc-950/90 rounded-t-[1.25rem] sm:rounded-t-4xl border-b border-white/5 relative z-10">
               <div className="flex space-x-2">
                 <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-zinc-800 group-hover:bg-red-500/90 transition-colors duration-500" />
                 <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-zinc-800 group-hover:bg-yellow-500/90 transition-colors duration-500" />
@@ -227,7 +227,7 @@ const HeroSection: FC<HeroSectionProps> = ({
               </div>
             </div>
 
-            <div className="w-full overflow-hidden relative aspect-[4/5] sm:aspect-video md:aspect-[2.35/1] rounded-b-xl sm:rounded-b-4xl bg-zinc-950">
+            <div className="w-full overflow-hidden relative aspect-4/5 sm:aspect-video md:aspect-[2.35/1] rounded-b-[1.25rem] sm:rounded-b-4xl bg-zinc-950">
               <Image
                 src={heroImageSrc}
                 alt="Interactive dashboard preview"
@@ -306,7 +306,9 @@ const HeroSection: FC<HeroSectionProps> = ({
                       </svg>
                       Optimization achieved: +42.5% efficiency
                     </div>
-                    <div className="text-zinc-400 hidden sm:block">&gt; Syncing across global edge nodes...</div>
+                    <div className="text-zinc-400 hidden sm:block">
+                      &gt; Syncing across global edge nodes...
+                    </div>
                     <div className="hidden sm:flex flex-col gap-1 mt-1 pl-4 border-l border-white/5">
                       <div className="text-zinc-500 flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-green-500" /> us-east-1 (2ms)
