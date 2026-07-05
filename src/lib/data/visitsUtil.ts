@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const visitsFilePath = path.join(process.cwd(), 'src/lib/data/visits.json');
 
@@ -23,7 +23,7 @@ export interface VisitRecord {
   method: string;
   status: number;
   userAgent: string;
-  metadata: any;
+  metadata: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
 }
@@ -33,7 +33,7 @@ export function getVisits(): VisitRecord[] {
   try {
     const data = fs.readFileSync(visitsFilePath, 'utf8');
     return JSON.parse(data);
-  } catch (e) {
+  } catch {
     return [];
   }
 }
@@ -47,24 +47,17 @@ export function upsertVisit(visitData: Partial<VisitRecord>) {
   const visits = getVisits();
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 
-  let existingVisitIndex = visits.findIndex(v => 
-    v.ip === visitData.ip && 
-    v.userAgent === visitData.userAgent && 
-    v.path === visitData.path &&
-    v.updatedAt >= oneHourAgo
+  const existingVisitIndex = visits.findIndex(
+    (v) =>
+      v.ip === visitData.ip &&
+      v.userAgent === visitData.userAgent &&
+      v.path === visitData.path &&
+      v.updatedAt >= oneHourAgo
   );
 
   let visitDoc: VisitRecord;
 
-  if (existingVisitIndex !== -1) {
-    visitDoc = {
-      ...visits[existingVisitIndex],
-      referrer: visitData.referrer || visits[existingVisitIndex].referrer,
-      metadata: visitData.metadata || visits[existingVisitIndex].metadata,
-      updatedAt: new Date().toISOString()
-    };
-    visits[existingVisitIndex] = visitDoc;
-  } else {
+  if (existingVisitIndex === -1) {
     visitDoc = {
       id: crypto.randomUUID(),
       ip: visitData.ip || 'unknown',
@@ -75,9 +68,17 @@ export function upsertVisit(visitData: Partial<VisitRecord>) {
       userAgent: visitData.userAgent || '',
       metadata: visitData.metadata || {},
       createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
     visits.push(visitDoc);
+  } else {
+    visitDoc = {
+      ...visits[existingVisitIndex],
+      referrer: visitData.referrer || visits[existingVisitIndex].referrer,
+      metadata: visitData.metadata || visits[existingVisitIndex].metadata,
+      updatedAt: new Date().toISOString(),
+    };
+    visits[existingVisitIndex] = visitDoc;
   }
 
   saveVisits(visits);

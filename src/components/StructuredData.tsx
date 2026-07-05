@@ -1,4 +1,5 @@
-import { ScriptHTMLAttributes } from 'react';
+import Script from "next/script";
+import { type ScriptHTMLAttributes } from "react";
 
 type StructuredDataProps = Readonly<
   ScriptHTMLAttributes<HTMLScriptElement> & {
@@ -7,9 +8,9 @@ type StructuredDataProps = Readonly<
 >;
 
 export default function StructuredData({ data, ...props }: StructuredDataProps) {
-  const json = JSON.stringify(data).replaceAll('<', String.raw`\u003c`);
+  const json = JSON.stringify(data).replaceAll("<", String.raw`\u003c`);
 
   return (
-    <script {...props} type='application/ld+json' dangerouslySetInnerHTML={{ __html: json }} />
+    <Script {...props} type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />
   );
 }

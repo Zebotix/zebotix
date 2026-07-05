@@ -1,0 +1,5 @@
+import { redirect } from "next/navigation";
+
+export default async function SecureLayout() {
+  redirect("/admin/login");
+}

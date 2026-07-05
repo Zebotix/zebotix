@@ -1,67 +1,79 @@
 'use client';
 
-import React from 'react';
-import { Check, Search, Settings, User, Home, Calendar } from 'lucide-react';
-import { FEATURES } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useRef } from 'react';
+
 import { Reveal } from '@/components/animations';
 
-const iconMap: Record<string, React.ReactNode> = {
-  Search: <Search className='h-6 w-6 text-zebotix-blue' />,
-  Settings: <Settings className='h-6 w-6 text-zebotix-blue' />,
-  User: <User className='h-6 w-6 text-zebotix-blue' />,
-  Home: <Home className='h-6 w-6 text-zebotix-blue' />,
-  Calendar: <Calendar className='h-6 w-6 text-zebotix-blue' />,
-  Check: <Check className='h-6 w-6 text-zebotix-blue' />,
-};
+gsap.registerPlugin(ScrollTrigger);
 
-const FeaturesSection = () => {
+export default function FeaturesSection() {
+  const textContainerRef = useRef<HTMLDivElement>(null);
+  const wordsRef = useRef<HTMLParagraphElement>(null);
+
+  const statement = 
+    "We build high-performance software, automated workflows, and custom e-commerce experiences that transform how modern companies scale. By combining robust database architectures, type-safe Next.js systems, and zero-compromise design systems, we deliver digital platforms that operate with absolute speed and reliability.";
+
+  const words = statement.split(' ');
+
+  useGSAP(
+    () => {
+      if (!wordsRef.current) return;
+
+      gsap.fromTo(
+        wordsRef.current.children,
+        {
+          opacity: 0.08,
+          y: 5,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.05,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: textContainerRef.current,
+            start: 'top 80%',
+            end: 'bottom 35%',
+            scrub: 1,
+          },
+        }
+      );
+    },
+    { scope: textContainerRef }
+  );
+
   return (
-    <section id='features' className='bg-zebotix-black py-16 md:py-24 overflow-hidden'>
-      <div className='section-container'>
-        <div className='text-center max-w-3xl mx-auto mb-16'>
+    <section
+      ref={textContainerRef}
+      id="features"
+      className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden flex flex-col justify-center min-h-[60vh]"
+    >
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="mb-12">
           <Reveal>
-            <h2 className='text-3xl md:text-5xl font-bold mb-4 text-white'>
-              Powerful{' '}
-              <span className='bg-linear-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent'>
-                Features
-              </span>{' '}
-              to Grow Your Business
-            </h2>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className='text-gray-400 text-lg'>
-              Discover an all-in-one platform designed to simplify your workflows, enhance
-              collaboration, and help your business scale faster with smart automation and
-              analytics.
-            </p>
+            <span className="text-xs uppercase tracking-widest text-blue-500 font-black mb-4 block">
+              Our Statement
+            </span>
           </Reveal>
         </div>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {FEATURES.map((feature, index) => (
-            <Reveal key={index} delay={0.1 * (index % 3)} distance={30} className='h-full'>
-              <article
-                className={cn(
-                  'bg-zebotix-darkGray p-8 rounded-2xl border border-gray-800 h-full',
-                  'hover:border-zebotix-blue/50 transition-all duration-300 shadow-xl group'
-                )}
-              >
-                <div
-                  className='bg-zebotix-blue/10 w-14 h-14 flex items-center justify-center rounded-xl mb-6 group-hover:bg-zebotix-blue/20 transition-colors'
-                  aria-hidden='true'
-                >
-                  {iconMap[feature.iconName]}
-                </div>
-                <h3 className='text-2xl font-semibold mb-3 text-white'>{feature.title}</h3>
-                <p className='text-gray-400 leading-relaxed'>{feature.description}</p>
-              </article>
-            </Reveal>
+        <p
+          ref={wordsRef}
+          className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.25] tracking-tight select-none"
+        >
+          {words.map((word, index) => (
+            <span
+              key={index}
+              className="inline-block mr-2 sm:mr-3 md:mr-4 transition-all duration-300 will-change-transform"
+            >
+              {word}
+            </span>
           ))}
-        </div>
+        </p>
       </div>
     </section>
   );
-};
-
-export default FeaturesSection;
+}

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { reportWebVital, getMetricRating, WebVital } from '@/lib/web-vitals';
+
+import { reportWebVital, getMetricRating, type WebVital } from '@/lib/web-vitals';
 
 /**
  * Hook to report Core Web Vitals metrics
@@ -34,7 +35,7 @@ export function useReportWebVitals() {
       lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
 
       return () => lcpObserver.disconnect();
-    } catch (e) {
+    } catch {
       // LCP observer not supported
     }
   }, []);
@@ -45,8 +46,9 @@ export function useReportWebVitals() {
       let clsValue = 0;
       const clsObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
-          if ((entry as any).hadRecentInput) continue;
-          clsValue += (entry as any).value;
+          const layoutShiftEntry = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
+          if (layoutShiftEntry.hadRecentInput) continue;
+          clsValue += layoutShiftEntry.value || 0;
         }
       });
 
@@ -75,7 +77,7 @@ export function useReportWebVitals() {
         document.removeEventListener('visibilitychange', reportCLS);
         window.removeEventListener('unload', reportCLS);
       };
-    } catch (e) {
+    } catch {
       // CLS observer not supported
     }
   }, []);
@@ -89,10 +91,10 @@ export function useReportWebVitals() {
 
         const metric: WebVital = {
           name: 'INP',
-          value: (lastEntry as any).duration,
+          value: (lastEntry as PerformanceEntry).duration,
           delta: 0,
           id: `inp-${Date.now()}`,
-          rating: getMetricRating('INP', (lastEntry as any).duration),
+          rating: getMetricRating('INP', (lastEntry as PerformanceEntry).duration),
         };
 
         reportWebVital(metric);
@@ -101,7 +103,7 @@ export function useReportWebVitals() {
       inpObserver.observe({ type: 'event', buffered: true });
 
       return () => inpObserver.disconnect();
-    } catch (e) {
+    } catch {
       // INP observer not supported
     }
   }, []);
@@ -129,7 +131,7 @@ export function useReportWebVitals() {
 
       po.observe({ type: 'first-input', buffered: true });
       return () => po.disconnect();
-    } catch (e) {
+    } catch {
       // FID not supported
     }
   }, []);

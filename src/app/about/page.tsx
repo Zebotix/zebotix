@@ -12,7 +12,7 @@ export default function About() {
             </p>
           </div>
           <Image
-            src={'/Zebotix.png'}
+            src="/Zebotix.webp"
             alt='zebotix'
             width={500}
             height={500}

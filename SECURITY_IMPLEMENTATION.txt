@@ -1,0 +1,157 @@
+You are a Senior Principal Security Engineer and Enterprise Architect.
+
+I have a Next.js 16 (App Router) + TypeScript + Prisma + PostgreSQL + JWT + Redis + BullMQ application.
+
+I DO NOT want random security improvements.
+
+I want you to implement a complete enterprise-grade security architecture while following modern OWASP ASVS Level 2/3 practices wherever applicable.
+
+Requirements:
+
+1. Preserve the existing project architecture.
+2. Do not introduce breaking changes.
+3. Every implementation must be production-ready.
+4. Every security feature must be modular.
+5. Every middleware must be reusable.
+6. Follow the Principle of Least Privilege.
+7. Prefer secure defaults.
+8. Avoid unnecessary dependencies.
+9. Use TypeScript strict mode.
+10. Follow Next.js App Router best practices.
+
+Implement the following security modules completely:
+
+• Authentication hardening
+
+- Refresh Token Rotation
+- Refresh Token Reuse Detection
+- Session Fingerprinting
+- Device Management
+- Session Revocation
+- Global Logout
+- Password History
+- Account Lockout
+- Login Attempt Tracking
+- MFA-ready architecture
+- Idle Timeout
+- Absolute Session Timeout
+
+• Authorization
+
+- RBAC
+- Permission-based authorization
+- Resource ownership validation
+- Route protection
+- API protection
+- Database ownership validation
+
+• Cookie Security
+
+- HttpOnly
+- Secure
+- SameSite
+- Cookie Prefixes
+- Cookie Rotation
+
+• CSRF Protection
+
+- Double Submit Cookie
+- Origin Validation
+- Referer Validation
+- CSRF Middleware
+
+• Input Validation
+
+- Strict Zod validation
+- Reject unknown fields
+- Data sanitization
+- HTML sanitization
+- Request size validation
+
+• XSS Protection
+
+- Safe rendering
+- Rich text sanitization
+- CSP compatibility
+
+• SQL Injection Protection
+
+- Parameterized queries only
+- Safe raw SQL usage
+- Dynamic query validation
+
+• Rate Limiting
+
+- Redis-based sliding window
+- IP limits
+- User limits
+- Route-specific limits
+- Auth endpoint protection
+
+• File Upload Security
+
+- MIME validation
+- Magic number validation
+- Size limits
+- Image re-encoding
+- SVG sanitization
+- Metadata stripping
+- Random filenames
+
+• API Security
+
+- Request validation
+- Consistent secure errors
+- Idempotency support where appropriate
+- Timeout handling
+
+• Database Security
+
+- Least privilege
+- Transaction safety
+- Audit logging
+- Ownership validation
+
+• Secrets Management
+
+- Environment validation
+- Secret rotation strategy
+- Secure configuration loading
+
+• Logging & Auditing
+
+- Structured logs
+- Security audit logs
+- Never log secrets or tokens
+
+• Monitoring
+
+- Health checks
+- Readiness checks
+- Suspicious activity logging
+
+• CORS
+
+- Strict origin allowlist
+- Environment-aware configuration
+
+• Redis Security
+
+- Secure configuration
+- Key namespacing
+- TTL strategy
+
+• Production Hardening
+
+- Dependency auditing
+- Secure build configuration
+- Security documentation
+
+For every implementation:
+
+- Explain WHY it is needed.
+- Explain WHAT threat it mitigates.
+- Provide production-ready code.
+- Follow OWASP recommendations.
+- Keep the implementation modular, maintainable, and enterprise-ready.
+- Do not add features that reduce usability unless they provide a clear security benefit.

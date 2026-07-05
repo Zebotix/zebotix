@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 type GtagFn = (...args: unknown[]) => void;
 
@@ -34,7 +34,7 @@ export const useGoogleAnalytics = () => {
           process.env.NEXT_PUBLIC_GA_ID || 'G-JD55RSPP55'
         }`
       );
-      console.log(res);
+
       if (res.ok) {
         const script = document.createElement('script');
         script.async = true;
@@ -42,7 +42,7 @@ export const useGoogleAnalytics = () => {
         document.head.appendChild(script);
       }
     }
-    loadGtag();
+    loadGtag().catch(() => undefined);
 
     // Load Apollo tracker script
     function loadApollo() {
@@ -95,9 +95,6 @@ export const useGoogleAnalytics = () => {
       win.gtag('config', process.env.NEXT_PUBLIC_GA_ID ?? 'G-JD55RSPP55', {
         page_path: url,
       });
-      console.debug('GA pageview tracked');
-    } else {
-      console.debug('gtag not available to track pageview');
     }
   }, [pathname, searchParams]);
 };

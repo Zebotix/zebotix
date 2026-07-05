@@ -2,22 +2,25 @@
 
 import { useEffect } from 'react';
 
+import { logVisitAction } from '@/app/actions/visits';
+
 export function useCreateVisit() {
   useEffect(() => {
     const logVisit = async () => {
       try {
-        const response = await fetch('/api/visits', {
-          method: 'POST',
-        });
+        const pathName = window.location.pathname;
+        const queryParams = Object.fromEntries(new URLSearchParams(window.location.search));
+        
+        const response = await logVisitAction(pathName, queryParams);
 
-        if (!response.ok) {
-          console.error('Failed to log visit:', response.statusText);
+        if (!response.success) {
+          console.error('Failed to log visit:', response.error);
         }
       } catch (err) {
         console.error('Error logging visit:', err);
       }
     };
 
-    logVisit();
+    logVisit().catch(() => undefined);
   }, []);
 }

@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import React from 'react';
+
 import { cn } from '@/lib/utils';
 
 interface NavLinkProps {
@@ -14,12 +16,12 @@ interface NavLinkProps {
 
 const NavLink = ({ href, children, active, onClick, className, mobile }: NavLinkProps) => {
   const baseStyles = mobile
-    ? 'block px-3 py-2 text-base font-medium rounded-md transition-all'
-    : 'px-3 py-2 text-sm font-medium transition-colors relative group';
+    ? 'block px-4 py-3 text-base font-black uppercase tracking-wider rounded-none transition-all'
+    : 'px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none';
 
   const activeStyles = active
-    ? 'text-zebotix-blue bg-zebotix-blue/10'
-    : 'text-white hover:text-zebotix-blue hover:bg-white/5';
+    ? 'text-blue-500 bg-blue-500/5 md:bg-transparent'
+    : 'text-zinc-400 hover:text-white hover:bg-zinc-900/50 md:hover:bg-transparent';
 
   return (
     <Link
@@ -28,8 +30,13 @@ const NavLink = ({ href, children, active, onClick, className, mobile }: NavLink
       className={cn(baseStyles, activeStyles, className)}
     >
       {children}
-      {!mobile && active && (
-        <span className='absolute bottom-0 left-3 right-3 h-0.5 bg-zebotix-blue rounded-full' />
+      {!mobile && (
+        <span
+          className={cn(
+            'absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300 rounded-none',
+            active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+          )}
+        />
       )}
     </Link>
   );
