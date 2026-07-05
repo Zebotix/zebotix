@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react';
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import React from "react";
 
-import { Reveal } from '@/components/animations';
-import { Button } from '@/components/ui';
-import { SOLUTIONS } from '@/lib/mockData';
-import { cn } from '@/lib/utils';
+import { Reveal } from "@/components/animations";
+import { Button } from "@/components/ui";
+import { SOLUTIONS } from "@/lib/mockData";
+import { cn } from "@/lib/utils";
 
 interface SolutionBenefit {
   title: string;
@@ -18,14 +18,14 @@ interface SolutionProduct {
   name: string;
 }
 
-interface SolutionItem {
+export interface SolutionItem {
   id: string;
   title: string;
   slug?: string;
   tagline?: string;
   subtitle?: string;
   products?: SolutionProduct[];
-  benefits?: SolutionBenefit[] | unknown;
+  benefits?: SolutionBenefit[];
 }
 
 interface ProductsCarouselSectionProps {
@@ -37,10 +37,10 @@ const ProductsCarouselSection = ({ solutions }: ProductsCarouselSectionProps) =>
 
   // Bento layout classes for 4 cards
   const gridClasses = [
-    'col-span-12 md:col-span-7 min-h-[360px]',
-    'col-span-12 md:col-span-5 min-h-[360px]',
-    'col-span-12 md:col-span-5 min-h-[360px]',
-    'col-span-12 md:col-span-7 min-h-[360px]',
+    "col-span-12 md:col-span-7 min-h-[360px]",
+    "col-span-12 md:col-span-5 min-h-[360px]",
+    "col-span-12 md:col-span-5 min-h-[360px]",
+    "col-span-12 md:col-span-7 min-h-[360px]",
   ];
 
   return (
@@ -57,13 +57,17 @@ const ProductsCarouselSection = ({ solutions }: ProductsCarouselSectionProps) =>
             </span>
           </Reveal>
           <Reveal delay={0.15}>
-            <h2 id="solutions-heading" className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter">
+            <h2
+              id="solutions-heading"
+              className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter"
+            >
               Scalable Software Architectures
             </h2>
           </Reveal>
           <Reveal delay={0.3}>
             <p className="text-zinc-400 text-lg leading-relaxed">
-              We design, build, and deploy high-performance digital systems. No generic templates, just tailored code engineered for absolute scale.
+              We design, build, and deploy high-performance digital systems. No generic templates,
+              just tailored code engineered for absolute scale.
             </p>
           </Reveal>
         </div>
@@ -71,30 +75,25 @@ const ProductsCarouselSection = ({ solutions }: ProductsCarouselSectionProps) =>
         <div className="grid grid-cols-12 gap-4 sm:gap-6 md:gap-8 grid-flow-dense">
           {items.map((s, i) => {
             const title = s.title;
-            const subtitle = s.subtitle || s.tagline || '';
-            const slug = s.slug || s.id || '';
-            const id = s.id || s.slug || '';
+            const subtitle = s.subtitle || s.tagline || "";
+            const slug = s.slug || s.id || "";
+            const id = s.id || s.slug || "";
             const benefits = s.products
               ? s.products.map((p: SolutionProduct) => p.name)
               : Array.isArray(s.benefits)
-              ? (s.benefits as SolutionBenefit[]).map((b: SolutionBenefit) => b.title)
-              : [];
+                ? (s.benefits as SolutionBenefit[]).map((b: SolutionBenefit) => b.title)
+                : [];
 
             const layoutClass = gridClasses[i % 4];
 
             return (
-              <Reveal
-                key={id}
-                delay={0.1 * i}
-                distance={30}
-                className={cn('h-full', layoutClass)}
-              >
+              <Reveal key={id} delay={0.1 * i} distance={30} className={cn("h-full", layoutClass)}>
                 <div className="bg-zinc-900/40 p-8 border border-zinc-800 flex flex-col justify-between h-full hover:border-blue-500/35 transition-all duration-300 relative overflow-hidden group select-none">
                   {/* Subtle Background Art */}
                   <div
                     className="absolute inset-0 bg-cover bg-center opacity-5 grayscale contrast-125 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 pointer-events-none"
                     style={{
-                      backgroundImage: `url(https://picsum.photos/seed/${id}/600/400)`,
+                      backgroundImage: `url(/images/hero-section-image.webp)`,
                     }}
                   />
                   {/* Glassy hover gradient */}
@@ -141,7 +140,8 @@ const ProductsCarouselSection = ({ solutions }: ProductsCarouselSectionProps) =>
               Ready to architect your custom software?
             </h4>
             <p className="text-zinc-400 mb-8 max-w-xl leading-relaxed">
-              Book a consultation call with our team to analyze your business goals and configure your system roadmap.
+              Book a consultation call with our team to analyze your business goals and configure
+              your system roadmap.
             </p>
             <Button
               asChild

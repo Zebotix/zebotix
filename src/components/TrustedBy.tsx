@@ -1,14 +1,26 @@
-'use client';
+"use client";
 
-import { Flame, ShieldCheck, Users, Rocket } from 'lucide-react';
-import React from 'react';
+import { Lightbulb, ShieldCheck, Globe, Zap, Headset, Activity, Handshake } from "lucide-react";
+import React from "react";
 
 export default function TrustedBy() {
   const badges = [
-    { label: 'Startup Friendly', icon: <Flame className="h-5 w-5 text-blue-500" /> },
-    { label: 'Enterprise Ready', icon: <ShieldCheck className="h-5 w-5 text-blue-500" /> },
-    { label: 'Remote Team', icon: <Users className="h-5 w-5 text-blue-500" /> },
-    { label: 'Fast Delivery', icon: <Rocket className="h-5 w-5 text-blue-500" /> },
+    { label: "Startup Friendly", icon: <Lightbulb className="h-5 w-5 text-blue-500" aria-hidden="true" /> },
+    { label: "Enterprise Ready", icon: <ShieldCheck className="h-5 w-5 text-blue-500" aria-hidden="true" /> },
+    { label: "Remote Team", icon: <Globe className="h-5 w-5 text-blue-500" aria-hidden="true" /> },
+    { label: "Fast Delivery", icon: <Zap className="h-5 w-5 text-blue-500" aria-hidden="true" /> },
+    {
+      label: "24/7 Support",
+      icon: <Headset className="h-5 w-5 text-blue-500" aria-hidden="true" />,
+    },
+    {
+      label: "99.9% Uptime",
+      icon: <Activity className="h-5 w-5 text-blue-500" aria-hidden="true" />,
+    },
+    {
+      label: "Flexible Engagement",
+      icon: <Handshake className="h-5 w-5 text-blue-500" aria-hidden="true" />,
+    },
   ];
 
   // Repeat items to fill marquee width seamlessly

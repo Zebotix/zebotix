@@ -11,7 +11,7 @@ import CtaSection from "@/components/CtaSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HeroSection from "@/components/HeroSection";
 import OurProcess from "@/components/OurProcess";
-import ProductsCarouselSection from "@/components/ProductsCarousel";
+import ProductsCarouselSection, { type SolutionItem } from "@/components/ProductsCarousel";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TrustedBy from "@/components/TrustedBy";
 import { COMPANY_NAME, SHORT_DESC, SITE_URL } from "@/lib/constants";
@@ -55,7 +55,7 @@ function LoadingFallback() {
 
 async function SolutionsWrapper() {
   const res = await getSolutionsAction();
-  const solutions = res.success ? res.data : [];
+  const solutions = res.success ? (res.data as unknown as SolutionItem[]) : [];
   return <ProductsCarouselSection solutions={solutions} />;
 }
 

@@ -2,19 +2,27 @@
 
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { Menu, ChevronDown } from "lucide-react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
-// import { ThemeToggle } from "./ThemeToggle";
 
 import { Button } from "@/components/ui/Button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/NavigationMenu";
 import { COMPANY_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+// import { ThemeToggle } from "./ThemeToggle";
 
 const SOLUTIONS_LIST = [
   {
@@ -43,8 +51,6 @@ const SOLUTIONS_LIST = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [solutionsOpen, setSolutionsOpen] = useState(false);
-  const [companyOpen, setCompanyOpen] = useState(false);
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
@@ -130,126 +136,106 @@ const Navbar = () => {
               Home
             </NavLink>
 
-            {/* Solutions hover dropdown mega-menu */}
-            <div
-              className="relative"
-              onMouseEnter={() => setSolutionsOpen(true)}
-              onMouseLeave={() => setSolutionsOpen(false)}
-              onKeyDown={() => setSolutionsOpen(false)}
-              tabIndex={0}
-              role="menu"
-            >
-              <Button
-                variant="ghost"
-                className={cn(
-                  "px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-default bg-transparent border-none outline-none hover:bg-transparent",
-                  pathname.startsWith("/solutions")
-                    ? "text-blue-500 hover:text-blue-500"
-                    : "text-zinc-400 hover:text-white"
-                )}
-              >
-                Solutions
-                <ChevronDown className="h-3 w-3" />
-                <span
-                  className={cn(
-                    "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
-                    pathname.startsWith("/solutions")
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100"
-                  )}
-                />
-              </Button>
-
-              {/* Solutions dropdown container */}
-              <div
-                className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[680px] bg-zinc-950 border border-zinc-900 p-8 shadow-2xl transition-all duration-300 grid grid-cols-3 gap-8 rounded-none z-50 text-left",
-                  solutionsOpen
-                    ? "opacity-100 translate-y-0 visible"
-                    : "opacity-0 -translate-y-2 invisible pointer-events-none"
-                )}
-              >
-                {SOLUTIONS_LIST.map((group) => (
-                  <div key={group.category} className="space-y-4">
-                    <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-550 border-b border-zinc-900 pb-2">
-                      {group.category}
-                    </h4>
-                    <ul className="space-y-3">
-                      {group.items.map((item) => (
-                        <li key={item.href}>
-                          <Link
-                            href={item.href}
-                            className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight"
-                          >
-                            {item.name}
-                          </Link>
-                        </li>
+            <NavigationMenu delayDuration={100}>
+              <NavigationMenuList className="gap-2 p-0 m-0">
+                {/* Solutions */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                      pathname.startsWith("/solutions")
+                        ? "text-blue-500 hover:text-blue-500 data-[state=open]:text-blue-500 focus:text-blue-500"
+                        : "text-zinc-400 hover:text-white data-[state=open]:text-white focus:text-white"
+                    )}
+                  >
+                    Solutions
+                    <span
+                      className={cn(
+                        "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
+                        pathname.startsWith("/solutions")
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 group-focus:scale-x-100"
+                      )}
+                    />
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-8 shadow-2xl rounded-none md:w-[680px] w-full">
+                    <div className="grid grid-cols-3 gap-8">
+                      {SOLUTIONS_LIST.map((group) => (
+                        <div key={group.category} className="space-y-4">
+                          <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-550 border-b border-zinc-900 pb-2">
+                            {group.category}
+                          </h4>
+                          <ul className="space-y-3">
+                            {group.items.map((item) => (
+                              <li key={item.href}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={item.href}
+                                    className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight outline-none focus-visible:text-blue-500"
+                                  >
+                                    {item.name}
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
 
-            {/* Company hover dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setCompanyOpen(true)}
-              onMouseLeave={() => setCompanyOpen(false)}
-              onKeyDown={() => setCompanyOpen(false)}
-              tabIndex={0}
-              role="menu"
-            >
-              <Button
-                variant="ghost"
-                className={cn(
-                  "px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-default bg-transparent border-none outline-none hover:bg-transparent",
-                  pathname === "/about" || pathname === "/blog"
-                    ? "text-blue-500 hover:text-blue-500"
-                    : "text-zinc-400 hover:text-white"
-                )}
-              >
-                Company
-                <ChevronDown className="h-3 w-3" />
-                <span
-                  className={cn(
-                    "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
-                    pathname === "/about" || pathname === "/blog"
-                      ? "scale-x-100"
-                      : "scale-x-0 group-hover:scale-x-100"
-                  )}
-                />
-              </Button>
-
-              {/* Company dropdown container */}
-              <div
-                className={cn(
-                  "absolute top-full right-0 mt-2 w-52 bg-zinc-950 border border-zinc-900 p-4 shadow-2xl transition-all duration-300 flex flex-col gap-3 rounded-none z-50 text-left",
-                  companyOpen
-                    ? "opacity-100 translate-y-0 visible"
-                    : "opacity-0 -translate-y-2 invisible pointer-events-none"
-                )}
-              >
-                <Link
-                  href="/about"
-                  className="text-xs font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block"
-                >
-                  Who we are
-                </Link>
-                <Link
-                  href="/#testimonials"
-                  className="text-xs font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block"
-                >
-                  Testimonials
-                </Link>
-                <Link
-                  href="/blog"
-                  className="text-xs font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block"
-                >
-                  Blogs
-                </Link>
-              </div>
-            </div>
+                {/* Company */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                      pathname === "/about" || pathname === "/blog"
+                        ? "text-blue-500 hover:text-blue-500 data-[state=open]:text-blue-500 focus:text-blue-500"
+                        : "text-zinc-400 hover:text-white data-[state=open]:text-white focus:text-white"
+                    )}
+                  >
+                    Company
+                    <span
+                      className={cn(
+                        "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
+                        pathname === "/about" || pathname === "/blog"
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 group-focus:scale-x-100"
+                      )}
+                    />
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-4 shadow-2xl rounded-none md:w-52 w-full">
+                    <div className="flex flex-col gap-3">
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/about"
+                          className="text-xs font-black text-zinc-400 hover:text-blue-500 focus-visible:text-blue-500 transition-colors uppercase tracking-wider block outline-none"
+                        >
+                          Who we are
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/#testimonials"
+                          className="text-xs font-black text-zinc-400 hover:text-blue-500 focus-visible:text-blue-500 transition-colors uppercase tracking-wider block outline-none"
+                        >
+                          Testimonials
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href="/blog"
+                          className="text-xs font-black text-zinc-400 hover:text-blue-500 focus-visible:text-blue-500 transition-colors uppercase tracking-wider block outline-none"
+                        >
+                          Blogs
+                        </Link>
+                      </NavigationMenuLink>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
 
             <NavLink href="/contact" active={pathname === "/contact"}>
               Contact

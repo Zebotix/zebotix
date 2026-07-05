@@ -45,41 +45,47 @@ const HeroSection: FC<HeroSectionProps> = ({
 
   useGSAP(
     () => {
-      // Glow movement
-      gsap.to(glowRef.current, {
-        scale: 1.2,
-        opacity: 0.15,
-        duration: 8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        force3D: true,
-      });
+      const initGSAP = () => {
+        // Glow movement
+        gsap.to(glowRef.current, {
+          scale: 1.2,
+          opacity: 0.15,
+          duration: 8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          force3D: true,
+        });
 
-      // Zooming image on scroll
-      if (imageFigureRef.current) {
-        gsap.fromTo(
-          imageFigureRef.current,
-          {
-            scale: 0.85,
-            opacity: 0.8,
-            y: 50,
-          },
-          {
-            scale: 1,
-            opacity: 1,
-            y: 0,
-            force3D: true,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: imageFigureRef.current,
-              start: "top bottom-=100",
-              end: "top 20%",
-              scrub: 1,
+        // Zooming image on scroll
+        if (imageFigureRef.current) {
+          gsap.fromTo(
+            imageFigureRef.current,
+            {
+              scale: 0.85,
+              opacity: 0.8,
+              y: 50,
             },
-          }
-        );
-      }
+            {
+              scale: 1,
+              opacity: 1,
+              y: 0,
+              force3D: true,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: imageFigureRef.current,
+                start: "top bottom-=100",
+                end: "top 20%",
+                scrub: 1,
+              },
+            }
+          );
+        }
+      };
+
+      // Delay execution until after initial render paint to prevent forced reflows
+      const timer = setTimeout(initGSAP, 100);
+      return () => clearTimeout(timer);
     },
     { scope: containerRef }
   );
@@ -150,7 +156,7 @@ const HeroSection: FC<HeroSectionProps> = ({
                   <span
                     className="inline-block w-16 sm:w-24 lg:w-32 h-8 sm:h-12 lg:h-16 border border-white/10 align-middle bg-cover bg-center mx-2 grayscale brightness-125 hover:grayscale-0 transition-all duration-500"
                     style={{
-                      backgroundImage: "url(https://picsum.photos/seed/tech/300/150)",
+                      backgroundImage: "url(/images/hero-section-image.webp)",
                     }}
                   />{" "}
                   platforms for digital scale.
@@ -231,9 +237,11 @@ const HeroSection: FC<HeroSectionProps> = ({
               <Image
                 src={heroImageSrc}
                 alt="Interactive dashboard preview"
-                fill
-                className="object-cover object-top transition-transform duration-1000 group-hover:scale-105 opacity-30 rounded-b-xl sm:rounded-b-4xl group-hover:opacity-50 mix-blend-screen"
+                width={1024}
+                height={435}
+                className="w-full h-auto object-cover object-top transition-transform duration-1000 scale-105  rounded-b-xl sm:rounded-b-4xl opacity-50 mix-blend-screen"
                 priority
+                fetchPriority="high"
                 sizes="(max-width: 1024px) 100vw, 1024px"
               />
 
@@ -261,9 +269,9 @@ const HeroSection: FC<HeroSectionProps> = ({
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-white text-xs sm:text-sm font-semibold tracking-wide">
+                      <div className="text-white text-xs sm:text-sm font-semibold tracking-wide">
                         Zebotix Intelligence
-                      </h3>
+                      </div>
                       <p className="text-zinc-500 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mt-0.5">
                         Live Environment
                       </p>

@@ -2,7 +2,6 @@
  * JSON-LD Schema Generators for SEO
  * Sanitizes dangerous characters and provides typed schema generation
  */
-
 import {
   COMPANY_NAME,
   SITE_URL,
@@ -10,13 +9,13 @@ import {
   CONTACT_EMAIL,
   CONTACT_PHONE,
   SOCIAL_LINKS,
-} from './constants';
+} from "./constants";
 
 /**
  * Sanitizes JSON-LD content to prevent XSS attacks
  */
 function sanitizeJsonLd(obj: unknown): string {
-  return JSON.stringify(obj).replaceAll(/</g, '\\u003c').replaceAll(/>/g, '\\u003e');
+  return JSON.stringify(obj).replaceAll(/</g, "\\u003c").replaceAll(/>/g, "\\u003e");
 }
 
 /**
@@ -24,8 +23,8 @@ function sanitizeJsonLd(obj: unknown): string {
  */
 export function generateOrganizationSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
+    "@context": "https://schema.org",
+    "@type": "Organization",
     name: COMPANY_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/Zebotix.webp`,
@@ -37,17 +36,17 @@ export function generateOrganizationSchema() {
       SOCIAL_LINKS.github,
     ],
     contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'Customer Service',
+      "@type": "ContactPoint",
+      contactType: "Customer Service",
       telephone: CONTACT_PHONE,
       email: CONTACT_EMAIL,
-      areaServed: 'PK',
-      availableLanguage: 'en',
+      areaServed: "PK",
+      availableLanguage: "en",
     },
-    foundingDate: '2024',
+    foundingDate: "2024",
     areaServed: {
-      '@type': 'Country',
-      name: 'Pakistan',
+      "@type": "Country",
+      name: "Pakistan",
     },
   };
 }
@@ -62,26 +61,26 @@ export function generateServiceSchema(
   image?: string
 ) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
+    "@context": "https://schema.org",
+    "@type": "Service",
     name,
     description,
     provider: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: COMPANY_NAME,
       url: SITE_URL,
     },
     ...(image && { image }),
     ...(price && {
       offers: {
-        '@type': 'Offer',
-        priceCurrency: 'PKR',
+        "@type": "Offer",
+        priceCurrency: "PKR",
         price,
       },
     }),
     areaServed: {
-      '@type': 'Country',
-      name: 'Pakistan',
+      "@type": "Country",
+      name: "Pakistan",
     },
   };
 }
@@ -98,29 +97,29 @@ export function generateBlogPostingSchema(
   slug?: string
 ) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
     headline: title,
     description,
     image,
     datePublished: datePublished.toISOString(),
     dateModified: (dateModified || datePublished).toISOString(),
     author: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: COMPANY_NAME,
       url: SITE_URL,
     },
     publisher: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: COMPANY_NAME,
       logo: {
-        '@type': 'ImageObject',
+        "@type": "ImageObject",
         url: `${SITE_URL}/Zebotix.webp`,
       },
     },
     mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': slug ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/blog`,
+      "@type": "WebPage",
+      "@id": slug ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/blog`,
     },
   };
 }
@@ -136,14 +135,14 @@ export function generateCreativeWorkSchema(
   url?: string
 ) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
     name: title,
     description,
     image,
     datePublished: datePublished.toISOString(),
     creator: {
-      '@type': 'Organization',
+      "@type": "Organization",
       name: COMPANY_NAME,
       url: SITE_URL,
     },
@@ -156,10 +155,10 @@ export function generateCreativeWorkSchema(
  */
 export function generateBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: index + 1,
       name: item.name,
       item: item.url,
@@ -172,17 +171,17 @@ export function generateBreadcrumbSchema(items: Array<{ name: string; url: strin
  */
 export function generateWebsiteSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
+    "@context": "https://schema.org",
+    "@type": "WebSite",
     name: COMPANY_NAME,
     url: SITE_URL,
     potentialAction: {
-      '@type': 'SearchAction',
+      "@type": "SearchAction",
       target: {
-        '@type': 'EntryPoint',
+        "@type": "EntryPoint",
         urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
       },
-      'query-input': 'required name=search_term_string',
+      "query-input": "required name=search_term_string",
     },
   };
 }
@@ -192,8 +191,8 @@ export function generateWebsiteSchema() {
  */
 export function generateLocalBusinessSchema() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
     name: COMPANY_NAME,
     image: `${SITE_URL}/Zebotix.webp`,
     description: SHORT_DESC,
@@ -202,13 +201,13 @@ export function generateLocalBusinessSchema() {
     email: CONTACT_EMAIL,
     sameAs: [SOCIAL_LINKS.twitter, SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram],
     areaServed: {
-      '@type': 'Country',
-      name: 'Pakistan',
+      "@type": "Country",
+      name: "Pakistan",
     },
     address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'PK',
-      addressLocality: 'Karachi',
+      "@type": "PostalAddress",
+      addressCountry: "PK",
+      addressLocality: "Karachi",
     },
   };
 }

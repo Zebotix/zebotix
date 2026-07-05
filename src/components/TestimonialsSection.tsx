@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { Star } from 'lucide-react';
-import Image from 'next/image';
-import React from 'react';
+import { Star } from "lucide-react";
+import Image from "next/image";
+import React from "react";
 
-import { Reveal } from '@/components/animations';
+import { Reveal } from "@/components/animations";
 
 interface Testimonial {
   id: string;
@@ -20,7 +20,7 @@ interface TestimonialsSectionProps {
   testimonials: Testimonial[];
 }
 
-export default function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
+export default function TestimonialsSection({ testimonials }: Readonly<TestimonialsSectionProps>) {
   if (!testimonials || testimonials.length === 0) {
     return null;
   }
@@ -39,13 +39,17 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
             </span>
           </Reveal>
           <Reveal delay={0.15}>
-            <h2 id="testimonials-heading" className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter">
+            <h2
+              id="testimonials-heading"
+              className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter"
+            >
               Trusted by Innovators
             </h2>
           </Reveal>
           <Reveal delay={0.3}>
             <p className="text-zinc-400 text-lg leading-relaxed">
-              Hear from startup founders and enterprise leaders who trust Zebotix to deliver exceptional digital platforms.
+              Hear from startup founders and enterprise leaders who trust Zebotix to deliver
+              exceptional digital platforms.
             </p>
           </Reveal>
         </div>
@@ -55,19 +59,21 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
             <Reveal key={t.id} delay={0.1 * (index % 3)} distance={30} className="h-full">
               <div className="bg-zinc-900/40 p-8 border border-zinc-800 h-full flex flex-col justify-between hover:border-blue-500/35 transition-colors duration-300 rounded-none relative overflow-hidden group select-none">
                 <div>
-                  <div className="flex gap-1 mb-6" aria-label={`Rating: ${t.rating} stars`}>
+                  <div
+                    className="flex gap-1 mb-6"
+                    role="img"
+                    aria-label={`Rating: ${t.rating} stars`}
+                  >
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
                         className={`h-4 w-4 ${
-                          i < t.rating ? 'text-blue-500 fill-blue-500' : 'text-zinc-800'
+                          i < t.rating ? "text-blue-500 fill-blue-500" : "text-zinc-800"
                         }`}
                       />
                     ))}
                   </div>
-                  <p className="text-zinc-350 leading-relaxed italic mb-8 text-sm">
-                    "{t.content}"
-                  </p>
+                  <p className="text-zinc-350 leading-relaxed italic mb-8 text-sm">"{t.content}"</p>
                 </div>
 
                 <div className="flex items-center gap-4 pt-6 border-t border-zinc-850">
@@ -87,9 +93,11 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
                     </div>
                   )}
                   <div>
-                    <h4 className="text-white font-black text-sm uppercase tracking-tight mb-1">{t.name}</h4>
+                    <h3 className="text-white font-black text-sm uppercase tracking-tight mb-1">
+                      {t.name}
+                    </h3>
                     <p className="text-zinc-550 text-[10px] font-black uppercase tracking-wider">
-                      {t.role} {t.company ? `at ${t.company}` : ''}
+                      {t.role} {t.company ? `at ${t.company}` : ""}
                     </p>
                   </div>
                 </div>
