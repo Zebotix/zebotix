@@ -1,14 +1,12 @@
 import { type Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 
 import { Reveal } from "@/components/animations";
 import { getPostBySlug } from "@/lib/blog";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 import { generateBlogPostingSchema, getSanitizedSchema } from "@/lib/schemas";
-
-// eslint-disable-next-line camelcase
-export const unstable_instant = false;
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -70,7 +68,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
 
   return (
     <article className="pt-32 pb-24">
-      <script
+      <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(blogPostingSchema),

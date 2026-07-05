@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import prisma from "@/lib/db/prisma";
 
-const quickQuoteSchema = z.object({
+export const quickQuoteSchema = z.object({
   projectType: z.string().min(1, "Project type is required"),
   businessType: z.string().min(1, "Business type is required"),
   colorThemes: z.array(z.string()).default([]),
@@ -20,21 +20,9 @@ const quickQuoteSchema = z.object({
   company: z.string().optional(),
 });
 
-export async function submitQuickQuoteAction(data: {
-  projectType: string;
-  businessType: string;
-  colorThemes: string[];
-  features: string[];
-  budget: string;
-  timeline: string;
-  details?: string;
-  referenceUrls: string[];
-  attachments: string[];
-  name: string;
-  email: string;
-  phone?: string;
-  company?: string;
-}) {
+export type QuickQuoteInput = z.infer<typeof quickQuoteSchema>;
+
+export async function submitQuickQuoteAction(data: QuickQuoteInput) {
   try {
     const validated = quickQuoteSchema.safeParse(data);
     if (!validated.success) {

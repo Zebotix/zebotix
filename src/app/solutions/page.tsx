@@ -53,7 +53,7 @@ export default async function SolutionsPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {solutions.map((sol, index) => {
-              const benefits = Array.isArray(sol.benefits) ? (sol.benefits as any[]) : [];
+              const benefits = Array.isArray(sol.benefits) ? (sol.benefits as { title: string; desc: string }[]) : [];
               return (
                 <Reveal key={sol.id} delay={0.1 * (index % 3)} distance={35}>
                   <div className="bg-zinc-900/40 border border-zinc-800 p-8 flex flex-col justify-between h-full hover:border-blue-500/35 transition-colors duration-300 group">

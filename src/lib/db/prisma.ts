@@ -1,10 +1,10 @@
-import { neonConfig , Pool as NeonPool } from '@neondatabase/serverless';
-import { PrismaNeon } from '@prisma/adapter-neon';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
-import ws from 'ws';
+import { neonConfig } from "@neondatabase/serverless";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
+import ws from "ws";
 
-import { PrismaClient } from '@/generated/prisma';
+import { PrismaClient } from "@/generated/prisma/client";
 
 neonConfig.webSocketConstructor = ws;
 
@@ -20,13 +20,13 @@ const connectionString = process.env.DATABASE_URL;
 let prisma: PrismaClient;
 
 if (!connectionString) {
-  if (process.env.NODE_ENV === 'production') {
-    console.warn('WARNING: DATABASE_URL is not set. Database operations will fail.');
+  if (process.env.NODE_ENV === "production") {
+    console.error("WARNING: DATABASE_URL is not set. Database operations will fail.");
   }
   // Initialize with a dummy or let it throw a clearer error on use
   // Cannot instantiate empty in v7 with adapter generator
-  prisma = {} as any; // Fail fast if used without env
-} else if (process.env.NODE_ENV === 'development') {
+  prisma = {} as PrismaClient; // Fail fast if used without env
+} else if (process.env.NODE_ENV === "development") {
   // Use @prisma/adapter-pg for local Postgres
   if (!global.prismaPg) {
     const pool = new Pool({ connectionString });
@@ -36,8 +36,7 @@ if (!connectionString) {
   prisma = global.prismaPg;
 } else {
   // Use Neon for production
-  const pool = new NeonPool({ connectionString });
-  const adapter = new PrismaNeon(pool as any);
+  const adapter = new PrismaNeon({ connectionString });
   prisma = new PrismaClient({ adapter });
 }
 

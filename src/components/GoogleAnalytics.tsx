@@ -1,5 +1,4 @@
 'use client';
-import { useEffect } from 'react';
 
 import { useGoogleAnalytics } from '@/hooks/useGoogleAnalytics';
 

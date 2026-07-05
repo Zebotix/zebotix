@@ -1,13 +1,8 @@
 import { Outfit } from "next/font/google";
+import Script from "next/script";
 import React, { Suspense } from "react";
 
 import type { Metadata, Viewport } from "next";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
 
 import { Layout, GoogleAnalytics, WebVitalsReporter } from "@/components";
 import { COMPANY_NAME, SITE_URL, SHORT_DESC } from "@/lib/constants";
@@ -19,7 +14,14 @@ import {
 import { cn } from "@/lib/utils";
 import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+
 import "./globals.css";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -122,20 +124,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
+        <Script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: getSanitizedSchema(organizationJsonLd),
           }}
         />
-        <script
+        <Script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: getSanitizedSchema(websiteJsonLd),
           }}
         />
       </head>
-      <body className={cn(outfit.variable, "modal-scroll min-h-screen bg-background text-foreground antialiased font-sans")}>
+      <body
+        className={cn(
+          outfit.variable,
+          "modal-scroll min-h-screen bg-background text-foreground antialiased font-sans"
+        )}
+      >
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-zebotix-blue focus:text-white focus:rounded-md"

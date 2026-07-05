@@ -10,7 +10,7 @@ export function ThemeProvider({
   // Suppress next-themes script tag warning in React 19
   if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
     const origError = console.error;
-    console.error = (...args: any[]) => {
+    console.error = (...args: unknown[]) => {
       if (typeof args[0] === 'string' && args[0].includes('Encountered a script tag')) {
         return;
       }

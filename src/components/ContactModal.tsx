@@ -1,12 +1,30 @@
 "use client";
 
-import { X } from "lucide-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import React, { useTransition } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui";
-import { cn } from "@/lib/utils";
+import { submitContactForm, contactSchema, type ContactInput } from "@/app/actions/contact";
+import { Button } from "@/components/ui/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/Dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 
 interface ContactModalProps {
   open: boolean;
@@ -14,186 +32,127 @@ interface ContactModalProps {
 }
 
 const ContactModal = ({ open, onClose }: ContactModalProps) => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
+  const [isPending, startTransition] = useTransition();
+
+  const form = useForm<ContactInput>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
   });
 
-  useEffect(() => setMounted(true), []);
+  const onSubmit = (data: ContactInput) => {
+    startTransition(async () => {
+      try {
+        const response = await submitContactForm(data);
 
-  useEffect(() => {
-    if (!open) return;
-    modalRef.current?.focus();
-
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [open]);
-
-  const handleInputchange = (
-    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Failed to send");
-
-      toast.success("Message sent successfully!");
-      onClose();
-      setFormData({ name: "", email: "", message: "" });
-    } catch {
-      toast.error("Failed to send message. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.stopPropagation();
-        onClose();
-      }
-
-      if (e.key === "Tab") {
-        const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        );
-        if (!focusable || focusable.length === 0) return;
-
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
+        if (!response.success) {
+          throw new Error(response.message || "Failed to send");
         }
+
+        toast.success("Message sent successfully!");
+        onClose();
+        form.reset();
+      } catch (err: unknown) {
+        toast.error(
+          err instanceof Error ? err.message : "Failed to send message. Please try again later."
+        );
       }
-    },
-    [onClose]
-  );
+    });
+  };
 
-  if (!mounted || !open) return null;
+  return (
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <DialogContent className="bg-zinc-900 border-zinc-800 rounded-none p-0 shadow-2xl text-zinc-100 sm:max-w-lg max-h-[90vh] overflow-hidden flex flex-col gap-0">
+        <div className="p-8 md:p-10 overflow-y-auto flex-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none">
+          <DialogHeader className="mb-6">
+            <DialogTitle className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
+              Get in Touch
+            </DialogTitle>
+            <DialogDescription className="text-xs text-zinc-400 uppercase tracking-wider font-semibold">
+              Have a project in mind? Let&apos;s build something amazing together.
+            </DialogDescription>
+          </DialogHeader>
 
-  return createPortal(
-    <>
-      <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-xs z-100 transition-opacity"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="contact-modal-title"
-        className="fixed inset-0 z-101 flex items-center justify-center p-4 overflow-y-auto"
-        onKeyDown={handleKeyDown}
-      >
-        <div
-          ref={modalRef}
-          tabIndex={-1}
-          onClick={(e) => e.stopPropagation()}
-          className={cn(
-            "relative w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-none p-8 md:p-10 shadow-2xl text-zinc-100 focus:outline-hidden",
-            "max-h-[90vh] overflow-auto animate-in fade-in slide-in-from-bottom-4 duration-200"
-          )}
-        >
-          <button
-            onClick={onClose}
-            aria-label="Close contact form"
-            className="absolute top-4 right-4 text-zinc-400 hover:text-white bg-zinc-950 border border-zinc-800 p-2 rounded-none focus:outline-hidden focus:ring-1 focus:ring-blue-500"
-          >
-            <X className="w-4 h-4" aria-hidden="true" />
-          </button>
-
-          <h2 id="contact-modal-title" className="text-2xl font-black text-white mb-2 tracking-tight uppercase">
-            Get in Touch
-          </h2>
-          <p className="text-xs text-zinc-400 mb-8 uppercase tracking-wider font-semibold">
-            Have a project in mind? Let&apos;s build something amazing together.
-          </p>
-
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              <label htmlFor="name" className="block text-xs font-black uppercase tracking-wider text-zinc-400">
-                Full Name
-              </label>
-              <input
-                id="name"
+          <Form {...form}>
+            <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
                 name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleInputchange}
-                required
-                className="w-full bg-zinc-950/70 border border-zinc-850 focus:border-blue-500 focus:ring-0 focus:outline-hidden p-3.5 text-white placeholder-zinc-650 transition-all rounded-none font-medium text-sm"
-                placeholder="John Doe"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel className="block text-xs font-black uppercase tracking-wider text-zinc-400">
+                      Full Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        className="w-full bg-zinc-950/70 border border-zinc-850 focus-visible:border-blue-500 focus-visible:ring-0 focus-visible:outline-hidden p-3.5 text-white placeholder-zinc-650 transition-all rounded-none font-medium text-sm"
+                        placeholder="John Doe"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-xs font-black uppercase tracking-wider text-zinc-400">
-                Email Address
-              </label>
-              <input
-                id="email"
+              <FormField
+                control={form.control}
                 name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputchange}
-                required
-                className="w-full bg-zinc-950/70 border border-zinc-850 focus:border-blue-500 focus:ring-0 focus:outline-hidden p-3.5 text-white placeholder-zinc-650 transition-all rounded-none font-medium text-sm"
-                placeholder="john@example.com"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel className="block text-xs font-black uppercase tracking-wider text-zinc-400">
+                      Email Address
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        {...field}
+                        className="w-full bg-zinc-950/70 border border-zinc-850 focus-visible:border-blue-500 focus-visible:ring-0 focus-visible:outline-hidden p-3.5 text-white placeholder-zinc-650 transition-all rounded-none font-medium text-sm"
+                        placeholder="john@example.com"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            <div className="space-y-2">
-              <label htmlFor="message" className="block text-xs font-black uppercase tracking-wider text-zinc-400">
-                Project Details
-              </label>
-              <textarea
-                id="message"
+              <FormField
+                control={form.control}
                 name="message"
-                rows={4}
-                value={formData.message}
-                onChange={handleInputchange}
-                required
-                className="w-full bg-zinc-950/70 border border-zinc-850 focus:border-blue-500 focus:ring-0 focus:outline-hidden p-3.5 text-white placeholder-zinc-650 resize-none transition-all rounded-none font-medium text-sm"
-                placeholder="Tell us about your project..."
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel className="block text-xs font-black uppercase tracking-wider text-zinc-400">
+                      Project Details
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        rows={4}
+                        {...field}
+                        className="w-full bg-zinc-950/70 border border-zinc-850 focus-visible:border-blue-500 focus-visible:ring-0 focus-visible:outline-hidden p-3.5 text-white placeholder-zinc-650 resize-none transition-all rounded-none font-medium text-sm"
+                        placeholder="Tell us about your project..."
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-wider py-4 rounded-none transition-all h-auto text-sm border border-blue-500/20"
-            >
-              {loading ? "Sending..." : "Send Message"}
-            </Button>
-          </form>
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-wider py-4 rounded-none transition-all h-auto text-sm border border-blue-500/20 flex items-center justify-center gap-2"
+              >
+                {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
+                {isPending ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
+          </Form>
         </div>
-      </div>
-    </>,
-    document.body
+      </DialogContent>
+    </Dialog>
   );
 };
 

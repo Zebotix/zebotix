@@ -389,37 +389,40 @@
   color: #888;
 }
 
-/* VARIABLES — pick your brand colors */
+/* Custom Global Scrollbar */
 :root {
-  --sb-track: #0b0b0c; /* track */
-  --sb-thumb: #2563eb; /* thumb (zebotix-blue) */
-  --sb-thumb-hover: #1d4ed8; /* hover */
-  --sb-width: 12px; /* width of scrollbar */
+  --sb-track: hsl(var(--background));
+  --sb-thumb: #2563eb;
+  --sb-thumb-hover: #1d4ed8;
+  --sb-width: 10px;
 }
 
-/* Apply to your modal panel (class .modal-scroll) */
-.modal-scroll {
-  scrollbar-gutter: stable both-edges; /* prevents layout shift when scroll appears */
-  -webkit-overflow-scrolling: touch; /* smooth momentum on iOS */
-  overflow: auto;
+html, body, .modal-scroll {
   scrollbar-width: thin;
   scrollbar-color: var(--sb-thumb) var(--sb-track);
+  scrollbar-gutter: stable; /* prevents layout shift */
+  -webkit-overflow-scrolling: touch; /* smooth momentum on iOS */
 }
 
 /* WebKit browsers (Chrome, Edge, Safari) */
-.modal-scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: var(--sb-width);
   height: var(--sb-width);
 }
-.modal-scroll::-webkit-scrollbar-track {
+
+::-webkit-scrollbar-track {
   background: var(--sb-track);
 }
-.modal-scroll::-webkit-scrollbar-thumb {
+
+::-webkit-scrollbar-thumb {
   background: var(--sb-thumb);
-  min-height: 44px; /* keep thumb usable for touch */
-  border: 3px solid rgba(0, 0, 0, 0); /* optional padding effect */
+  border-radius: 10px;
+  border: 2px solid var(--sb-track); /* Creates a sleek padding effect */
+  min-height: 40px;
+  background-clip: padding-box;
 }
-.modal-scroll::-webkit-scrollbar-thumb:hover {
+
+::-webkit-scrollbar-thumb:hover {
   background: var(--sb-thumb-hover);
 }
 

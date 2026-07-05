@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import React from "react";
 
 import { getPortfolioBySlugAction, getPortfoliosAction } from "@/app/actions/portfolio";
@@ -14,9 +15,6 @@ import { generateCreativeWorkSchema, getSanitizedSchema } from "@/lib/schemas";
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
-
-// eslint-disable-next-line camelcase
-export const unstable_instant = false;
 
 export async function generateStaticParams() {
   const res = await getPortfoliosAction();
@@ -91,7 +89,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
-      <script
+      <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(creativeworkSchema),

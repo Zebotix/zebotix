@@ -1,12 +1,11 @@
-'use client';
+"use client";
 
-import { Mail } from 'lucide-react';
-import React, { useCallback, useState } from 'react';
+import { Mail } from "lucide-react";
+import React, { useCallback, useState } from "react";
 
-import ContactModal from './ContactModal';
+import ContactModal from "./ContactModal";
 
-import { Button } from '@/components/ui';
-
+import { Button } from "@/components/ui";
 
 export default function ContactButton() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,11 +16,12 @@ export default function ContactButton() {
   return (
     <>
       <Button
+        type="button"
         onClick={openModal}
-        className='z-50 fixed bottom-8 right-8 bg-zebotix-blue hover:bg-blue-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-2xl focus:outline-hidden focus:ring-4 focus:ring-zebotix-blue/40 transition-all duration-300 hover:scale-110 active:scale-95'
-        aria-label='Contact us'
+        className="group z-50 fixed bottom-6 right-6 md:bottom-8 md:right-8 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center border border-white/10"
+        aria-label="Contact us"
       >
-        <Mail className='w-6 h-6' aria-hidden='true' />
+        <Mail className="w-6 h-6 md:w-7 md:h-7 pointer-events-none" aria-hidden="true" />
       </Button>
 
       <ContactModal open={modalOpen} onClose={closeModal} />

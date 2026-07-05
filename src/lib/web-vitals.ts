@@ -25,12 +25,13 @@ export function reportWebVital(metric: WebVital) {
       value: Math.round(metric.value),
       delta: Math.round(metric.delta),
     };
+    // eslint-disable-next-line no-console
     console.log('[Web Vital]', rounded);
   }
 
   // Send to analytics (customize based on your provider)
   // Example: Send to Google Analytics
-  if (typeof window !== 'undefined' && (window as any).gtag) {
+  if (typeof window !== 'undefined' && (window as typeof window & { gtag?: (...args: unknown[]) => void }).gtag) {
     const vitals = {
       event_category: 'web_vitals',
       value: Math.round(metric.value),
@@ -38,7 +39,7 @@ export function reportWebVital(metric: WebVital) {
       non_interaction: true,
     };
 
-    (window as any).gtag('event', metric.name, vitals);
+    (window as typeof window & { gtag: (...args: unknown[]) => void }).gtag('event', metric.name, vitals);
   }
 
   // Send to custom endpoint

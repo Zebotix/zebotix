@@ -23,7 +23,7 @@ export interface VisitRecord {
   method: string;
   status: number;
   userAgent: string;
-  metadata: any;
+  metadata: Record<string, unknown>;
   createdAt: string;
   updatedAt: string;
 }
@@ -33,7 +33,7 @@ export function getVisits(): VisitRecord[] {
   try {
     const data = fs.readFileSync(visitsFilePath, 'utf8');
     return JSON.parse(data);
-  } catch (e) {
+  } catch {
     return [];
   }
 }

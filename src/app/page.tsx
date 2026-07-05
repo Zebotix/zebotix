@@ -1,9 +1,9 @@
+import Script from "next/script";
 import { Suspense } from "react";
 
 import type { Metadata } from "next";
 
 import { getBlogsAction } from "@/app/actions/blogs";
-import { getFeaturedPortfoliosAction } from "@/app/actions/portfolio";
 import { getSolutionsAction } from "@/app/actions/solutions";
 import { getTestimonialsAction } from "@/app/actions/testimonials";
 import BlogSection from "@/components/BlogSection";
@@ -11,7 +11,6 @@ import CtaSection from "@/components/CtaSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HeroSection from "@/components/HeroSection";
 import OurProcess from "@/components/OurProcess";
-import PortfolioSection from "@/components/PortfolioSection";
 import ProductsCarouselSection from "@/components/ProductsCarousel";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import TrustedBy from "@/components/TrustedBy";
@@ -19,10 +18,6 @@ import { COMPANY_NAME, SHORT_DESC, SITE_URL } from "@/lib/constants";
 import { getSanitizedSchema, generateLocalBusinessSchema } from "@/lib/schemas";
 
 // Server Actions
-
-// Enable instant navigation for this page
-// eslint-disable-next-line camelcase
-export const unstable_instant = { prefetch: "static" };
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -64,12 +59,6 @@ async function SolutionsWrapper() {
   return <ProductsCarouselSection solutions={solutions} />;
 }
 
-async function PortfoliosWrapper() {
-  const res = await getFeaturedPortfoliosAction();
-  const portfolios = res.success ? res.data : [];
-  return <PortfolioSection portfolios={portfolios} />;
-}
-
 async function TestimonialsWrapper() {
   const res = await getTestimonialsAction(true);
   const testimonials = res.success ? res.data : [];
@@ -87,7 +76,7 @@ export default async function Home() {
 
   return (
     <main id="main-content">
-      <script
+      <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(localBusinessSchema),
@@ -111,10 +100,6 @@ export default async function Home() {
       </Suspense>
 
       <OurProcess />
-
-      <Suspense fallback={<LoadingFallback />}>
-        <PortfoliosWrapper />
-      </Suspense>
 
       <Suspense fallback={<LoadingFallback />}>
         <TestimonialsWrapper />

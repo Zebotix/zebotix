@@ -1,31 +1,58 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useTransition } from "react";
+import { useForm } from "react-hook-form";
 
-import { submitContactForm } from "../actions/contact";
+import { submitContactForm, contactSchema, type ContactInput } from "../actions/contact";
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 
 export default function ContactPage() {
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const liveRef = useRef<HTMLDivElement>(null);
+  const [isPending, startTransition] = useTransition();
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("sending");
+  const form = useForm<ContactInput>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      company: "",
+      message: "",
+      subject: "",
+    },
+  });
+
+  function onSubmit(data: ContactInput) {
+    setStatus("idle");
     setMessage("");
 
-    const formData = new FormData(e.currentTarget);
-    const result = await submitContactForm(formData);
+    startTransition(async () => {
+      const result = await submitContactForm(data);
 
-    if (result.success) {
-      setStatus("success");
-      setMessage("Thanks — your message was sent. We will reply soon.");
-      (e.target as HTMLFormElement).reset();
-    } else {
-      setStatus("error");
-      setMessage(result.error || "Something went wrong.");
-    }
-    liveRef.current?.focus();
+      if (result.success) {
+        setStatus("success");
+        setMessage("Thanks — your message was sent. We will reply soon.");
+        form.reset();
+      } else {
+        setStatus("error");
+        setMessage(result.message || "Something went wrong.");
+      }
+      liveRef.current?.focus();
+    });
   }
 
   return (
@@ -77,128 +104,135 @@ export default function ContactPage() {
                 Send us a message
               </h2>
 
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-zinc-400 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
                       name="name"
-                      required
-                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
-                      placeholder="Jane Doe"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-zinc-400">Full Name *</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Jane Doe"
+                              className="bg-zinc-950 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:ring-1 focus-visible:ring-zinc-400 focus-visible:border-zinc-400"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-zinc-400 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
+                    <FormField
+                      control={form.control}
                       name="email"
-                      required
-                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
-                      placeholder="jane@company.com"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-zinc-400">Email Address *</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="jane@company.com"
+                              className="bg-zinc-950 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:ring-1 focus-visible:ring-zinc-400 focus-visible:border-zinc-400"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-zinc-400 mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
                       name="phone"
-                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
-                      placeholder="+1 (555) 000-0000"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-zinc-400">Phone Number</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="tel"
+                              placeholder="+1 (555) 000-0000"
+                              className="bg-zinc-950 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:ring-1 focus-visible:ring-zinc-400 focus-visible:border-zinc-400"
+                              {...field}
+                              value={field.value || ""}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="company"
-                      className="block text-sm font-medium text-zinc-400 mb-2"
-                    >
-                      Company Name
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
+                    <FormField
+                      control={form.control}
                       name="company"
-                      className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors"
-                      placeholder="Acme Corp"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-zinc-400">Company Name</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Acme Corp"
+                              className="bg-zinc-950 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:ring-1 focus-visible:ring-zinc-400 focus-visible:border-zinc-400"
+                              {...field}
+                              value={field.value || ""}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-zinc-400 mb-2">
-                    How can we help you? *
-                  </label>
-                  <textarea
-                    id="message"
+                  <FormField
+                    control={form.control}
                     name="message"
-                    required
-                    rows={5}
-                    className="w-full bg-zinc-950 border border-zinc-800 text-white px-4 py-3 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:border-zinc-400 transition-colors resize-none"
-                    placeholder="Tell us about your project, timeline, and goals..."
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-zinc-400">How can we help you? *</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            rows={5}
+                            placeholder="Tell us about your project, timeline, and goals..."
+                            className="bg-zinc-950 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:ring-1 focus-visible:ring-zinc-400 focus-visible:border-zinc-400 resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  className="w-full bg-white text-black font-semibold py-4 px-8 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
-                >
-                  {status === "sending" ? (
-                    <>
-                      <svg
-                        className="animate-spin h-5 w-5 text-black"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        />
-                      </svg>
-                      Sending...
-                    </>
-                  ) : (
-                    "Submit Request"
-                  )}
-                </button>
+                  <button
+                    type="submit"
+                    disabled={isPending}
+                    className="w-full bg-white text-black font-semibold py-4 px-8 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                  >
+                    {isPending ? (
+                      <>
+                        <Loader2 className="animate-spin h-5 w-5 text-black" />
+                        Sending...
+                      </>
+                    ) : (
+                      "Submit Request"
+                    )}
+                  </button>
 
-                {/* Status Message (Live Region) */}
-                <div ref={liveRef} aria-live="polite" tabIndex={-1} className="outline-none">
-                  {status === "success" && (
-                    <div className="mt-4 p-4 bg-green-950/50 border border-green-900 text-green-400 text-sm">
-                      {message}
-                    </div>
-                  )}
-                  {status === "error" && (
-                    <div className="mt-4 p-4 bg-red-950/50 border border-red-900 text-red-400 text-sm">
-                      {message}
-                    </div>
-                  )}
-                </div>
-              </form>
+                  {/* Status Message (Live Region) */}
+                  <div ref={liveRef} aria-live="polite" tabIndex={-1} className="outline-none">
+                    {status === "success" && (
+                      <div className="mt-4 p-4 bg-green-950/50 border border-green-900 text-green-400 text-sm">
+                        {message}
+                      </div>
+                    )}
+                    {status === "error" && (
+                      <div className="mt-4 p-4 bg-red-950/50 border border-red-900 text-red-400 text-sm">
+                        {message}
+                      </div>
+                    )}
+                  </div>
+                </form>
+              </Form>
             </div>
 
             {/* Image Column */}

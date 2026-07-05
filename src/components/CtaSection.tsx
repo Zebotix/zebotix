@@ -1,19 +1,22 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-import { Reveal } from '@/components/animations';
-import { Button } from '@/components/ui';
-import { COMPANY_NAME } from '@/lib/constants';
+import { Reveal } from "@/components/animations";
+import { Button } from "@/components/ui";
+import { COMPANY_NAME } from "@/lib/constants";
 
 const CtaSection = () => {
   return (
-    <section id="cta" className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden">
+    <section
+      id="cta"
+      className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <Reveal distance={40}>
-          <div className="bg-zinc-900 border border-zinc-800 p-8 md:p-16 relative overflow-hidden rounded-none shadow-[0_-20px_50px_rgba(0,0,0,0.3)] select-none">
+          <div className="bg-zinc-900 border border-zinc-800 p-8 md:p-16 relative overflow-hidden rounded-none select-none">
             {/* Abstract glow effects */}
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/5 rounded-none blur-[120px] pointer-events-none" />
             <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/3 rounded-none blur-[120px] pointer-events-none" />
@@ -24,10 +27,9 @@ const CtaSection = () => {
                   Next Step
                 </span>
                 <h2 className="text-3xl md:text-5xl font-black mb-6 text-white leading-[1.1] uppercase tracking-tighter">
-                  Build faster.<br />
-                  <span className="text-blue-500">
-                    Launch confidently.
-                  </span>
+                  Build faster.
+                  <br />
+                  <span className="text-blue-500">Launch confidently.</span>
                 </h2>
                 <p className="text-zinc-400 text-sm mb-10 max-w-xl leading-relaxed">
                   {COMPANY_NAME} designs and delivers web and mobile solutions — from fast landing
@@ -55,7 +57,7 @@ const CtaSection = () => {
 
               <div className="lg:w-2/5 w-full">
                 <div className="relative border border-zinc-800 rounded-none bg-zinc-950 p-2">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-tr from-blue-500/10 via-transparent to-transparent pointer-events-none" />
                   <Image
                     width={500}
                     height={400}

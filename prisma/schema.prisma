@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -207,16 +208,21 @@ model AnnouncementBar {
 // ═══ AUTH & AUDIT ═══
 
 model User {
-  id           String    @id @default(cuid())
-  name         String
-  email        String    @unique
-  passwordHash String
-  role         String    @default("admin") // admin, editor
-  isActive     Boolean   @default(true)
-  lastLogin    DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  auditLogs    AuditLog[]
+  id                  String            @id @default(cuid())
+  name                String
+  email               String            @unique
+  passwordHash        String
+  passwordUpdatedAt   DateTime          @default(now())
+  failedLoginAttempts Int               @default(0)
+  lockedUntil         DateTime?
+  role                String            @default("admin") // admin, editor
+  isActive            Boolean           @default(true)
+  lastLogin           DateTime?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  auditLogs           AuditLog[]
+  sessions            Session[]
+  passwordHistory     PasswordHistory[]
 }
 
 model AuditLog {
@@ -229,4 +235,25 @@ model AuditLog {
   user      User      @relation(fields: [userId], references: [id])
   ipAddress String?
   createdAt DateTime  @default(now())
+}
+
+model PasswordHistory {
+  id           String   @id @default(cuid())
+  passwordHash String
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  token        String   @unique // Hashed token or jti
+  ipAddress    String?
+  userAgent    String?
+  expiresAt    DateTime
+  isRevoked    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

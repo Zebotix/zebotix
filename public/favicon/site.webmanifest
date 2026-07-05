@@ -40,9 +40,9 @@
       "url": "/",
       "icons": [
         {
-          "src": "../Zebotix.png",
+          "src": "../Zebotix.webp",
           "sizes": "192x192",
-          "type": "image/png"
+          "type": "image/webp"
         }
       ]
     }
@@ -54,9 +54,9 @@
       "url": "/contact",
       "icons": [
         {
-          "src": "../Zebotix.png",
+          "src": "../Zebotix.webp",
           "sizes": "192x192",
-          "type": "image/png"
+          "type": "image/webp"
         }
       ]
     }
@@ -70,24 +70,24 @@
   ],
   "icons": [
     {
-      "src": "../Zebotix.png",
+      "src": "../Zebotix.webp",
       "sizes": "32x32",
-      "type": "image/png"
+      "type": "image/webp"
     },
     {
-      "src": "../Zebotix.png",
+      "src": "../Zebotix.webp",
       "sizes": "180x180",
-      "type": "image/png"
+      "type": "image/webp"
     },
     {
-      "src": "../Zebotix.png",
+      "src": "../Zebotix.webp",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/webp"
     },
     {
-      "src": "../Zebotix.png",
+      "src": "../Zebotix.webp",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/webp"
     }
   ],
   "maskable_icon": true,
@@ -98,7 +98,7 @@
   },
   "ms": {
     "tile_color": "#1d1d1d",
-    "tile_image": "../Zebotix.png",
+    "tile_image": "../Zebotix.webp",
     "config": ""
   },
   "share_target": {

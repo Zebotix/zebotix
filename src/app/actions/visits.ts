@@ -1,16 +1,14 @@
-import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+"use server";
 
-import { COMPANY_NAME } from '@/lib/constants';
-import { upsertVisit } from '@/lib/data/visitsUtil';
-import { escapeHtml, getRequestMetadata } from '@/lib/server/utils';
+import nodemailer from "nodemailer";
 
-export async function POST(request: Request) {
+import { COMPANY_NAME } from "@/lib/constants";
+import { upsertVisit } from "@/lib/data/visitsUtil";
+import { escapeHtml, getActionMetadata } from "@/lib/server/utils";
+
+export async function logVisitAction(pathName: string, queryParams: Record<string, string>) {
   try {
-    const { ip, userAgent, referer, headers } = getRequestMetadata(request);
-    const url = new URL(request.url);
-    const pathName = url.pathname;
-    const queryParams = Object.fromEntries(url.searchParams);
+    const { ip, userAgent, referer, headers } = await getActionMetadata();
 
     const mergedMetadata = {
       ...headers,
@@ -22,13 +20,13 @@ export async function POST(request: Request) {
       userAgent,
       path: pathName,
       referrer: referer,
-      metadata: mergedMetadata
+      metadata: mergedMetadata,
     });
 
     // Email notification logic
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       const transporter = nodemailer.createTransport({
-        service: process.env.EMAIL_SERVICE || 'gmail',
+        service: process.env.EMAIL_SERVICE || "gmail",
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS,
@@ -56,12 +54,12 @@ export async function POST(request: Request) {
       };
 
       // Background the email send
-      transporter.sendMail(mailOptions).catch(err => console.error('Email notification failed:', err));
+      transporter.sendMail(mailOptions).catch(err => console.error("Email notification failed:", err));
     }
 
-    return NextResponse.json({ success: true, id: visitDoc.id });
+    return { success: true, id: visitDoc.id };
   } catch (err) {
-    console.error('Visits API Error:', err);
-    return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
+    console.error("Visits Action Error:", err);
+    return { success: false, error: "Internal Server Error" };
   }
 }

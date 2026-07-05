@@ -15,7 +15,7 @@ import {
 /**
  * Sanitizes JSON-LD content to prevent XSS attacks
  */
-function sanitizeJsonLd(obj: any): string {
+function sanitizeJsonLd(obj: unknown): string {
   return JSON.stringify(obj).replaceAll(/</g, '\\u003c').replaceAll(/>/g, '\\u003e');
 }
 
@@ -216,6 +216,6 @@ export function generateLocalBusinessSchema() {
 /**
  * Export sanitized schema for use in dangerouslySetInnerHTML
  */
-export function getSanitizedSchema(schema: any): string {
+export function getSanitizedSchema(schema: unknown): string {
   return sanitizeJsonLd(schema);
 }
