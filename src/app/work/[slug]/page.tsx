@@ -3,7 +3,6 @@ import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import React from "react";
 
 import { getPortfolioBySlugAction, getPortfoliosAction } from "@/app/actions/portfolio";
@@ -89,7 +88,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
-      <Script
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(creativeworkSchema),

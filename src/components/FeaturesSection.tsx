@@ -25,7 +25,7 @@ export default function FeaturesSection() {
       gsap.fromTo(
         wordsRef.current.children,
         {
-          opacity: 0.3,
+          opacity: 0.5,
           y: 5,
         },
         {

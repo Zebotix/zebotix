@@ -1,7 +1,6 @@
 import { type Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 
 import { getBlogsAction } from "@/app/actions/blogs";
 import { Reveal } from "@/components/animations";
@@ -69,7 +68,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
 
   return (
     <article className="pt-32 pb-24">
-      <Script
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(blogPostingSchema),

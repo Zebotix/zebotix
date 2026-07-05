@@ -1,4 +1,4 @@
-import Script from "next/script";
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
 import type { Metadata } from "next";
@@ -7,16 +7,16 @@ import { getBlogsAction } from "@/app/actions/blogs";
 import { getSolutionsAction } from "@/app/actions/solutions";
 import { getTestimonialsAction } from "@/app/actions/testimonials";
 import BlogSection from "@/components/BlogSection";
-import CtaSection from "@/components/CtaSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HeroSection from "@/components/HeroSection";
-import OurProcess from "@/components/OurProcess";
 import ProductsCarouselSection, { type SolutionItem } from "@/components/ProductsCarousel";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import TrustedBy from "@/components/TrustedBy";
 import { COMPANY_NAME, SHORT_DESC, SITE_URL } from "@/lib/constants";
 import { getSanitizedSchema, generateLocalBusinessSchema } from "@/lib/schemas";
 
+const OurProcess = dynamic(() => import("@/components/OurProcess"));
+const CtaSection = dynamic(() => import("@/components/CtaSection"));
+const TrustedBy = dynamic(() => import("@/components/TrustedBy"));
 // Server Actions
 
 export const metadata: Metadata = {
@@ -76,7 +76,7 @@ export default async function Home() {
 
   return (
     <main id="main-content">
-      <Script
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(localBusinessSchema),

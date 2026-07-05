@@ -1,10 +1,10 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Outfit } from "next/font/google";
-import Script from "next/script";
 import React, { Suspense } from "react";
 
 import type { Metadata, Viewport } from "next";
 
-import { Layout, GoogleAnalytics, WebVitalsReporter } from "@/components";
+import { Layout, GoogleAnalytics as GoogleAnalyticsTracker, WebVitalsReporter } from "@/components";
 import { COMPANY_NAME, SITE_URL, SHORT_DESC } from "@/lib/constants";
 import {
   generateOrganizationSchema,
@@ -124,13 +124,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: getSanitizedSchema(organizationJsonLd),
           }}
         />
-        <Script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: getSanitizedSchema(websiteJsonLd),
@@ -150,8 +150,9 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Suspense fallback={null}>
-          <GoogleAnalytics />
+          <GoogleAnalyticsTracker />
         </Suspense>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"} />
         <Suspense fallback={null}>
           <WebVitalsReporter />
           <ThemeProvider
