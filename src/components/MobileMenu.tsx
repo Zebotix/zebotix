@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 
 import { ThemeToggle } from './ThemeToggle';
 
+import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
 interface MobileMenuProps {
@@ -57,14 +58,15 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
           <span className="text-xs font-black uppercase tracking-widest text-zinc-550">
             Navigation
           </span>
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            size="icon"
             onClick={onClose}
-            className="p-2 rounded-none bg-zinc-900 border border-zinc-800 text-white hover:bg-zinc-850 transition-colors"
+            className="rounded-none bg-zinc-900 border-zinc-800 text-white hover:bg-zinc-850 transition-colors"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
 
         {/* Links Navigation */}
@@ -82,13 +84,14 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
 
           {/* Solutions Dropdown Menu */}
           <div>
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setSolutionsExpanded(!solutionsExpanded)}
-              className="w-full flex justify-between items-center text-sm font-black uppercase tracking-wider py-2 text-zinc-300 hover:text-white transition-colors"
+              className="w-full flex justify-between items-center text-sm font-black uppercase tracking-wider py-6 px-0 text-zinc-300 hover:text-white hover:bg-transparent transition-colors"
             >
               <span>Solutions</span>
               {solutionsExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </button>
+            </Button>
             <div
               className={cn(
                 "pl-4 flex flex-col gap-2 overflow-hidden transition-all duration-300",
@@ -113,13 +116,14 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
 
           {/* Company Dropdown Menu */}
           <div>
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setCompanyExpanded(!companyExpanded)}
-              className="w-full flex justify-between items-center text-sm font-black uppercase tracking-wider py-2 text-zinc-300 hover:text-white transition-colors"
+              className="w-full flex justify-between items-center text-sm font-black uppercase tracking-wider py-6 px-0 text-zinc-300 hover:text-white hover:bg-transparent transition-colors"
             >
               <span>Company</span>
               {companyExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </button>
+            </Button>
             <div
               className={cn(
                 "pl-4 flex flex-col gap-2 overflow-hidden transition-all duration-300",

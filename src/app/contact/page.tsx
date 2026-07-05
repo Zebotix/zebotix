@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 import { submitContactForm, contactSchema, type ContactInput } from "../actions/contact";
 
+import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
@@ -203,10 +204,10 @@ export default function ContactPage() {
                     )}
                   />
 
-                  <button
+                  <Button
                     type="submit"
                     disabled={isPending}
-                    className="w-full bg-white text-black font-semibold py-4 px-8 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+                    className="w-full bg-white text-black font-semibold py-4 px-8 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2 rounded-none h-auto"
                   >
                     {isPending ? (
                       <>
@@ -216,7 +217,7 @@ export default function ContactPage() {
                     ) : (
                       "Submit Request"
                     )}
-                  </button>
+                  </Button>
 
                   {/* Status Message (Live Region) */}
                   <div ref={liveRef} aria-live="polite" tabIndex={-1} className="outline-none">

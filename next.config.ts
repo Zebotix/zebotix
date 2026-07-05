@@ -51,7 +51,6 @@ if (isDev) {
 }
 
 const nextConfig: NextConfig = {
-  output: "standalone",
   poweredByHeader: false,
   /* config options here */
   images: {
@@ -125,8 +124,8 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               process.env.NODE_ENV === "development"
-                ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com`
-                : `script-src 'self' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com`,
+                ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com https://assets.apollo.io`
+                : `script-src 'self' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com https://assets.apollo.io`,
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' blob: data: https:",
               "font-src 'self' data:",
@@ -136,8 +135,8 @@ const nextConfig: NextConfig = {
               "form-action 'self'",
               "frame-ancestors 'none'",
               process.env.NODE_ENV === "development"
-                ? `connect-src 'self' ${cloudflareTurnstileOrigin} ws://127.0.0.1:* ws://localhost:* https://*.google-analytics.com https://*.analytics.google.com`
-                : `connect-src 'self' ${cloudflareTurnstileOrigin} https://*.google-analytics.com https://*.analytics.google.com`,
+                ? `connect-src 'self' ${cloudflareTurnstileOrigin} ws://127.0.0.1:* ws://localhost:* https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io`
+                : `connect-src 'self' ${cloudflareTurnstileOrigin} https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io`,
             ].join("; "),
           },
         ],

@@ -12,6 +12,7 @@ import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
 // import { ThemeToggle } from "./ThemeToggle";
 
+import { Button } from "@/components/ui/Button";
 import { COMPANY_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -138,12 +139,12 @@ const Navbar = () => {
               tabIndex={0}
               role="menu"
             >
-              <button
-                type="button"
+              <Button
+                variant="ghost"
                 className={cn(
-                  "px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-default bg-transparent border-none outline-none",
+                  "px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-default bg-transparent border-none outline-none hover:bg-transparent",
                   pathname.startsWith("/solutions")
-                    ? "text-blue-500"
+                    ? "text-blue-500 hover:text-blue-500"
                     : "text-zinc-400 hover:text-white"
                 )}
               >
@@ -157,7 +158,7 @@ const Navbar = () => {
                       : "scale-x-0 group-hover:scale-x-100"
                   )}
                 />
-              </button>
+              </Button>
 
               {/* Solutions dropdown container */}
               <div
@@ -199,12 +200,12 @@ const Navbar = () => {
               tabIndex={0}
               role="menu"
             >
-              <button
-                type="button"
+              <Button
+                variant="ghost"
                 className={cn(
-                  "px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-default bg-transparent border-none outline-none",
+                  "px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-default bg-transparent border-none outline-none hover:bg-transparent",
                   pathname === "/about" || pathname === "/blog"
-                    ? "text-blue-500"
+                    ? "text-blue-500 hover:text-blue-500"
                     : "text-zinc-400 hover:text-white"
                 )}
               >
@@ -218,7 +219,7 @@ const Navbar = () => {
                       : "scale-x-0 group-hover:scale-x-100"
                   )}
                 />
-              </button>
+              </Button>
 
               {/* Company dropdown container */}
               <div
@@ -261,16 +262,17 @@ const Navbar = () => {
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden flex items-center">
-            <button
-              type="button"
+            <Button
+              variant="outline"
+              size="icon"
               onClick={toggleMenu}
-              className="p-3 rounded-none bg-zinc-900 text-white hover:bg-zinc-850 transition-all border border-zinc-800 focus:outline-hidden"
+              className="rounded-none bg-zinc-900 text-white hover:bg-zinc-850 transition-all border-zinc-800 focus:outline-hidden"
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
             >
               <Menu className="h-5 w-5" />
-            </button>
+            </Button>
           </div>
         </div>
       </div>
