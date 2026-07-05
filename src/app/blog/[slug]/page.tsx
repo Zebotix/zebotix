@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 
+import { getBlogsAction } from "@/app/actions/blogs";
 import { Reveal } from "@/components/animations";
 import { getPostBySlug } from "@/lib/blog";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
@@ -151,4 +152,17 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
       </div>
     </article>
   );
+}
+
+export async function generateStaticParams() {
+  try {
+    const { data: blogs, success } = await getBlogsAction();
+    if (!success || !blogs) {
+      return [];
+    }
+    return blogs.map((s) => ({ slug: s.slug || "" }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }

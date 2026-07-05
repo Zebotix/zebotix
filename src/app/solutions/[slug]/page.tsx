@@ -1,13 +1,13 @@
-import { ArrowLeft, Check, Cpu, Hammer } from 'lucide-react';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import React from 'react';
+import { ArrowLeft, Check, Cpu, Hammer } from "lucide-react";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import React from "react";
 
-import { getFaqsAction } from '@/app/actions/faqs';
-import { getSolutionBySlugAction } from '@/app/actions/solutions';
-import { Reveal } from '@/components/animations';
-import FaqSection from '@/components/FaqSection';
-import { Button } from '@/components/ui/Button';
+import { getFaqsAction } from "@/app/actions/faqs";
+import { getSolutionBySlugAction, getSolutionsAction } from "@/app/actions/solutions";
+import { Reveal } from "@/components/animations";
+import FaqSection from "@/components/FaqSection";
+import { Button } from "@/components/ui/Button";
 
 interface SolutionPageProps {
   params: Promise<{ slug: string }>;
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: SolutionPageProps) {
   const { slug } = await params;
   const res = await getSolutionBySlugAction(slug);
   if (!res.success || !res.data) {
-    return { title: 'Solution Not Found' };
+    return { title: "Solution Not Found" };
   }
   return {
     title: `${res.data.title} | Solutions | Zebotix`,
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: SolutionPageProps) {
   };
 }
 
-export default async function SolutionDetailsPage({ params }: SolutionPageProps) {
+export default async function SolutionDetailsPage({ params }: Readonly<SolutionPageProps>) {
   const { slug } = await params;
   const res = await getSolutionBySlugAction(slug);
   const faqsRes = await getFaqsAction();
@@ -36,9 +36,15 @@ export default async function SolutionDetailsPage({ params }: SolutionPageProps)
   }
 
   const solution = res.data;
-  const benefits = Array.isArray(solution.benefits) ? (solution.benefits as Array<{ title: string; desc: string }>) : [];
-  const processSteps = Array.isArray(solution.process) ? (solution.process as Array<{ title: string; desc: string }>) : [];
-  const techStack = Array.isArray(solution.technologies) ? (solution.technologies as Array<{ name: string; icon: string }>) : [];
+  const benefits = Array.isArray(solution.benefits)
+    ? (solution.benefits as Array<{ title: string; desc: string }>)
+    : [];
+  const processSteps = Array.isArray(solution.process)
+    ? (solution.process as Array<{ title: string; desc: string }>)
+    : [];
+  const techStack = Array.isArray(solution.technologies)
+    ? (solution.technologies as Array<{ name: string; icon: string }>)
+    : [];
 
   return (
     <main className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
@@ -90,7 +96,7 @@ export default async function SolutionDetailsPage({ params }: SolutionPageProps)
                     {processSteps.map((step, sIdx: number) => (
                       <div key={sIdx} className="flex gap-6 items-start">
                         <div className="bg-zinc-900 border border-zinc-800 text-blue-500 text-sm font-bold font-mono px-3 py-1 mt-1 shrink-0">
-                          {String(sIdx + 1).padStart(2, '0')}
+                          {String(sIdx + 1).padStart(2, "0")}
                         </div>
                         <div>
                           <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
@@ -108,7 +114,9 @@ export default async function SolutionDetailsPage({ params }: SolutionPageProps)
             <Reveal delay={0.3}>
               <div className="bg-zinc-900/40 p-8 border border-zinc-800 shadow-2xl space-y-8">
                 <div>
-                  <h3 className="text-xl font-black text-white mb-6 uppercase tracking-wide">Key Benefits</h3>
+                  <h3 className="text-xl font-black text-white mb-6 uppercase tracking-wide">
+                    Key Benefits
+                  </h3>
                   <div className="space-y-4">
                     {benefits.map((b, bIdx: number) => (
                       <div key={bIdx} className="flex items-start gap-3">
@@ -130,10 +138,10 @@ export default async function SolutionDetailsPage({ params }: SolutionPageProps)
                     <div className="flex flex-wrap gap-2">
                       {techStack.map((tech) => (
                         <span
-                          key={typeof tech === 'string' ? tech : tech.name}
+                          key={typeof tech === "string" ? tech : tech.name}
                           className="px-3 py-1.5 bg-zinc-950 border border-zinc-850 text-xs font-bold text-zinc-400"
                         >
-                          {typeof tech === 'string' ? tech : tech.name}
+                          {typeof tech === "string" ? tech : tech.name}
                         </span>
                       ))}
                     </div>
@@ -161,4 +169,17 @@ export default async function SolutionDetailsPage({ params }: SolutionPageProps)
       </div>
     </main>
   );
+}
+
+export async function generateStaticParams() {
+  try {
+    const { data: solutions, success } = await getSolutionsAction();
+    if (!success || !solutions) {
+      return [];
+    }
+    return solutions.map((s) => ({ slug: s.slug || "" }));
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
