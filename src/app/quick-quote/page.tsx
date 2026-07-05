@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
+import { cn } from "@/lib/utils";
 
 export default function QuickQuotePage() {
   const [step, setStep] = useState(1);
@@ -162,18 +163,20 @@ export default function QuickQuotePage() {
                         "E-commerce Platform",
                         "Other",
                       ].map((type) => (
-                        <button
+                        <Button
                           key={type}
                           type="button"
+                          variant="outline"
                           onClick={() => handleSelectOne("projectType", type)}
-                          className={`text-left p-5 border transition-all duration-200 font-bold ${
+                          className={cn(
+                            "text-left p-5 border transition-all duration-200 font-bold h-auto rounded-none w-full justify-start",
                             formData.projectType === type
                               ? "border-blue-500 bg-blue-500/10 text-white"
                               : "border-zinc-800 hover:border-zinc-700 bg-zinc-950 text-zinc-400 hover:text-white"
-                          }`}
+                          )}
                         >
                           {type}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </Reveal>
@@ -195,18 +198,20 @@ export default function QuickQuotePage() {
                         "Tech Startup",
                         "Other",
                       ].map((type) => (
-                        <button
+                        <Button
                           key={type}
                           type="button"
+                          variant="outline"
                           onClick={() => handleSelectOne("businessType", type)}
-                          className={`text-left p-5 border transition-all duration-200 font-bold ${
+                          className={cn(
+                            "text-left p-5 border transition-all duration-200 font-bold h-auto rounded-none w-full justify-start",
                             formData.businessType === type
                               ? "border-blue-500 bg-blue-500/10 text-white"
                               : "border-zinc-800 hover:border-zinc-700 bg-zinc-950 text-zinc-400 hover:text-white"
-                          }`}
+                          )}
                         >
                           {type}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </Reveal>
@@ -232,19 +237,21 @@ export default function QuickQuotePage() {
                       ].map((theme) => {
                         const isSelected = formData.colorThemes?.includes(theme);
                         return (
-                          <button
+                          <Button
                             key={theme}
                             type="button"
+                            variant="outline"
                             onClick={() => handleMultiSelect("colorThemes", theme)}
-                            className={`text-left p-5 border transition-all duration-200 font-bold flex justify-between items-center ${
+                            className={cn(
+                              "text-left p-5 border transition-all duration-200 font-bold flex justify-between items-center h-auto rounded-none w-full",
                               isSelected
                                 ? "border-blue-500 bg-blue-500/5 text-white"
                                 : "border-zinc-800 hover:border-zinc-700 bg-zinc-950 text-zinc-400 hover:text-white"
-                            }`}
+                            )}
                           >
                             <span>{theme}</span>
                             {isSelected && <Check className="h-5 w-5 text-blue-500" />}
-                          </button>
+                          </Button>
                         );
                       })}
                     </div>
@@ -272,19 +279,21 @@ export default function QuickQuotePage() {
                       ].map((feat) => {
                         const isSelected = formData.features?.includes(feat);
                         return (
-                          <button
+                          <Button
                             key={feat}
                             type="button"
+                            variant="outline"
                             onClick={() => handleMultiSelect("features", feat)}
-                            className={`text-left p-4 border transition-all duration-200 text-sm font-bold flex justify-between items-center ${
+                            className={cn(
+                              "text-left p-4 border transition-all duration-200 text-sm font-bold flex justify-between items-center h-auto rounded-none w-full",
                               isSelected
                                 ? "border-blue-500 bg-blue-500/5 text-white"
                                 : "border-zinc-800 hover:border-zinc-700 bg-zinc-950 text-zinc-400"
-                            }`}
+                            )}
                           >
                             <span>{feat}</span>
                             {isSelected && <Check className="h-4 w-4 text-blue-500" />}
-                          </button>
+                          </Button>
                         );
                       })}
                     </div>
@@ -304,18 +313,20 @@ export default function QuickQuotePage() {
                         "$3,000 - $5,000",
                         "$5,000+ / Enterprise Custom",
                       ].map((bud) => (
-                        <button
+                        <Button
                           key={bud}
                           type="button"
+                          variant="outline"
                           onClick={() => handleSelectOne("budget", bud)}
-                          className={`text-left p-5 border transition-all duration-200 font-bold ${
+                          className={cn(
+                            "text-left p-5 border transition-all duration-200 font-bold h-auto rounded-none w-full justify-start",
                             formData.budget === bud
                               ? "border-blue-500 bg-blue-500/10 text-white"
                               : "border-zinc-800 hover:border-zinc-700 bg-zinc-950 text-zinc-400 hover:text-white"
-                          }`}
+                          )}
                         >
                           {bud}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </Reveal>
@@ -334,18 +345,20 @@ export default function QuickQuotePage() {
                         "Custom Scope (2+ months)",
                         "Flexible Schedule",
                       ].map((time) => (
-                        <button
+                        <Button
                           key={time}
                           type="button"
+                          variant="outline"
                           onClick={() => handleSelectOne("timeline", time)}
-                          className={`text-left p-5 border transition-all duration-200 font-bold ${
+                          className={cn(
+                            "text-left p-5 border transition-all duration-200 font-bold h-auto rounded-none w-full justify-start",
                             formData.timeline === time
                               ? "border-blue-500 bg-blue-500/10 text-white"
                               : "border-zinc-800 hover:border-zinc-700 bg-zinc-950 text-zinc-400 hover:text-white"
-                          }`}
+                          )}
                         >
                           {time}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   </Reveal>
@@ -391,13 +404,13 @@ export default function QuickQuotePage() {
                             className="flex-1 bg-zinc-950 border border-zinc-850 text-white placeholder:text-zinc-600 focus-visible:ring-1 focus-visible:ring-blue-500 rounded-none"
                             placeholder="https://example.com"
                           />
-                          <button
+                          <Button
                             type="button"
                             onClick={handleAddRefUrl}
-                            className="bg-zinc-800 hover:bg-zinc-700 text-white px-6 font-bold text-sm"
+                            className="bg-zinc-800 hover:bg-zinc-700 text-white px-6 font-bold text-sm rounded-none"
                           >
                             Add URL
-                          </button>
+                          </Button>
                         </div>
                         {formData.referenceUrls && formData.referenceUrls.length > 0 && (
                           <div className="mt-4 space-y-2">
@@ -407,13 +420,14 @@ export default function QuickQuotePage() {
                                 className="flex justify-between items-center bg-zinc-950 p-2.5 border border-zinc-850 text-xs"
                               >
                                 <span className="text-zinc-400 truncate max-w-md">{url}</span>
-                                <button
+                                <Button
+                                  variant="link"
                                   type="button"
                                   onClick={() => handleRemoveRefUrl(idx)}
-                                  className="text-red-500 font-bold hover:underline"
+                                  className="text-red-500 font-bold hover:underline p-0 h-auto"
                                 >
                                   Remove
-                                </button>
+                                </Button>
                               </div>
                             ))}
                           </div>
@@ -521,13 +535,14 @@ export default function QuickQuotePage() {
                 {/* Back / Next navigation bar */}
                 <div className="mt-12 pt-8 border-t border-zinc-850 flex justify-between">
                   {step > 1 ? (
-                    <button
+                    <Button
+                      variant="ghost"
                       type="button"
                       onClick={prevStep}
                       className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors font-bold text-sm uppercase tracking-wider"
                     >
                       <ArrowLeft className="h-4 w-4" /> Back
-                    </button>
+                    </Button>
                   ) : (
                     <div />
                   )}

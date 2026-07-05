@@ -108,13 +108,15 @@ const Modal = ({ open, onClose, content }: ModalType) => {
               </h3>
               <p className="text-gray-400">{content.short}</p>
             </div>
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={onClose}
               aria-label="Close details"
-              className="p-2 rounded-full hover:bg-white/10 transition-colors"
+              className="rounded-full hover:bg-white/10 transition-colors text-white"
             >
               <X className="h-6 w-6" />
-            </button>
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
@@ -270,12 +272,13 @@ const PricingSection = ({ pricingPlans }: PricingSectionProps) => {
                     {plan.name === "Enterprise" ? "Custom Quote" : "Get Started"}
                   </Button>
 
-                  <button
+                  <Button
+                    variant="link"
                     onClick={() => openDetails(plan.id)}
-                    className="w-full text-xs font-medium text-gray-500 hover:text-white transition-colors py-2"
+                    className="w-full text-xs font-medium text-gray-500 hover:text-white transition-colors py-2 h-auto"
                   >
                     View Full Scope & Add-ons
-                  </button>
+                  </Button>
                 </div>
               </div>
             </Reveal>
