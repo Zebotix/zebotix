@@ -6,9 +6,7 @@ import Link from "next/link";
 import React, { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
-import {
-  submitQuickQuoteAction,
-} from "@/app/actions/quick-quote";
+import { submitQuickQuoteAction } from "@/app/actions/quick-quote";
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
 import {
@@ -392,11 +390,15 @@ export default function QuickQuotePage() {
                         )}
                       />
                       <div>
-                        <label className="block text-sm font-medium text-zinc-400 mb-2">
+                        <label
+                          htmlFor="reference-website-url"
+                          className="block text-sm font-medium text-zinc-400 mb-2"
+                        >
                           Reference Website URLs
                         </label>
                         <div className="flex gap-2">
                           <Input
+                            id="reference-website-url"
                             type="url"
                             value={refUrlInput}
                             onChange={(e) => setRefUrlInput(e.target.value)}

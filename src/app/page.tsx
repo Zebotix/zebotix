@@ -20,7 +20,7 @@ const TrustedBy = dynamic(() => import("@/components/TrustedBy"));
 // Server Actions
 
 export const metadata: Metadata = {
-  metadataBase: new URL("/"),
+  metadataBase: new URL(SITE_URL),
   title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
   description: `${SHORT_DESC} Build responsive web apps, AI-driven products, and scalable systems.`,
   alternates: {

@@ -1,5 +1,5 @@
 export const COMPANY_NAME = "Zebotix";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "/";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || "https://www.zebotix.com";
 export const SHORT_DESC =
   "Zebotix — software & AI solutions that power modern businesses: web apps, ML, and custom IT services.";
 
