@@ -100,7 +100,7 @@ const Navbar = () => {
       ref={navRef}
       aria-label="Primary navigation"
       className={cn(
-        "fixed top-0 left-0 right-0 z-90 transition-all duration-500 border-b",
+        "fixed top-0 left-0 right-0 z-[90] transition-all duration-500 border-b",
         scrolled
           ? "bg-zinc-950/90 backdrop-blur-xl py-3 border-zinc-900 shadow-2xl"
           : "bg-transparent py-6 border-transparent"
@@ -266,12 +266,12 @@ const Navbar = () => {
               variant="outline"
               size="icon"
               onClick={toggleMenu}
-              className="rounded-none bg-zinc-900 text-white hover:bg-zinc-850 transition-all border-zinc-800 focus:outline-hidden"
+              className="rounded-none bg-zinc-900 text-white hover:bg-zinc-850 transition-all border-zinc-800 focus:outline-hidden w-10 h-10 sm:w-12 sm:h-12"
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-navigation"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
             </Button>
           </div>
         </div>

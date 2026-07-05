@@ -8,8 +8,6 @@ import { useForm } from "react-hook-form";
 
 import {
   submitQuickQuoteAction,
-  quickQuoteSchema,
-  type QuickQuoteInput,
 } from "@/app/actions/quick-quote";
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
@@ -24,6 +22,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { cn } from "@/lib/utils";
+import { quickQuoteSchema, type QuickQuoteInput } from "@/lib/validations";
 
 export default function QuickQuotePage() {
   const [step, setStep] = useState(1);

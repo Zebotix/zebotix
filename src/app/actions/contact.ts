@@ -1,23 +1,12 @@
 "use server";
 
 import nodemailer from "nodemailer";
-import { z } from "zod";
 
 import { COMPANY_NAME, CONTACT_EMAIL } from "@/lib/constants";
 import prisma from "@/lib/db/prisma";
 import { checkActionSecurity, type ActionResponse } from "@/lib/security/actionHandler";
 import { escapeHtml, getActionMetadata, getTimestamp } from "@/lib/server/utils";
-
-export const contactSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
-  email: z.email("Invalid email address"),
-  phone: z.string().max(20).optional().nullable(),
-  company: z.string().max(100).optional().nullable(),
-  message: z.string().min(1, "Message is required").max(5000),
-  subject: z.string().max(200).optional().default(""),
-});
-
-export type ContactInput = z.infer<typeof contactSchema>;
+import { contactSchema, type ContactInput } from "@/lib/validations";
 
 export async function submitContactForm(data: unknown): Promise<ActionResponse> {
   const securityCheck = await checkActionSecurity<ContactInput>(data, {

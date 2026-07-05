@@ -6,7 +6,7 @@ import React, { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import { submitContactForm, contactSchema, type ContactInput } from "@/app/actions/contact";
+import { submitContactForm } from "@/app/actions/contact";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
+import { contactSchema, type ContactInput } from "@/lib/validations";
 
 interface ContactModalProps {
   open: boolean;
