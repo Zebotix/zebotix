@@ -10,7 +10,7 @@
     "postinstall": "npm run prisma:generate",
     "prisma:generate": "npx prisma generate --schema ./prisma/schema.prisma",
     "prisma:migrate": "npx prisma migrate dev --schema ./prisma/schema.prisma",
-    "docker:build": "docker compose down && docker compose build --no-cache && docker compose up -d --remove-orphans"
+    "prisma:seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@ai-sdk/google": "^3.0.80",
