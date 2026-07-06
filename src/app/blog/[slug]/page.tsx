@@ -6,7 +6,7 @@ import { getBlogsAction } from "@/app/actions/blogs";
 import { Reveal } from "@/components/animations";
 import { getPostBySlug } from "@/lib/blog";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import { generateBlogPostingSchema, getSanitizedSchema } from "@/lib/schemas";
+import { generateBlogPostingSchema, generateBreadcrumbSchema, getSanitizedSchema } from "@/lib/schemas";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -66,12 +66,24 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
     slug
   );
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_URL },
+    { name: "Blog", url: `${SITE_URL}/blog` },
+    { name: post.title, url: `${SITE_URL}/blog/${post.slug}` }
+  ]);
+
   return (
     <article className="pt-32 pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(blogPostingSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(breadcrumbSchema),
         }}
       />
       <div className="section-container max-w-4xl">

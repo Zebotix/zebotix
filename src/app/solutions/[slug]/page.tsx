@@ -8,7 +8,8 @@ import { getSolutionBySlugAction, getSolutionsAction } from "@/app/actions/solut
 import { Reveal } from "@/components/animations";
 import FaqSection from "@/components/FaqSection";
 import { Button } from "@/components/ui/Button";
-
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { generateBreadcrumbSchema, generateServiceSchema, getSanitizedSchema } from "@/lib/schemas";
 interface SolutionPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -19,9 +20,27 @@ export async function generateMetadata({ params }: SolutionPageProps) {
   if (!res.success || !res.data) {
     return { title: "Solution Not Found" };
   }
+  
+  const title = `${res.data.title} | Solutions | ${COMPANY_NAME}`;
+  const description = res.data.tagline || `Discover our ${res.data.title} solutions at ${COMPANY_NAME}.`;
+  
   return {
-    title: `${res.data.title} | Solutions | Zebotix`,
-    description: res.data.tagline,
+    title,
+    description,
+    alternates: {
+      canonical: `${SITE_URL}/solutions/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/solutions/${slug}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -46,8 +65,33 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
     ? (solution.technologies as Array<{ name: string; icon: string }>)
     : [];
 
+  const serviceSchema = generateServiceSchema(
+    solution.title,
+    solution.tagline || "",
+    undefined, // price
+    `${SITE_URL}/Zebotix.webp` // default image
+  );
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_URL },
+    { name: "Solutions", url: `${SITE_URL}/solutions` },
+    { name: solution.title, url: `${SITE_URL}/solutions/${slug}` }
+  ]);
+
   return (
     <main className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(serviceSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(breadcrumbSchema),
+        }}
+      />
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <Reveal>
           <Link

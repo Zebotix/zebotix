@@ -107,5 +107,56 @@ export async function seedCMS(prisma: PrismaClient) {
     });
   }
 
+  // Navigation Links
+  const headerLinks = [
+    { label: "Home", href: "/", order: 1, location: "header" },
+    { label: "About", href: "/about", order: 2, location: "header" },
+    { label: "Solutions", href: "/solutions", order: 3, location: "header" },
+    { label: "Blogs", href: "/blog", order: 4, location: "header" },
+    { label: "Portfolio", href: "/work", order: 5, location: "header" },
+    { label: "Testimonials", href: "/testimonials", order: 6, location: "header" },
+    { label: "Contact", href: "/contact", order: 7, location: "header" },
+    { label: "Quick Quote", href: "/quick-quote", order: 8, location: "header" },
+  ];
+
+  for (const link of headerLinks) {
+    const exists = await prisma.navigationItem.findFirst({ where: { label: link.label, location: "header" } });
+    if (!exists) {
+      await prisma.navigationItem.create({ data: link });
+    }
+  }
+
+  const footerLinks = [
+    { label: "Cookie Policy", href: "/cookie-policy", order: 1, location: "footer" },
+    { label: "GDPR", href: "/gdpr", order: 2, location: "footer" },
+    { label: "Privacy Policy", href: "/privacy", order: 3, location: "footer" },
+    { label: "Terms and Conditions", href: "/terms", order: 4, location: "footer" },
+  ];
+
+  for (const link of footerLinks) {
+    const exists = await prisma.navigationItem.findFirst({ where: { label: link.label, location: "footer" } });
+    if (!exists) {
+      await prisma.navigationItem.create({ data: link });
+    }
+  }
+
+  // Manifest Config
+  const manifestExists = await prisma.siteSetting.findUnique({ where: { key: "manifest_config" } });
+  if (!manifestExists) {
+    await prisma.siteSetting.create({
+      data: {
+        key: "manifest_config",
+        group: "general",
+        value: {
+          name: "Zebotix Software Engineering",
+          shortName: "Zebotix",
+          description: "Empowering innovation with scalable software architecture, AI automation, and bespoke cloud infrastructure.",
+          backgroundColor: "#09090b",
+          themeColor: "#1d4ed8"
+        },
+      },
+    });
+  }
+
   console.log("CMS seeded successfully.");
 }

@@ -6,7 +6,6 @@ import React from "react";
 
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui";
-import { SOLUTIONS } from "@/lib/mockData";
 import { cn } from "@/lib/utils";
 
 interface SolutionBenefit {
@@ -32,8 +31,8 @@ interface ProductsCarouselSectionProps {
   solutions?: SolutionItem[];
 }
 
-const ProductsCarouselSection = ({ solutions }: ProductsCarouselSectionProps) => {
-  const items = ((solutions || SOLUTIONS) as SolutionItem[]).slice(0, 4);
+const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProps) => {
+  const items = solutions.slice(0, 4);
 
   // Bento layout classes for 4 cards
   const gridClasses = [

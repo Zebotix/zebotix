@@ -49,6 +49,15 @@
   --color-zebotix-darkGray: #222222;
   --color-zebotix-lightGray: #f8f8f8;
 
+  --color-zinc-150: #eceeef;
+  --color-zinc-250: #dcdce0;
+  --color-zinc-350: #bcbcc1;
+  --color-zinc-450: #8a8a93;
+  --color-zinc-550: #62626b;
+  --color-zinc-650: #494951;
+  --color-zinc-750: #333338;
+  --color-zinc-850: #202024;
+
   --radius-xs: 0px;
   --radius-sm: 0px;
   --radius-md: 0px;

@@ -254,6 +254,41 @@ model Session {
   userAgent    String?
   expiresAt    DateTime
   isRevoked    Boolean  @default(false)
-  createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+// ═══ CAREERS ═══
+
+model JobPosting {
+  id               String           @id @default(cuid())
+  title            String
+  slug             String           @unique
+  department       String
+  location         String           @default("Remote")
+  type             String           @default("Full-time") // Full-time, Part-time, Contract
+  description      String           // Rich text
+  requirements     Json?            // Array of strings
+  responsibilities Json?            // Array of strings
+  benefits         Json?            // Array of strings
+  isActive         Boolean          @default(true)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  applications     JobApplication[]
+}
+
+model JobApplication {
+  id           String     @id @default(cuid())
+  jobId        String
+  job          JobPosting @relation(fields: [jobId], references: [id])
+  firstName    String
+  lastName     String
+  email        String
+  phone        String?
+  resumeUrl    String?    // Link to uploaded resume
+  coverLetter  String?    // Text or Link
+  portfolioUrl String?
+  status       String     @default("new") // new, reviewing, interviewed, rejected, hired
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+

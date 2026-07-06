@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 
 import type { Metadata, Viewport } from "next";
 
+import { getSolutionsAction } from "@/app/actions/solutions";
 import { Layout, GoogleAnalytics as GoogleAnalyticsTracker, WebVitalsReporter } from "@/components";
 import { COMPANY_NAME, SITE_URL, SHORT_DESC } from "@/lib/constants";
 import {
@@ -13,7 +14,6 @@ import {
 } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
-import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import "./globals.css";
 
@@ -113,13 +113,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const organizationJsonLd = generateOrganizationSchema();
   const websiteJsonLd = generateWebsiteSchema();
+
+  const solutionsRes = await getSolutionsAction();
+  const solutions = solutionsRes.success && solutionsRes.data ? solutionsRes.data : [];
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -155,16 +158,10 @@ export default function RootLayout({
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"} />
         <Suspense fallback={null}>
           <WebVitalsReporter />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SmoothScrollProvider>
-              <Layout>{children}</Layout>
-            </SmoothScrollProvider>
-          </ThemeProvider>
+
+          <SmoothScrollProvider>
+            <Layout solutions={solutions}>{children}</Layout>
+          </SmoothScrollProvider>
         </Suspense>
       </body>
     </html>

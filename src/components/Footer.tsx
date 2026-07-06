@@ -6,38 +6,28 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
+import type { Prisma } from "@/generated/prisma/client";
+
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui";
 import { COMPANY_NAME, SOCIAL_LINKS, CONTACT_EMAIL } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-const Footer = () => {
+interface FooterProps {
+  solutions?: Prisma.SolutionGetPayload<{}>[];
+}
+const legalLinks = [
+  { name: "Privacy Policy", href: "/privacy" },
+  { name: "Terms & Conditions", href: "/terms" },
+  { name: "Cookie Policy", href: "/cookie-policy" },
+  { name: "GDPR Compliance", href: "/gdpr" },
+];
+
+const Footer = ({ solutions = [] }: FooterProps) => {
   const year = new Date().getFullYear();
   const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const legalLinks = [
-    { name: "Privacy Policy", href: "/privacy" },
-    { name: "Terms & Conditions", href: "/terms" },
-    { name: "Cookie Policy", href: "/cookie-policy" },
-    { name: "GDPR Compliance", href: "/gdpr" },
-  ];
-
-  const companyLinks: { name: string; href: string; disabled?: boolean }[] = [
-    { name: "Contact", href: "/contact" },
-    { name: "Solutions", href: "/solutions" },
-    { name: "About", href: "/about" },
-    { name: "Blog", href: "/blog" },
-  ];
-
-  const solutionsLinks = [
-    { name: "Custom Software Engineering", href: "/solutions/custom-software-engineering" },
-    { name: "AI-Driven Automation", href: "/solutions/ai-driven-automation" },
-    { name: "High-Performance E-Commerce", href: "/solutions/high-performance-ecommerce" },
-    { name: "Intelligent Workflows & APIs", href: "/solutions/intelligent-workflows-api" },
-    { name: "Cloud Infrastructure & DevOps", href: "/solutions/cloud-infrastructure-devops" },
-    { name: "Database Architecture & Design", href: "/solutions/database-architecture-design" },
-  ];
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +60,7 @@ const Footer = () => {
               </h3>
             </Reveal>
             <Reveal delay={0.15}>
-              <p className="text-zinc-400 text-xs max-w-lg leading-relaxed">
+              <p className="text-zinc-450 text-xs max-w-lg leading-relaxed">
                 Sign up for our newsletter to receive technical briefs on architecture, web
                 optimization, and modern software design patterns.
               </p>
@@ -102,9 +92,9 @@ const Footer = () => {
           </div>
         </div>
         {/* Links Columns Grid - aligned correctly */}{" "}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-x-4 gap-y-8 sm:gap-8 lg:gap-12 pt-12 sm:pt-16 pb-8 sm:pb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-10 gap-x-4 gap-y-8 sm:gap-8 lg:gap-12 pt-12 sm:pt-16 pb-8 sm:pb-12">
           {/* Column 1: Info */}
-          <div className="col-span-2 sm:col-span-2">
+          <div className="col-span-2">
             <Reveal distance={30}>
               <div className="flex flex-col">
                 <Link
@@ -142,63 +132,36 @@ const Footer = () => {
             </Reveal>
           </div>
 
-          {/* Column 2: Solutions */}
-          <div className="col-span-2 sm:col-span-1">
-            <Reveal delay={0.1} distance={30}>
-              <nav aria-label="Solutions navigation">
-                <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
-                  Solutions
-                </h4>
-                <ul className="space-y-3">
-                  {solutionsLinks.map((link) => (
-                    <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </Reveal>
-          </div>
+          {solutions.length > 0 && (
+            <div className="col-span-2 sm:col-span-3">
+              <Reveal delay={0.1} distance={30}>
+                <div className="flex flex-col">
+                  <nav aria-label="Solutions navigation">
+                    <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
+                      Solutions
+                    </h4>
+                    <ul className="space-y-3 mb-6">
+                      {solutions.map((child) => (
+                        <li key={child.id}>
+                          <Link
+                            href={`/solutions/${child.slug}`}
+                            className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                          >
+                            {child.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                </div>
+              </Reveal>
+            </div>
+          )}
 
-          {/* Column 3: Company */}
-          <div className="col-span-1">
+          <div className={cn("col-span-2")}>
             <Reveal delay={0.2} distance={30}>
-              <nav aria-label="Company navigation">
-                <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
-                  Company
-                </h4>
-                <ul className="space-y-3">
-                  {companyLinks.map((link) => (
-                    <li key={link.name}>
-                      {link.disabled ? (
-                        <span className="text-zinc-600 text-[10px] font-black uppercase tracking-wider cursor-not-allowed block">
-                          {link.name}
-                        </span>
-                      ) : (
-                        <Link
-                          href={link.href}
-                          className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
-                        >
-                          {link.name}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </Reveal>
-          </div>
-
-          {/* Column 4: Legal & Social */}
-          <div className="col-span-1 sm:col-span-2">
-            <Reveal delay={0.3} distance={30}>
               <div className="flex flex-col">
-                <nav aria-label="Legal navigation">
+                <nav aria-label="Company navigation">
                   <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
                     Legal
                   </h4>
@@ -213,6 +176,52 @@ const Footer = () => {
                         </Link>
                       </li>
                     ))}
+                  </ul>
+                </nav>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className={cn("col-span-3")}>
+            <Reveal delay={0.2} distance={30}>
+              <div className="flex flex-col">
+                <nav aria-label="Company navigation">
+                  <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
+                    Company
+                  </h4>
+                  <ul className="space-y-3 mb-6">
+                    <li>
+                      <Link
+                        href="/about"
+                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                      >
+                        Who we are
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/testimonials"
+                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                      >
+                        Testimonials
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/careers"
+                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                      >
+                        Career
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/blog"
+                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                      >
+                        Blogs
+                      </Link>
+                    </li>
                   </ul>
                 </nav>
 
@@ -259,8 +268,11 @@ const Footer = () => {
           </nav>
         </div>
         {/* Giant Typographic Signature */}
-        <div className="select-none text-center  mt-8 pt-8 border-t border-zinc-900 hidden sm:block">
-          <span aria-hidden="true" className="font-black text-[10vw] text-zinc-900 uppercase tracking-tighter leading-none block select-none">
+        <div className="select-none text-center  mt-8 pt-8 border-t border-zinc-900">
+          <span
+            aria-hidden="true"
+            className="font-black text-[10vw] text-zinc-900 uppercase tracking-tighter leading-none block select-none"
+          >
             {COMPANY_NAME}
           </span>
         </div>

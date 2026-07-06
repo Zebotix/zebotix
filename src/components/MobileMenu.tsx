@@ -6,6 +6,8 @@ import React from "react";
 
 // import { ThemeToggle } from "./ThemeToggle";
 
+import type { Prisma } from "@/generated/prisma/client";
+
 import {
   Accordion,
   AccordionContent,
@@ -15,21 +17,15 @@ import {
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   activePath: string;
+  solutions?: Prisma.SolutionGetPayload<{}>[];
 }
 
-const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
-  const solutions = [
-    { name: "Custom Software Engineering", href: "/solutions/custom-software-engineering" },
-    { name: "AI-Driven Automation", href: "/solutions/ai-driven-automation" },
-    { name: "High-Performance E-Commerce", href: "/solutions/high-performance-ecommerce" },
-    { name: "Intelligent Workflows & APIs", href: "/solutions/intelligent-workflows-api" },
-    { name: "Cloud Infrastructure & DevOps", href: "/solutions/cloud-infrastructure-devops" },
-    { name: "Database Architecture & Design", href: "/solutions/database-architecture-design" },
-  ];
+const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuProps) => {
 
   const handleLinkClick = () => {
     onClose();
@@ -78,83 +74,101 @@ const MobileMenu = ({ isOpen, onClose, activePath }: MobileMenuProps) => {
             href="/"
             onClick={handleLinkClick}
             className={cn(
-              "text-sm font-black uppercase tracking-wider py-2 transition-colors",
+              "text-sm font-black uppercase tracking-wider py-2 transition-colors block",
               activePath === "/" ? "text-blue-500" : "text-zinc-300 hover:text-white"
             )}
           >
             Home
           </Link>
-
           <Accordion type="multiple" className="w-full">
-            <AccordionItem value="solutions" className="border-none">
-              <AccordionTrigger className="hover:no-underline py-2 px-0">
-                <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
-                  Solutions
-                </span>
-              </AccordionTrigger>
-              <AccordionContent className="pb-0 pt-2">
-                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
-                  {solutions.map((s) => (
-                    <Link
-                      key={s.href}
-                      href={s.href}
-                      onClick={handleLinkClick}
-                      className={cn(
-                        "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
-                        activePath === s.href
-                          ? "text-blue-500"
-                          : "text-zinc-550 hover:text-zinc-300"
-                      )}
-                    >
-                      {s.name}
-                    </Link>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
+            {solutions.length > 0 && (
+              <AccordionItem value="solutions" className="border-none">
+                <AccordionTrigger className="hover:no-underline py-2 px-0">
+                  <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
+                    Solutions
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="pb-0 pt-2">
+                  <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
+                    {solutions.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/solutions/${item.slug}`}
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                          activePath === `/solutions/${item.slug}`
+                            ? "text-blue-500"
+                            : "text-zinc-550 hover:text-zinc-300"
+                        )}
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            )}
 
             <AccordionItem value="company" className="border-none">
-              <AccordionTrigger className="hover:no-underline py-2 px-0">
-                <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
-                  Company
-                </span>
-              </AccordionTrigger>
-              <AccordionContent className="pb-0 pt-2">
-                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
-                  <Link
-                    href="/about"
-                    onClick={handleLinkClick}
-                    className={cn(
-                      "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
-                      activePath === "/about"
-                        ? "text-blue-500"
-                        : "text-zinc-550 hover:text-zinc-300"
-                    )}
-                  >
-                    Who we are
-                  </Link>
-                  <Link
-                    href="/#testimonials"
-                    onClick={handleLinkClick}
-                    className="text-xs font-black uppercase tracking-wider py-2 pl-3 text-zinc-550 hover:text-zinc-300 transition-colors"
-                  >
-                    Testimonials
-                  </Link>
-                  <Link
-                    href="/blog"
-                    onClick={handleLinkClick}
-                    className={cn(
-                      "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
-                      activePath === "/blog" ? "text-blue-500" : "text-zinc-550 hover:text-zinc-300"
-                    )}
-                  >
-                    Blogs
-                  </Link>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
+                <AccordionTrigger className="hover:no-underline py-2 px-0">
+                  <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
+                    Company
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="pb-0 pt-2">
+                  <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
+                      <Link
+                        href="/about"
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                          activePath === "/about"
+                            ? "text-blue-500"
+                            : "text-zinc-550 hover:text-zinc-300"
+                        )}
+                      >
+                        Who we are
+                      </Link>
+                      <Link
+                        href="/#testimonials"
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                          activePath === "/#testimonials"
+                            ? "text-blue-500"
+                            : "text-zinc-550 hover:text-zinc-300"
+                        )}
+                      >
+                        Testimonials
+                      </Link>
+                      <Link
+                        href="/blog"
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                          activePath === "/blog"
+                            ? "text-blue-500"
+                            : "text-zinc-550 hover:text-zinc-300"
+                        )}
+                      >
+                        Blogs
+                      </Link>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
           </Accordion>
 
+          <Link
+            href="/careers"
+            onClick={handleLinkClick}
+            className={cn(
+              "text-sm font-black uppercase tracking-wider py-2 transition-colors",
+              activePath.startsWith("/careers") ? "text-blue-500" : "text-zinc-300 hover:text-white"
+            )}
+          >
+            Careers
+          </Link>
           <Link
             href="/contact"
             onClick={handleLinkClick}

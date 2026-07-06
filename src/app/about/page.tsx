@@ -1,29 +1,63 @@
-import Image from 'next/image';
+import { type Metadata } from "next";
+import Image from "next/image";
+
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { generateOrganizationSchema, getSanitizedSchema } from "@/lib/schemas";
+
+export const metadata: Metadata = {
+  title: `About Us — ${COMPANY_NAME}`,
+  description:
+    "Learn about Zebotix, our mission, digital services, team, and how we help businesses grow.",
+  alternates: {
+    canonical: `${SITE_URL}/about`,
+  },
+  openGraph: {
+    title: `About Us — ${COMPANY_NAME}`,
+    description:
+      "Learn about Zebotix, our mission, digital services, team, and how we help businesses grow.",
+    url: `${SITE_URL}/about`,
+    type: "website",
+    images: [{ url: "/Zebotix.webp", width: 1200, height: 630, alt: `${COMPANY_NAME} About` }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `About Us — ${COMPANY_NAME}`,
+    description:
+      "Learn about Zebotix, our mission, digital services, team, and how we help businesses grow.",
+    images: ["/Zebotix.webp"],
+  },
+};
 
 export default function About() {
+  const schema = generateOrganizationSchema();
+
   return (
-    <main className='min-h-screen py-12 px-6 lg:px-24'>
-      <article className='max-w-4xl mx-auto shadow-xl rounded-2xl p-2'>
-        <header className='min-h-[20vh] flex justify-between items-center'>
+    <main className="min-h-screen py-12 px-6 lg:px-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: getSanitizedSchema(schema) }}
+      />
+      <article className="max-w-4xl mx-auto shadow-xl rounded-2xl p-2">
+        <header className="min-h-[20vh] flex justify-between items-center">
           <div>
-            <h1 className='text-3xl font-extrabold mb-2'>About Zebotix</h1>
-            <p className='text-sm text-gray-400'>
+            <h1 className="text-3xl font-extrabold mb-2">About Zebotix</h1>
+            <p className="text-sm text-gray-400">
               Last updated: <strong>October 2025</strong>
             </p>
           </div>
           <Image
             src="/Zebotix.webp"
-            alt='zebotix'
+            alt={`${COMPANY_NAME} logo`}
             width={500}
             height={500}
-            className='w-16 h-auto'
+            className="w-16 h-auto"
             priority
           />
         </header>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Who we are</h2>
-          <p className='text-sm text-gray-400'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Who we are</h2>
+          <p className="text-sm text-gray-400">
             Zebotix is a Karachi-based digital services studio that builds web and mobile products,
             e-commerce stores, and tailored business systems for local and international clients. We
             combine pragmatic engineering, product design, and digital marketing to help small &
@@ -31,23 +65,23 @@ export default function About() {
           </p>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Our mission & vision</h2>
-          <p className='text-sm text-gray-400'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Our mission & vision</h2>
+          <p className="text-sm text-gray-400">
             <strong>Mission:</strong> Enable Pakistani businesses to compete globally by delivering
             reliable, compliant, and easy-to-run digital products.
           </p>
-          <p className='text-sm text-gray-400 mt-2'>
+          <p className="text-sm text-gray-400 mt-2">
             <strong>Vision:</strong> Be the trusted partner for marketplaces, e-commerce brands,
             service businesses, and startups seeking fast, secure, and legally-compliant digital
             solutions from Pakistan.
           </p>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>What we do</h2>
-          <p className='text-sm text-gray-400'>Core services we offer:</p>
-          <ul className='list-disc ml-6 mt-3 text-sm text-gray-400 space-y-2'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">What we do</h2>
+          <p className="text-sm text-gray-400">Core services we offer:</p>
+          <ul className="list-disc ml-6 mt-3 text-sm text-gray-400 space-y-2">
             <li>Custom E‑commerce & Multi‑vendor Marketplaces</li>
             <li>Fashion & Seasonal Stores (winter collections, perfumes, cosmetics)</li>
             <li>Learning Management Systems (LMS) & Training Portals</li>
@@ -60,9 +94,9 @@ export default function About() {
           </ul>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>How we work — our process</h2>
-          <ol className='list-decimal ml-6 space-y-3 text-sm text-gray-400'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">How we work — our process</h2>
+          <ol className="list-decimal ml-6 space-y-3 text-sm text-gray-400">
             <li>
               <strong>Discovery &amp; Proposal:</strong> We collect requirements, scope features,
               propose milestones and agree on payment schedule (typical: 50% upfront, 40% staging,
@@ -84,13 +118,13 @@ export default function About() {
           </ol>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Trust, compliance & security</h2>
-          <p className='text-sm text-gray-400'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Trust, compliance & security</h2>
+          <p className="text-sm text-gray-400">
             We publish and adhere to standard legal and security documents to build trust with
             clients and end users. Key items include:
           </p>
-          <ul className='list-disc ml-6 mt-3 text-sm text-gray-400 space-y-2'>
+          <ul className="list-disc ml-6 mt-3 text-sm text-gray-400 space-y-2">
             <li>
               Terms &amp; Conditions — project terms, payment, IP, liability, and dispute clauses
             </li>
@@ -106,29 +140,29 @@ export default function About() {
           </ul>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Pricing & payments (summary)</h2>
-          <p className='text-sm text-gray-400'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Pricing & payments (summary)</h2>
+          <p className="text-sm text-gray-400">
             Standard payment schedule used in proposals: <strong>50% upfront</strong>,
-            <strong> 40% on staging/design approval</strong>,{' '}
-            <strong>10% on final acceptance</strong>. All payments are by default in{' '}
+            <strong> 40% on staging/design approval</strong>,{" "}
+            <strong>10% on final acceptance</strong>. All payments are by default in{" "}
             <strong>PKR</strong>. Late payments incur 2% monthly interest after 15 days. Invoices
             are issued electronically and exclude applicable taxes.
           </p>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Portfolio &amp; clients</h2>
-          <p className='text-sm text-gray-400'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Portfolio &amp; clients</h2>
+          <p className="text-sm text-gray-400">
             We work with local Karachi businesses, online retailers, and international clients. We
             retain the right to showcase delivered work in our portfolio unless an NDA is in place.
             For case studies or references, please contact us.
           </p>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Onboarding checklist (quick)</h2>
-          <ul className='list-disc ml-6 mt-3 text-sm text-gray-400 space-y-2'>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Onboarding checklist (quick)</h2>
+          <ul className="list-disc ml-6 mt-3 text-sm text-gray-400 space-y-2">
             <li>Signed contract + upfront payment</li>
             <li>Complete brief, sitemap, branding assets</li>
             <li>
@@ -139,15 +173,15 @@ export default function About() {
           </ul>
         </section>
 
-        <section className='mb-6'>
-          <h2 className='text-xl font-semibold mb-2'>Contact &amp; support</h2>
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-2">Contact &amp; support</h2>
 
-          <a href='mailto:zebotix@gmail.com' className='indent-4 text-indigo-600 hover:underline'>
+          <a href="mailto:zebotix@gmail.com" className="indent-4 text-indigo-600 hover:underline">
             zebotix@gmail.com
           </a>
         </section>
 
-        <footer className='mt-8 border-t pt-4 text-sm text-gray-400'>
+        <footer className="mt-8 border-t pt-4 text-sm text-gray-400">
           <p>
             Have feedback or want this page tailored (Urdu version, downloadable PDF, or shorter
             copy for marketing)? Tell me what you prefer and I will update it.

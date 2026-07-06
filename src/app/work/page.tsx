@@ -1,15 +1,33 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { ArrowRight, Sparkles } from "lucide-react";
+import { type Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-import { getPortfoliosAction } from '@/app/actions/portfolio';
-import { Reveal } from '@/components/animations';
+import { getPortfoliosAction } from "@/app/actions/portfolio";
+import { Reveal } from "@/components/animations";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 
-
-export const metadata = {
-  title: 'Our Work | Zebotix',
-  description: 'Explore our portfolio of scalable web applications, e-commerce storefronts, and AI workflows.',
+export const metadata: Metadata = {
+  title: `Our Work | ${COMPANY_NAME}`,
+  description:
+    "Explore our portfolio of scalable web applications, e-commerce storefronts, and AI workflows.",
+  alternates: {
+    canonical: `${SITE_URL}/work`,
+  },
+  openGraph: {
+    title: `Our Work | ${COMPANY_NAME}`,
+    description:
+      "Explore our portfolio of scalable web applications, e-commerce storefronts, and AI workflows.",
+    url: `${SITE_URL}/work`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Our Work | ${COMPANY_NAME}`,
+    description:
+      "Explore our portfolio of scalable web applications, e-commerce storefronts, and AI workflows.",
+  },
 };
 
 export default async function WorkPage() {
@@ -32,7 +50,8 @@ export default async function WorkPage() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-lg md:text-xl text-zinc-400">
-              A gallery of dynamic platforms, custom CMS portals, and API integrations we have designed, architected, and deployed.
+              A gallery of dynamic platforms, custom CMS portals, and API integrations we have
+              designed, architected, and deployed.
             </p>
           </Reveal>
         </header>
@@ -42,7 +61,8 @@ export default async function WorkPage() {
             <div className="text-center py-20 border border-zinc-900 bg-zinc-900/20">
               <h2 className="text-2xl font-bold text-white mb-4">Portfolio Coming Soon</h2>
               <p className="text-zinc-500 mb-8 max-w-md mx-auto">
-                We are currently preparing case studies of our latest software launches. Check back shortly.
+                We are currently preparing case studies of our latest software launches. Check back
+                shortly.
               </p>
               <Link
                 href="/contact"
@@ -55,8 +75,8 @@ export default async function WorkPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolios.map((item, index) => {
-              const summary = item.problem || '';
-              const image = (item.gallery && item.gallery[0]) || '';
+              const summary = item.problem || "";
+              const image = (item.gallery && item.gallery[0]) || "";
               const tags = item.techStack || [];
 
               return (

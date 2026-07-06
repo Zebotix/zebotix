@@ -10,7 +10,6 @@ import React, { useRef } from 'react';
 
 import { Reveal } from '@/components/animations';
 import { Button } from '@/components/ui';
-import { PORTFOLIOS } from '@/lib/mockData';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -33,9 +32,9 @@ interface PortfolioSectionProps {
   portfolios?: PortfolioItem[];
 }
 
-const PortfolioSection = ({ portfolios }: PortfolioSectionProps) => {
+const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const items = ((portfolios || PORTFOLIOS) as PortfolioItem[]).slice(0, 3); // Take top 3 for stacking layout
+  const items = portfolios.slice(0, 3); // Take top 3 for stacking layout
 
   useGSAP(
     () => {

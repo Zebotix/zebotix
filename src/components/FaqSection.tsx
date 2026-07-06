@@ -1,10 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-
-import { Reveal } from '@/components/animations';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui';
-import { FAQS } from '@/lib/mockData';
+import { Reveal } from "@/components/animations";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui";
 
 interface FaqItem {
   question: string;
@@ -15,8 +12,13 @@ interface FaqSectionProps {
   faqs?: FaqItem[];
 }
 
-const FaqSection = ({ faqs }: FaqSectionProps) => {
-  const items = faqs || FAQS;
+const FaqSection = ({ faqs = [] }: FaqSectionProps) => {
+  const items = faqs;
+
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   return (
     <section
       id="faq"
@@ -31,7 +33,10 @@ const FaqSection = ({ faqs }: FaqSectionProps) => {
             </span>
           </Reveal>
           <Reveal delay={0.15}>
-            <h2 id="faq-heading" className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter">
+            <h2
+              id="faq-heading"
+              className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter"
+            >
               Frequently Asked Questions
             </h2>
           </Reveal>

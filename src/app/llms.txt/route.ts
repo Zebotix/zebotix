@@ -1,15 +1,14 @@
-import { SOLUTIONS, PLATFORMS } from "@/lib/mockData";
+import { getSolutionsAction } from "@/app/actions/solutions";
 
 export async function GET() {
+  const { data: solutions } = await getSolutionsAction();
+  
   const content = `# Zebotix
 
 Zebotix is an innovative software engineering agency focusing on scalable software architecture, custom software development, high-performance e-commerce, AI automation, and cloud infrastructure.
 
 ## Solutions
-${SOLUTIONS.map((s) => `- ${s.title}: ${s.subtitle}`).join("\n")}
-
-## Platforms
-${PLATFORMS.map((p) => `- ${p.title}`).join("\n")}
+${(solutions || []).map((s) => `- ${s.title}: ${s.tagline || s.description?.substring(0, 50)}`).join("\n")}
 
 ## Contact
 Website: https://www.zebotix.com

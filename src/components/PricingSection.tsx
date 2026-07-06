@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui";
-import { PRICING_PLANS } from "@/lib/mockData";
 import { cn } from "@/lib/utils";
 
 export interface PricingPlan {
@@ -94,6 +93,7 @@ const Modal = ({ open, onClose, content }: ModalType) => {
         aria-labelledby="plan-modal-title"
         className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 overflow-auto"
         onKeyDown={handleKeyDown}
+        tabIndex={0}
       >
         <div
           ref={modalRef}
@@ -176,10 +176,13 @@ const Modal = ({ open, onClose, content }: ModalType) => {
   );
 };
 
-const PricingSection = ({ pricingPlans }: PricingSectionProps) => {
-  const plans = pricingPlans || PRICING_PLANS;
+const PricingSection = ({ pricingPlans = [] }: PricingSectionProps) => {
+  const plans = pricingPlans;
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+  const router = useRouter();
+
+  if (!plans || plans.length === 0) return null;
 
   const openDetails = (planId: string) => {
     const p = plans.find((x: PricingPlan) => x.id === planId);
@@ -191,8 +194,6 @@ const PricingSection = ({ pricingPlans }: PricingSectionProps) => {
     setModalOpen(false);
     setSelectedPlan(null);
   };
-
-  const router = useRouter();
 
   return (
     <section

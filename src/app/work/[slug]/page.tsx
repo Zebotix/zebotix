@@ -9,7 +9,7 @@ import { getPortfolioBySlugAction, getPortfoliosAction } from "@/app/actions/por
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import { generateCreativeWorkSchema, getSanitizedSchema } from "@/lib/schemas";
+import { generateBreadcrumbSchema, generateCreativeWorkSchema, getSanitizedSchema } from "@/lib/schemas";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -86,12 +86,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     `${SITE_URL}/work/${project.slug}`
   );
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_URL },
+    { name: "Work", url: `${SITE_URL}/work` },
+    { name: project.title, url: `${SITE_URL}/work/${project.slug}` }
+  ]);
+
   return (
     <article className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(creativeworkSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(breadcrumbSchema),
         }}
       />
       <div className="section-container">

@@ -5,12 +5,30 @@ import Link from "next/link";
 import { Reveal } from "@/components/animations";
 import { type BlogPost } from "@/generated/prisma/client";
 import { getAllPosts } from "@/lib/blog";
-import { COMPANY_NAME } from "@/lib/constants";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: `Blog | ${COMPANY_NAME}`,
   description:
     "Insights, tutorials, and updates from the Zebotix team on AI, web development, and digital strategy.",
+  alternates: {
+    canonical: `${SITE_URL}/blog`,
+  },
+  openGraph: {
+    title: `Blog | ${COMPANY_NAME}`,
+    description:
+      "Insights, tutorials, and updates from the Zebotix team on AI, web development, and digital strategy.",
+    url: `${SITE_URL}/blog`,
+    type: "website",
+    images: [{ url: "/Zebotix.webp", width: 1200, height: 630, alt: `${COMPANY_NAME} Blog` }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Blog | ${COMPANY_NAME}`,
+    description:
+      "Insights, tutorials, and updates from the Zebotix team on AI, web development, and digital strategy.",
+    images: ["/Zebotix.webp"],
+  },
 };
 
 export default async function BlogPage() {

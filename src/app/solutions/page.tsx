@@ -1,13 +1,32 @@
-import { ArrowRight, Sparkles } from 'lucide-react';
-import Link from 'next/link';
-import React from 'react';
+import { ArrowRight, Sparkles } from "lucide-react";
+import { type Metadata } from "next";
+import Link from "next/link";
+import React from "react";
 
-import { getSolutionsAction } from '@/app/actions/solutions';
-import { Reveal } from '@/components/animations';
+import { getSolutionsAction } from "@/app/actions/solutions";
+import { Reveal } from "@/components/animations";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 
-export const metadata = {
-  title: 'Our Solutions | Zebotix',
-  description: 'Enterprise-grade digital infrastructure designed to scale your business operations and dominate the market.',
+export const metadata: Metadata = {
+  title: `Our Solutions | ${COMPANY_NAME}`,
+  description:
+    "Enterprise-grade digital infrastructure designed to scale your business operations and dominate the market.",
+  alternates: {
+    canonical: `${SITE_URL}/solutions`,
+  },
+  openGraph: {
+    title: `Our Solutions | ${COMPANY_NAME}`,
+    description:
+      "Enterprise-grade digital infrastructure designed to scale your business operations and dominate the market.",
+    url: `${SITE_URL}/solutions`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Our Solutions | ${COMPANY_NAME}`,
+    description:
+      "Enterprise-grade digital infrastructure designed to scale your business operations and dominate the market.",
+  },
 };
 
 export default async function SolutionsPage() {
@@ -30,7 +49,8 @@ export default async function SolutionsPage() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-lg md:text-xl text-zinc-400">
-              We engineer custom software, fast e-commerce setups, and smart automation systems designed for operational excellence.
+              We engineer custom software, fast e-commerce setups, and smart automation systems
+              designed for operational excellence.
             </p>
           </Reveal>
         </header>
@@ -53,7 +73,9 @@ export default async function SolutionsPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {solutions.map((sol, index) => {
-              const benefits = Array.isArray(sol.benefits) ? (sol.benefits as { title: string; desc: string }[]) : [];
+              const benefits = Array.isArray(sol.benefits)
+                ? (sol.benefits as { title: string; desc: string }[])
+                : [];
               return (
                 <Reveal key={sol.id} delay={0.1 * (index % 3)} distance={35}>
                   <div className="bg-zinc-900/40 border border-zinc-800 p-8 flex flex-col justify-between h-full hover:border-blue-500/35 transition-colors duration-300 group">
@@ -61,9 +83,7 @@ export default async function SolutionsPage() {
                       <h2 className="text-2xl font-black text-white mb-3 group-hover:text-blue-500 transition-colors">
                         {sol.title}
                       </h2>
-                      <p className="text-zinc-400 text-sm leading-relaxed mb-8">
-                        {sol.tagline}
-                      </p>
+                      <p className="text-zinc-400 text-sm leading-relaxed mb-8">{sol.tagline}</p>
 
                       <ul className="space-y-3 mb-8">
                         {benefits.slice(0, 3).map((b, bi) => (

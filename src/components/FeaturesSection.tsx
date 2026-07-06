@@ -65,12 +65,12 @@ export default function FeaturesSection() {
           className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.25] tracking-tight select-none"
         >
           {words.map((word, index) => (
-            <span
-              key={index}
-              className="inline-block mr-2 sm:mr-3 md:mr-4 transition-all duration-300 will-change-transform"
-            >
-              {word}
-            </span>
+            <React.Fragment key={index}>
+              <span className="inline-block transition-all duration-300 will-change-transform">
+                {word}
+              </span>
+              {index < words.length - 1 && " "}
+            </React.Fragment>
           ))}
         </p>
       </div>

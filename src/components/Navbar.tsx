@@ -11,6 +11,8 @@ import { useState, useEffect, useRef } from "react";
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
 
+import type { Prisma } from "@/generated/prisma/client";
+
 import { Button } from "@/components/ui/Button";
 import {
   NavigationMenu,
@@ -22,33 +24,8 @@ import {
 } from "@/components/ui/NavigationMenu";
 import { COMPANY_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-// import { ThemeToggle } from "./ThemeToggle";
 
-const SOLUTIONS_LIST = [
-  {
-    category: "Software & Web",
-    items: [
-      { name: "Custom Software Engineering", href: "/solutions/custom-software-engineering" },
-      { name: "High-Performance E-Commerce", href: "/solutions/high-performance-ecommerce" },
-    ],
-  },
-  {
-    category: "AI & Automation",
-    items: [
-      { name: "AI-Driven Automation", href: "/solutions/ai-driven-automation" },
-      { name: "Intelligent Workflows & APIs", href: "/solutions/intelligent-workflows-api" },
-    ],
-  },
-  {
-    category: "Data & Cloud",
-    items: [
-      { name: "Cloud Infrastructure & DevOps", href: "/solutions/cloud-infrastructure-devops" },
-      { name: "Database Architecture & Design", href: "/solutions/database-architecture-design" },
-    ],
-  },
-];
-
-const Navbar = () => {
+const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
@@ -142,7 +119,7 @@ const Navbar = () => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
                     className={cn(
-                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group/navitem select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
                       pathname.startsWith("/solutions")
                         ? "text-blue-500 hover:text-blue-500 data-[state=open]:text-blue-500 focus:text-blue-500"
                         : "text-zinc-400 hover:text-white data-[state=open]:text-white focus:text-white"
@@ -154,33 +131,31 @@ const Navbar = () => {
                         "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
                         pathname.startsWith("/solutions")
                           ? "scale-x-100"
-                          : "scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 group-focus:scale-x-100"
+                          : "scale-x-0 group-hover/navitem:scale-x-100 group-data-[state=open]/navitem:scale-x-100 group-focus/navitem:scale-x-100"
                       )}
                     />
                   </NavigationMenuTrigger>
                   <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-8 shadow-2xl rounded-none md:w-[680px] w-full">
-                    <div className="grid grid-cols-3 gap-8">
-                      {SOLUTIONS_LIST.map((group) => (
-                        <div key={group.category} className="space-y-4">
-                          <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-550 border-b border-zinc-900 pb-2">
-                            {group.category}
-                          </h4>
-                          <ul className="space-y-3">
-                            {group.items.map((item) => (
-                              <li key={item.href}>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    href={item.href}
-                                    className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight outline-none focus-visible:text-blue-500"
-                                  >
-                                    {item.name}
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-4">
+                        <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-550 border-b border-zinc-900 pb-2">
+                          All Solutions
+                        </h4>
+                        <ul className="space-y-3">
+                          {solutions.map((item) => (
+                            <li key={item.id}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href={`/solutions/${item.slug}`}
+                                  className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight outline-none focus-visible:text-blue-500"
+                                >
+                                  {item.title}
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -189,8 +164,8 @@ const Navbar = () => {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
                     className={cn(
-                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
-                      pathname === "/about" || pathname === "/blog"
+                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group/navitem select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                      pathname === "/about" || pathname === "/blog" || pathname === "/testimonials"
                         ? "text-blue-500 hover:text-blue-500 data-[state=open]:text-blue-500 focus:text-blue-500"
                         : "text-zinc-400 hover:text-white data-[state=open]:text-white focus:text-white"
                     )}
@@ -199,9 +174,9 @@ const Navbar = () => {
                     <span
                       className={cn(
                         "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
-                        pathname === "/about" || pathname === "/blog"
+                        pathname === "/about" || pathname === "/blog" || pathname === "/testimonials"
                           ? "scale-x-100"
-                          : "scale-x-0 group-hover:scale-x-100 group-data-[state=open]:scale-x-100 group-focus:scale-x-100"
+                          : "scale-x-0 group-hover/navitem:scale-x-100 group-data-[state=open]/navitem:scale-x-100 group-focus/navitem:scale-x-100"
                       )}
                     />
                   </NavigationMenuTrigger>
@@ -217,7 +192,7 @@ const Navbar = () => {
                       </NavigationMenuLink>
                       <NavigationMenuLink asChild>
                         <Link
-                          href="/#testimonials"
+                          href="/testimonials"
                           className="text-xs font-black text-zinc-400 hover:text-blue-500 focus-visible:text-blue-500 transition-colors uppercase tracking-wider block outline-none"
                         >
                           Testimonials
@@ -237,13 +212,12 @@ const Navbar = () => {
               </NavigationMenuList>
             </NavigationMenu>
 
+            <NavLink href="/careers" active={pathname.startsWith("/careers")}>
+              Careers
+            </NavLink>
             <NavLink href="/contact" active={pathname === "/contact"}>
               Contact
             </NavLink>
-
-            {/* <div className="ml-2 pl-2 border-l border-zinc-900">
-              <ThemeToggle />
-            </div> */}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -263,7 +237,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <MobileMenu isOpen={isOpen} onClose={closeMenu} activePath={pathname} />
+      <MobileMenu isOpen={isOpen} onClose={closeMenu} activePath={pathname} solutions={solutions} />
     </nav>
   );
 };

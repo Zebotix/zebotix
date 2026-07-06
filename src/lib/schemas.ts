@@ -167,6 +167,24 @@ export function generateBreadcrumbSchema(items: Array<{ name: string; url: strin
 }
 
 /**
+ * FAQPage schema - for FAQ pages
+ */
+export function generateFAQPageSchema(faqs: Array<{ question: string; answer: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
  * WebSite schema with SearchAction - for homepage
  */
 export function generateWebsiteSchema() {
@@ -175,14 +193,6 @@ export function generateWebsiteSchema() {
     "@type": "WebSite",
     name: COMPANY_NAME,
     url: SITE_URL,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
