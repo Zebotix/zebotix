@@ -130,6 +130,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
               fill
               className="object-cover"
               priority
+              sizes="(max-width: 768px) 100vw, 80vw"
             />
           </div>
         </Reveal>

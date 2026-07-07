@@ -19,6 +19,8 @@ model Solution {
   tagline     String
   description String    // Rich text
   category    String?
+  industry    String?
+  industrySlug String?
   icon        String?
   image       String?
   benefits    Json      // Array of benefit objects

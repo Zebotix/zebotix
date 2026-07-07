@@ -29,12 +29,7 @@ const getLocalIPs = (): string[] => {
 const cloudflareTurnstileOrigin = "https://challenges.cloudflare.com";
 
 // Define origins allowed during local development
-const devOrigins = [
-  "localhost",
-  "http://192.168.18.145:3000",
-  "http://192.168.100.89:3000",
-  "http://192.168.18.13:3000",
-];
+const devOrigins = ["localhost"];
 if (isDev) {
   const localIPs = getLocalIPs();
   for (const ip of localIPs) {
@@ -139,6 +134,25 @@ const nextConfig: NextConfig = {
     ];
 
     return headersList;
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "www.zebotix.com",
+          },
+          {
+            type: "host",
+            value: "zebotix.vercel.app",
+          },
+        ],
+        destination: "https://zebotix.com/:path*",
+        permanent: true,
+      },
+    ];
   },
 };
 

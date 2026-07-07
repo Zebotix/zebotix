@@ -47,7 +47,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
   return (
     <footer
       key={pathname}
-      className="bg-zinc-950 border-t border-zinc-900 pt-20 pb-12 overflow-hidden"
+      className="relative z-20 bg-zinc-950 border-t border-zinc-900 pt-20 pb-12 overflow-hidden"
       role="contentinfo"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -144,7 +144,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                       {solutions.map((child) => (
                         <li key={child.id}>
                           <Link
-                            href={`/solutions/${child.slug}`}
+                            href={`/solutions/${child.industrySlug}/${child.slug}`}
                             className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                           >
                             {child.title}

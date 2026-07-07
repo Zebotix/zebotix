@@ -78,11 +78,12 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
 
           {/* Desktop Menu */}
           <div ref={linksRef} className="hidden md:flex items-center gap-2 relative">
-            <NavLink href="/" active={pathname === "/"}>
-              Home
-            </NavLink>
-
-            <NavigationMenu delayDuration={100}>
+            <NavigationMenu
+              delayDuration={100}
+              className="static!"
+              viewportWrapperClassName="!left-1/2 !-translate-x-1/2 top-full mt-0"
+              viewportWrapperStyle={{}}
+            >
               <NavigationMenuList className="gap-2 p-0 m-0">
                 {/* Solutions */}
                 <NavigationMenuItem>
@@ -105,49 +106,35 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
                       )}
                     />
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-8 shadow-2xl rounded-none md:w-5xl w-full">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {Object.entries(
-                        solutions.reduce(
-                          (acc, item) => {
-                            const category = item.category || "Other Solutions";
-                            if (!acc[category]) acc[category] = [];
-                            acc[category].push(item);
-                            return acc;
-                          },
-                          {} as Record<string, typeof solutions>
-                        )
-                      ).map(([category, items]) => (
-                        <div key={category} className="space-y-4">
-                          <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500 border-b border-zinc-900 pb-2">
-                            {category}
-                          </h4>
-                          <ul className="space-y-3">
-                            {items.map((item) => (
-                              <li key={item.id}>
-                                <NavigationMenuLink asChild>
-                                  <Link
-                                    href={`/solutions/${item.slug}`}
-                                    className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight outline-none focus-visible:text-blue-500"
-                                  >
-                                    {item.title}
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-6 shadow-2xl rounded-none w-full md:w-[800px] lg:w-[900px]">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {solutions.map((item) => (
+                        <NavigationMenuLink key={item.id} asChild>
+                          <Link
+                            href={`/solutions/${item.industrySlug}/${item.slug}`}
+                            className="group block p-4 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors"
+                          >
+                            <h4 className="text-xs font-black text-zinc-300 group-hover:text-blue-500 uppercase tracking-wider mb-2 leading-tight">
+                              {item.title}
+                            </h4>
+                            <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">
+                              {item.category || "Solution"}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
                       ))}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-
+            <NavLink href="/work" active={pathname === "/work"}>
+              Portfolio
+            </NavLink>
             <NavigationMenu
               delayDuration={100}
-              viewportWrapperClassName="!left-auto !right-0 !translate-x-0"
-              viewportWrapperStyle={{ left: "auto", right: 0, transform: "none" }}
+              viewportWrapperClassName="!left-0 !translate-x-0"
+              viewportWrapperStyle={{ left: 0, transform: "none" }}
             >
               <NavigationMenuList className="gap-2 p-0 m-0">
                 {/* Company */}
@@ -207,6 +194,7 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
             <NavLink href="/careers" active={pathname.startsWith("/careers")}>
               Careers
             </NavLink>
+
             <NavLink href="/contact" active={pathname === "/contact"}>
               Contact
             </NavLink>

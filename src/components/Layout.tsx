@@ -8,7 +8,6 @@ import { Navbar, Footer, ContactButton } from "@/components";
 import { Toaster, TooltipProvider } from "@/components/ui";
 import { useScrollHash } from "@/hooks/useScrollHash";
 
-
 export default function Layout({
   children,
   solutions = [],
@@ -35,7 +34,15 @@ export default function Layout({
         {children}
         <ContactButton />
       </main>
-      <Footer solutions={solutions} />
+      <Footer
+        solutions={solutions
+          .toSorted((a, b) => {
+            const dateA = new Date(a.updatedAt).getTime();
+            const dateB = new Date(b.updatedAt).getTime();
+            return dateB - dateA;
+          })
+          .slice(0, 6)}
+      />
     </TooltipProvider>
   );
 }

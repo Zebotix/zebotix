@@ -47,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Solutions routes
   const { data: solutions } = await getSolutionsAction();
   const solutionRoutes = (solutions || []).map((s) => ({
-    url: `${baseUrl}/solutions/${s.slug || s.id}`,
+    url: `${baseUrl}/solutions/${s.industrySlug}/${s.slug}`,
     lastModified: s.updatedAt || s.createdAt || new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,

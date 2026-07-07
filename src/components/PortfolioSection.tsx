@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useRef } from 'react';
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useRef } from "react";
 
-import { Reveal } from '@/components/animations';
-import { Button } from '@/components/ui';
+import { Reveal } from "@/components/animations";
+import { Button } from "@/components/ui";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface PortfolioItem {
+export interface PortfolioItem {
   id?: string;
   title: string;
   slug: string;
@@ -39,7 +39,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
   useGSAP(
     () => {
       if (!containerRef.current) return;
-      const cards = gsap.utils.toArray<HTMLElement>('.portfolio-stack-card');
+      const cards = gsap.utils.toArray<HTMLElement>(".portfolio-stack-card");
       cards.forEach((card, index) => {
         if (index === cards.length - 1) return; // Skip last card
 
@@ -48,8 +48,8 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
           opacity: 0.4,
           scrollTrigger: {
             trigger: card,
-            start: 'top top+=140',
-            end: 'bottom top+=140',
+            start: "top top+=140",
+            end: "bottom top+=140",
             scrub: true,
           },
         });
@@ -77,13 +77,17 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
             </span>
           </Reveal>
           <Reveal delay={0.15}>
-            <h2 id="portfolio-heading" className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter">
+            <h2
+              id="portfolio-heading"
+              className="text-3xl md:text-5xl font-black mb-6 text-white tracking-tighter"
+            >
               Featured Deliveries
             </h2>
           </Reveal>
           <Reveal delay={0.3}>
             <p className="text-zinc-400 text-lg leading-relaxed">
-              Explore how we design and deploy scalable digital systems for innovators and leading brands.
+              Explore how we design and deploy scalable digital systems for innovators and leading
+              brands.
             </p>
           </Reveal>
         </div>
@@ -91,14 +95,14 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
         {/* Stacked Cards Container */}
         <div className="relative space-y-0 pb-12">
           {items.map((project, index) => {
-            const summary = project.summary || project.problem || '';
-            const image = project.image || (project.gallery && project.gallery[0]) || '';
+            const summary = project.summary || project.problem || "";
+            const image = project.image || project.gallery?.[0] || "";
             const tags = project.tags || project.techStack || [];
 
             return (
               <div
                 key={project.slug}
-                className="portfolio-stack-card sticky top-24 md:top-32 w-full min-h-[480px] md:min-h-[560px] bg-zinc-900 border border-zinc-800 flex flex-col md:flex-row justify-between mb-12 sm:mb-16 shadow-[0_-20px_50px_rgba(0,0,0,0.4)] will-change-transform select-none rounded-none"
+                className="group portfolio-stack-card sticky top-24 md:top-32 w-full min-h-[480px] md:min-h-[560px] bg-zinc-900 border border-zinc-800 flex flex-col md:flex-row justify-between mb-12 sm:mb-16 shadow-[0_-20px_50px_rgba(0,0,0,0.4)] will-change-transform select-none rounded-none"
                 style={{
                   zIndex: index + 1,
                 }}
@@ -147,7 +151,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                       src={image}
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-700 hover:scale-103 rounded-none grayscale brightness-90 hover:grayscale-0 hover:brightness-100"
+                      className="object-cover transition-transform duration-700 group-hover:scale-103 rounded-none grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   ) : (
@@ -155,7 +159,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                       Zebotix Case Study
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-zinc-950/20 via-transparent to-transparent pointer-events-none rounded-none" />
+                  <div className="absolute inset-0 bg-linear-to-t md:bg-linear-to-r from-zinc-950/20 via-transparent to-transparent pointer-events-none rounded-none" />
                 </div>
               </div>
             );
@@ -165,7 +169,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
         <Reveal delay={0.4} className="mt-20 text-center">
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 text-white font-semibold hover:text-blue-500 transition-colors group text-sm uppercase tracking-wider font-black"
+            className="inline-flex items-center gap-2 text-white font-semibold hover:text-blue-500 transition-colors group text-sm uppercase tracking-wider"
           >
             Explore Complete Works
             <ArrowRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />

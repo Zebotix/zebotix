@@ -146,9 +146,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <div 
-              className="text-xl md:text-2xl text-zinc-400 max-w-3xl leading-relaxed prose prose-invert prose-p:leading-relaxed prose-p:m-0" 
-              dangerouslySetInnerHTML={{ __html: summary }} 
+            <div
+              className="text-xl md:text-2xl text-zinc-400 max-w-3xl leading-relaxed prose prose-invert prose-p:leading-relaxed prose-p:m-0"
+              dangerouslySetInnerHTML={{ __html: summary }}
             />
           </Reveal>
         </header>
@@ -156,7 +156,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <Reveal delay={0.3} distance={50} className="mb-24">
           <div className="relative h-[400px] md:h-[700px] overflow-hidden border border-zinc-900 shadow-2xl">
             {image && (
-              <Image src={image} alt={project.title} fill className="object-cover" priority />
+              <Image
+                src={image}
+                alt={project.title}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 768px) 100vw, 80vw"
+              />
             )}
           </div>
         </Reveal>
@@ -199,7 +206,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <h3 className="text-xl font-black text-white mb-4 uppercase tracking-wide">
                       Results & Impact
                     </h3>
-                    
+
                     {results.summary && (
                       <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
                         {results.summary}
@@ -207,34 +214,40 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     )}
 
                     <div className="space-y-4">
-                      {Array.isArray(results.metrics) ? (
-                        results.metrics.map((metric: { label: string, value: string }, idx: number) => (
-                          <div key={idx} className="flex items-start gap-3">
-                            <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
-                            <div>
-                              <strong className="text-zinc-200 text-sm block capitalize">
-                                {metric.label}
-                              </strong>
-                              <span className="text-zinc-500 text-xs">{metric.value}</span>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        Object.entries(results).map(([key, val]: [string, unknown], idx) => {
-                          if (typeof val !== 'string' && typeof val !== 'number' && typeof val !== 'boolean') return null;
-                          return (
-                            <div key={idx} className="flex items-start gap-3">
-                              <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
-                              <div>
-                                <strong className="text-zinc-200 text-sm block capitalize">
-                                  {key.replace(/([A-Z])/g, " $1")}
-                                </strong>
-                                <span className="text-zinc-500 text-xs">{String(val)}</span>
+                      {Array.isArray(results.metrics)
+                        ? results.metrics.map(
+                            (metric: { label: string; value: string }, idx: number) => (
+                              <div key={idx} className="flex items-start gap-3">
+                                <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+                                <div>
+                                  <strong className="text-zinc-200 text-sm block capitalize">
+                                    {metric.label}
+                                  </strong>
+                                  <span className="text-zinc-500 text-xs">{metric.value}</span>
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })
-                      )}
+                            )
+                          )
+                        : Object.entries(results).map(([key, val]: [string, unknown], idx) => {
+                            if (
+                              typeof val !== "string" &&
+                              typeof val !== "number" &&
+                              typeof val !== "boolean"
+                            ) {
+                              return null;
+                            }
+                            return (
+                              <div key={idx} className="flex items-start gap-3">
+                                <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+                                <div>
+                                  <strong className="text-zinc-200 text-sm block capitalize">
+                                    {key.replace(/([A-Z])/g, " $1")}
+                                  </strong>
+                                  <span className="text-zinc-500 text-xs">{String(val)}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
                     </div>
                   </div>
                 )}

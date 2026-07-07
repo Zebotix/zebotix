@@ -17,12 +17,13 @@ import {
   getSanitizedSchema,
 } from "@/lib/schemas";
 interface SolutionPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }
 
 export async function generateMetadata({ params }: SolutionPageProps) {
   const { slug } = await params;
-  const res = await getSolutionBySlugAction(slug);
+  const slugStr = slug.at(-1) ?? "";
+  const res = await getSolutionBySlugAction(slugStr);
   if (!res.success || !res.data) {
     return { title: "Solution Not Found" };
   }
@@ -43,12 +44,12 @@ export async function generateMetadata({ params }: SolutionPageProps) {
     title,
     description,
     alternates: {
-      canonical: `/solutions/${slug}`,
+      canonical: `/solutions/${slug.join("/")}`,
     },
     openGraph: {
       title,
       description,
-      url: `${SITE_URL}/solutions/${slug}`,
+      url: `${SITE_URL}/solutions/${slug.join("/")}`,
       type: "website",
     },
     twitter: {
@@ -67,7 +68,8 @@ export async function generateMetadata({ params }: SolutionPageProps) {
 
 export default async function SolutionDetailsPage({ params }: Readonly<SolutionPageProps>) {
   const { slug } = await params;
-  const res = await getSolutionBySlugAction(slug);
+  const slugStr = slug.at(-1) ?? "";
+  const res = await getSolutionBySlugAction(slugStr);
   const faqs: { question: string; answer: string }[] = res.success
     ? (res.data?.faq as { question: string; answer: string }[])
     : [];
@@ -97,7 +99,7 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: SITE_URL },
     { name: "Solutions", url: `${SITE_URL}/solutions` },
-    { name: solution.title, url: `${SITE_URL}/solutions/${slug}` },
+    { name: solution.title, url: `${SITE_URL}/solutions/${slug.join("/")}` },
   ]);
 
   const faqSchema = Array.isArray(faqs) && faqs?.length > 0 ? generateFAQPageSchema(faqs) : null;
@@ -253,7 +255,10 @@ export async function generateStaticParams() {
     if (!success || !solutions) {
       return [];
     }
-    return solutions.map((s) => ({ slug: s.slug || "" }));
+    return solutions.map((s) => {
+      const slugArr = [s.industrySlug, s.slug];
+      return { slug: slugArr };
+    });
   } catch (error) {
     console.error(error);
     return [];

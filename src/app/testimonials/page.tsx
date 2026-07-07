@@ -26,14 +26,16 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Testimonials - What Our Clients Say",
-    description: "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
+    description:
+      "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
     url: "/testimonials",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Testimonials - What Our Clients Say",
-    description: "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
+    description:
+      "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
   },
 };
 
@@ -167,7 +169,7 @@ export default async function TestimonialsPage(
                     />
                   </PaginationItem>
 
-                  {[...Array(meta.totalPages)].map((_, i) => {
+                  {[...new Array(meta.totalPages)].map((_, i) => {
                     const pageNum = i + 1;
                     // Show current, first, last, and pages adjacent to current
                     const isVisible =
@@ -232,7 +234,8 @@ export default async function TestimonialsPage(
                     <span className="text-blue-500">extraordinary?</span>
                   </h2>
                   <p className="text-zinc-400 text-sm mb-10 max-w-xl leading-relaxed">
-                    Join the growing list of innovative companies that trust Zebotix with their most critical digital products. Let's turn your vision into our next success story.
+                    Join the growing list of innovative companies that trust Zebotix with their most
+                    critical digital products. Let's turn your vision into our next success story.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button
@@ -274,4 +277,3 @@ export default async function TestimonialsPage(
     </div>
   );
 }
-

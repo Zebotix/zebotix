@@ -98,21 +98,24 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                 </div>
                 <AccordionContent className="pb-0 pt-2">
                   <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
-                    {solutions.map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/solutions/${item.slug}`}
-                        onClick={handleLinkClick}
-                        className={cn(
-                          "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
-                          activePath === `/solutions/${item.slug}`
-                            ? "text-blue-500"
-                            : "text-zinc-550 hover:text-zinc-300"
-                        )}
-                      >
+                    {solutions.map((item) => {
+                      const href = `/solutions/${item.industrySlug}/${item.slug}`;
+                      return (
+                        <Link
+                          key={item.id}
+                          href={href}
+                          onClick={handleLinkClick}
+                          className={cn(
+                            "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
+                            activePath === href
+                              ? "text-blue-500"
+                              : "text-zinc-550 hover:text-zinc-300"
+                          )}
+                        >
                         {item.title}
                       </Link>
-                    ))}
+                      );
+                    })}
                   </div>
                 </AccordionContent>
               </AccordionItem>

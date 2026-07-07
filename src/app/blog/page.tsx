@@ -1,9 +1,7 @@
 import { type Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 
 import { Reveal } from "@/components/animations";
-import { type BlogPost } from "@/generated/prisma/client";
+import { BlogListClient } from "@/components/BlogListClient";
 import { getAllPosts } from "@/lib/blog";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
 
@@ -53,62 +51,7 @@ export default async function BlogPage() {
           </Reveal>
         </header>
 
-        {posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {posts.map((post: BlogPost, index: number) => (
-              <Reveal key={post.slug} delay={0.1 * index} distance={40}>
-                <article className="group bg-zebotix-darkGray rounded-3xl overflow-hidden border border-white/5 hover:border-zebotix-blue/40 transition-all duration-500 shadow-2xl h-full flex flex-col">
-                  <Link href={`/blog/${post.slug}`} className="block relative h-64 overflow-hidden">
-                    <Image
-                      src={
-                        post.image ||
-                        "/images/hero-section-image.webp"
-                      }
-                      alt={post.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  </Link>
-                  <div className="p-8 grow flex flex-col">
-                    <div className="flex gap-4 mb-4">
-                      {post.tags.map((tag: string) => (
-                        <span
-                          key={tag}
-                          className="text-[10px] uppercase tracking-widest text-zebotix-blue font-bold"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h2 className="text-2xl font-bold text-white mb-4 group-hover:text-zebotix-blue transition-colors">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                    </h2>
-                    <p className="text-gray-400 mb-6 line-clamp-3 leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                    <div className="mt-auto flex items-center justify-between pt-6 border-t border-white/5">
-                      <span className="text-sm text-gray-500">
-                        {post.publishedAt
-                          ? new Date(post.publishedAt).toLocaleDateString()
-                          : "Draft"}
-                      </span>
-                      <span className="text-sm font-bold text-white group-hover:text-zebotix-blue transition-colors">
-                        Read More →
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        ) : (
-          <Reveal delay={0.4}>
-            <div className="text-center py-24 bg-zebotix-darkGray rounded-3xl border border-white/5">
-              <h2 className="text-2xl font-bold text-white mb-4">No posts yet</h2>
-              <p className="text-gray-400">We're working on some great content. Check back soon!</p>
-            </div>
-          </Reveal>
-        )}
+        <BlogListClient initialPosts={posts} />
       </div>
     </div>
   );

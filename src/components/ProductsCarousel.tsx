@@ -23,8 +23,10 @@ export interface SolutionItem {
   slug?: string;
   tagline?: string;
   subtitle?: string;
+  image?: string | null;
   products?: SolutionProduct[];
   benefits?: SolutionBenefit[];
+  industrySlug?: string;
 }
 
 interface ProductsCarouselSectionProps {
@@ -76,12 +78,14 @@ const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProp
             const title = s.title;
             const subtitle = s.subtitle || s.tagline || "";
             const slug = s.slug || s.id || "";
+            const industrySlug = s.industrySlug || "general";
             const id = s.id || s.slug || "";
-            const benefits = s.products
-              ? s.products.map((p: SolutionProduct) => p.name)
-              : Array.isArray(s.benefits)
-                ? (s.benefits as SolutionBenefit[]).map((b: SolutionBenefit) => b.title)
-                : [];
+            let benefits: string[] = [];
+            if (s.products) {
+              benefits = s.products.map((p: SolutionProduct) => p.name);
+            } else if (Array.isArray(s.benefits)) {
+              benefits = (s.benefits as SolutionBenefit[]).map((b: SolutionBenefit) => b.title);
+            }
 
             const layoutClass = gridClasses[i % 4];
 
@@ -90,13 +94,15 @@ const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProp
                 <div className="bg-zinc-900/40 p-8 border border-zinc-800 flex flex-col justify-between h-full hover:border-blue-500/35 transition-all duration-300 relative overflow-hidden group select-none">
                   {/* Subtle Background Art */}
                   <div
-                    className="absolute inset-0 bg-cover bg-center opacity-5 grayscale contrast-125 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                    className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700 pointer-events-none"
                     style={{
-                      backgroundImage: `url(/images/hero-section-image.webp)`,
+                      backgroundImage: `url(${s.image || "/images/hero-section-image.webp"})`,
                     }}
                   />
+                  {/* Dark overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-950/90 via-zinc-950/80 to-transparent pointer-events-none" />
                   {/* Glassy hover gradient */}
-                  <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-blue-500/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
                   <div className="relative z-10">
                     <h3 className="text-2xl font-black text-white mb-3 group-hover:text-blue-500 transition-colors tracking-tight">
@@ -120,7 +126,7 @@ const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProp
 
                   <div className="pt-6 border-t border-zinc-850 relative z-10">
                     <Link
-                      href={`/solutions/${slug}`}
+                      href={`/solutions/${industrySlug}/${slug}`}
                       aria-label={`Explore ${title} Solution`}
                       className="w-full text-white font-bold hover:text-blue-500 transition-colors flex items-center justify-between group/link"
                     >

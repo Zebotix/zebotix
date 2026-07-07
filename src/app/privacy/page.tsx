@@ -119,7 +119,7 @@ export default async function PrivacyPolicy() {
                     <a href="mailto:zebotix@gmail.com" className="underline text-blue-500">
                       zebotix@gmail.com
                     </a>
-                    . We respond within 30 days.
+                    <span>. We respond within 30 days.</span>
                   </p>
                 </section>
               </>
