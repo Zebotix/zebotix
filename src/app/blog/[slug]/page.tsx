@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
             <Image
               src={
                 post.image ||
-                "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80"
+                "/images/hero-section-image.webp"
               }
               alt={post.title}
               fill

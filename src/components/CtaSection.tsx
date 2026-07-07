@@ -61,7 +61,7 @@ const CtaSection = () => {
                   <Image
                     width={500}
                     height={400}
-                    src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?auto=format&fit=crop&w=500&h=400&q=80"
+                    src="/images/hero-section-image.webp"
                     alt={`${COMPANY_NAME} dashboard preview`}
                     sizes="(max-width: 768px) 100vw, 500px"
                     className="w-full grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700 rounded-none object-cover border border-zinc-900"

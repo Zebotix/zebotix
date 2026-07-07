@@ -229,7 +229,7 @@ export const PORTFOLIOS = [
     results:
       "Achieved a 98/100 Lighthouse performance score and integrated a custom headless CMS that reduced content update time by 70%.",
     image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+      "/images/hero-section-image.webp",
     tags: ["E-commerce", "Stripe", "PWA"],
   },
   {
@@ -244,7 +244,7 @@ export const PORTFOLIOS = [
     results:
       "Successfully deployed to 3 corporate clients, serving over 500 active daily users with zero reported data synchronization issues.",
     image:
-      "https://images.unsplash.com/photo-1508830524289-0adcbe822b40?auto=format&fit=crop&w=1200&q=80",
+      "/images/hero-section-image.webp",
     tags: ["Dashboard", "Auth", "Realtime"],
   },
   {
@@ -259,7 +259,7 @@ export const PORTFOLIOS = [
     results:
       "Increased organic lead generation by 150% within the first three months of launch and secured top-3 Google rankings for targeted local keywords.",
     image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+      "/images/hero-section-image.webp",
     tags: ["Responsive", "SEO", "Lead Capture"],
   },
 ];
