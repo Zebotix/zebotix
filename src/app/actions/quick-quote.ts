@@ -1,5 +1,7 @@
 "use server";
 
+import { flattenError } from "zod";
+
 import prisma from "@/lib/db/prisma";
 import { quickQuoteSchema, type QuickQuoteInput } from "@/lib/validations";
 
@@ -10,7 +12,7 @@ export async function submitQuickQuoteAction(data: QuickQuoteInput) {
       return {
         success: false,
         error: "Validation failed",
-        errors: validated.error.flatten().fieldErrors,
+        errors: flattenError(validated.error).fieldErrors,
       };
     }
 

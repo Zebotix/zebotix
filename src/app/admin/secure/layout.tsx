@@ -1,16 +1,18 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
-import { logoutAction } from '@/app/actions/auth';
+import { logoutAction } from "@/app/actions/auth";
 
 export default function AdminLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const navItems = [
-    { name: 'Dashboard', href: '/admin/secure' },
-    { name: 'Leads', href: '/admin/secure/leads' },
-    { name: 'Portfolios', href: '/admin/secure/portfolios' },
-    { name: 'Solutions', href: '/admin/secure/solutions' },
-    { name: 'Blogs', href: '/admin/secure/blogs' },
-    { name: 'Settings', href: '/admin/secure/settings' },
+    { name: "Dashboard", href: "/admin/secure" },
+    { name: "Leads", href: "/admin/secure/leads" },
+    { name: "Quick Quotes", href: "/admin/secure/quick-quotes" },
+    { name: "Analytics", href: "/admin/secure/analytics" },
+    { name: "Portfolios", href: "/admin/secure/portfolios" },
+    { name: "Solutions", href: "/admin/secure/solutions" },
+    { name: "Blogs", href: "/admin/secure/blogs" },
+    { name: "Settings", href: "/admin/secure/settings" },
   ];
 
   return (
@@ -43,9 +45,7 @@ export default function AdminLayout({ children }: Readonly<{ children: React.Rea
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto">
-        {children}
-      </main>
+      <main className="flex-1 overflow-y-auto">{children}</main>
     </div>
   );
 }
