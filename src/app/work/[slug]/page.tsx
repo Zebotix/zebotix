@@ -9,7 +9,11 @@ import { getPortfolioBySlugAction, getPortfoliosAction } from "@/app/actions/por
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import { generateBreadcrumbSchema, generateCreativeWorkSchema, getSanitizedSchema } from "@/lib/schemas";
+import {
+  generateBreadcrumbSchema,
+  generateCreativeWorkSchema,
+  getSanitizedSchema,
+} from "@/lib/schemas";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -48,7 +52,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       siteName: COMPANY_NAME,
       images: [
         {
-          url: (project.gallery && project.gallery[0]) || "",
+          url: project.gallery?.[0] || "",
           width: 1200,
           height: 630,
           alt: project.title,
@@ -59,7 +63,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       card: "summary_large_image",
       title: `${project.title} | Case Study | ${COMPANY_NAME}`,
       description: summary,
-      images: [(project.gallery && project.gallery[0]) || ""],
+      images: [project.gallery?.[0] || ""],
     },
   };
 }
@@ -76,7 +80,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const summary = project.problem || "";
   const image = project.gallery?.[0] || "";
   const tags = project.techStack || [];
-  const results = project.results;
+  const results = project.results as {
+    summary?: string;
+    metrics?: { label: string; value: string }[];
+    [key: string]: unknown;
+  } | null;
 
   const creativeworkSchema = generateCreativeWorkSchema(
     project.title,
@@ -89,7 +97,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: SITE_URL },
     { name: "Work", url: `${SITE_URL}/work` },
-    { name: project.title, url: `${SITE_URL}/work/${project.slug}` }
+    { name: project.title, url: `${SITE_URL}/work/${project.slug}` },
   ]);
 
   return (
@@ -138,7 +146,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl leading-relaxed">{summary}</p>
+            <div 
+              className="text-xl md:text-2xl text-zinc-400 max-w-3xl leading-relaxed prose prose-invert prose-p:leading-relaxed prose-p:m-0" 
+              dangerouslySetInnerHTML={{ __html: summary }} 
+            />
           </Reveal>
         </header>
 
@@ -185,21 +196,45 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div className="bg-zinc-900/40 p-8 border border-zinc-800 shadow-2xl sticky top-32 space-y-8">
                 {results && (
                   <div>
-                    <h3 className="text-xl font-black text-white mb-6 uppercase tracking-wide">
+                    <h3 className="text-xl font-black text-white mb-4 uppercase tracking-wide">
                       Results & Impact
                     </h3>
+                    
+                    {results.summary && (
+                      <p className="text-zinc-400 text-sm mb-6 leading-relaxed">
+                        {results.summary}
+                      </p>
+                    )}
+
                     <div className="space-y-4">
-                      {Object.entries(results).map(([key, val]: [string, string], idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
-                          <div>
-                            <strong className="text-zinc-200 text-sm block capitalize">
-                              {key.replace(/([A-Z])/g, " $1")}
-                            </strong>
-                            <span className="text-zinc-500 text-xs">{val}</span>
+                      {Array.isArray(results.metrics) ? (
+                        results.metrics.map((metric: { label: string, value: string }, idx: number) => (
+                          <div key={idx} className="flex items-start gap-3">
+                            <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+                            <div>
+                              <strong className="text-zinc-200 text-sm block capitalize">
+                                {metric.label}
+                              </strong>
+                              <span className="text-zinc-500 text-xs">{metric.value}</span>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))
+                      ) : (
+                        Object.entries(results).map(([key, val]: [string, unknown], idx) => {
+                          if (typeof val !== 'string' && typeof val !== 'number' && typeof val !== 'boolean') return null;
+                          return (
+                            <div key={idx} className="flex items-start gap-3">
+                              <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0 mt-0.5" />
+                              <div>
+                                <strong className="text-zinc-200 text-sm block capitalize">
+                                  {key.replace(/([A-Z])/g, " $1")}
+                                </strong>
+                                <span className="text-zinc-500 text-xs">{String(val)}</span>
+                              </div>
+                            </div>
+                          );
+                        })
+                      )}
                     </div>
                   </div>
                 )}

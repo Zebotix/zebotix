@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
@@ -146,7 +146,7 @@
 }
 
 @utility section-container {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+  @apply max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 md:py-24;
 }
 
 @utility card-shadow {
@@ -371,7 +371,9 @@
   --sb-width: 10px;
 }
 
-html, body, .modal-scroll {
+html,
+body,
+.modal-scroll {
   scrollbar-width: thin;
   scrollbar-color: var(--sb-thumb) var(--sb-track);
   scrollbar-gutter: stable; /* prevents layout shift */
