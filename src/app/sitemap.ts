@@ -41,7 +41,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: p.updatedAt || p.createdAt || new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
-    images: p.gallery && p.gallery.length > 0 ? [p.gallery[0].replaceAll(`&`, "&amp;")] : [],
+    images: p.gallery && p.gallery.length > 0 
+      ? [p.gallery[0].startsWith("http") ? p.gallery[0].replaceAll("&", "&amp;") : `${baseUrl}${p.gallery[0].replaceAll("&", "&amp;")}`] 
+      : [],
   }));
 
   // Solutions routes
@@ -60,7 +62,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: b.updatedAt || b.publishedAt || b.createdAt || new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
-    images: b.image ? [b.image.replaceAll(`&`, "&amp;")] : [],
+    images: b.image 
+      ? [b.image.startsWith("http") ? b.image.replaceAll("&", "&amp;") : `${baseUrl}${b.image.replaceAll("&", "&amp;")}`] 
+      : [],
   }));
 
   // Job routes
