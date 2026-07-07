@@ -1,11 +1,9 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 
 import MobileMenu from "./MobileMenu";
@@ -29,6 +27,7 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const navRef = useRef<HTMLElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
 
@@ -40,36 +39,6 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useGSAP(
-    () => {
-      if (!navRef.current) return;
-
-      const tl = gsap.timeline();
-
-      tl.from(navRef.current, {
-        y: -100,
-        opacity: 0,
-        duration: 1,
-        ease: "power4.out",
-      });
-
-      if (linksRef.current && linksRef.current.children.length > 0) {
-        tl.from(
-          linksRef.current.children,
-          {
-            opacity: 0,
-            y: -10,
-            stagger: 0.1,
-            duration: 0.8,
-            ease: "power3.out",
-          },
-          "-=0.5"
-        );
-      }
-    },
-    { dependencies: [pathname] }
-  );
 
   if (pathname.startsWith("/admin/secure")) {
     return null;
@@ -83,7 +52,7 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
       ref={navRef}
       aria-label="Primary navigation"
       className={cn(
-        "fixed top-0 left-0 right-0 z-[90] transition-all duration-500 border-b",
+        "fixed top-0 left-0 right-0 z-90 transition-all duration-500 border-b",
         scrolled
           ? "bg-zinc-950/90 backdrop-blur-xl py-3 border-zinc-900 shadow-2xl"
           : "bg-transparent py-6 border-transparent"
@@ -118,6 +87,7 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
                 {/* Solutions */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
+                    onClick={() => router.push("/solutions")}
                     className={cn(
                       "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group/navitem select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
                       pathname.startsWith("/solutions")
@@ -126,7 +96,7 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
                     )}
                   >
                     Solutions
-                    <span
+                    <div
                       className={cn(
                         "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
                         pathname.startsWith("/solutions")
@@ -135,31 +105,51 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
                       )}
                     />
                   </NavigationMenuTrigger>
-                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-8 shadow-2xl rounded-none md:w-[680px] w-full">
+                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-8 shadow-2xl rounded-none md:w-5xl w-full">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="space-y-4">
-                        <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-550 border-b border-zinc-900 pb-2">
-                          All Solutions
-                        </h4>
-                        <ul className="space-y-3">
-                          {solutions.map((item) => (
-                            <li key={item.id}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={`/solutions/${item.slug}`}
-                                  className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight outline-none focus-visible:text-blue-500"
-                                >
-                                  {item.title}
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {Object.entries(
+                        solutions.reduce(
+                          (acc, item) => {
+                            const category = item.category || "Other Solutions";
+                            if (!acc[category]) acc[category] = [];
+                            acc[category].push(item);
+                            return acc;
+                          },
+                          {} as Record<string, typeof solutions>
+                        )
+                      ).map(([category, items]) => (
+                        <div key={category} className="space-y-4">
+                          <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-500 border-b border-zinc-900 pb-2">
+                            {category}
+                          </h4>
+                          <ul className="space-y-3">
+                            {items.map((item) => (
+                              <li key={item.id}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={`/solutions/${item.slug}`}
+                                    className="text-[11px] font-black text-zinc-400 hover:text-blue-500 transition-colors uppercase tracking-wider block leading-tight outline-none focus-visible:text-blue-500"
+                                  >
+                                    {item.title}
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
 
+            <NavigationMenu
+              delayDuration={100}
+              viewportWrapperClassName="!left-auto !right-0 !translate-x-0"
+              viewportWrapperStyle={{ left: "auto", right: 0, transform: "none" }}
+            >
+              <NavigationMenuList className="gap-2 p-0 m-0">
                 {/* Company */}
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
@@ -171,10 +161,12 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
                     )}
                   >
                     Company
-                    <span
+                    <div
                       className={cn(
                         "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
-                        pathname === "/about" || pathname === "/blog" || pathname === "/testimonials"
+                        pathname === "/about" ||
+                          pathname === "/blog" ||
+                          pathname === "/testimonials"
                           ? "scale-x-100"
                           : "scale-x-0 group-hover/navitem:scale-x-100 group-data-[state=open]/navitem:scale-x-100 group-focus/navitem:scale-x-100"
                       )}
@@ -219,6 +211,15 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
               Contact
             </NavLink>
           </div>
+
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="max-sm:hidden h-12 px-8 border-zinc-800 hover:border-zinc-700 bg-transparent text-white font-bold w-full sm:w-auto"
+          >
+            <Link href="/contact">Let's Discuss</Link>
+          </Button>
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden flex items-center">

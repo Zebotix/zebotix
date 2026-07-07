@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import React from "react";
 
 import { getLegalPageAction } from "@/app/actions/legal";
 import { Reveal } from "@/components/animations";
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
   title: `GDPR & DPA Compliance | ${COMPANY_NAME}`,
   description: "Zebotix GDPR compliance policy and Data Processing Agreement (DPA) guidelines.",
   alternates: {
-    canonical: `${SITE_URL}/gdpr`,
+    canonical: "/gdpr",
   },
   openGraph: {
     title: `GDPR & DPA Compliance | ${COMPANY_NAME}`,
@@ -30,7 +29,7 @@ export default async function GDPR() {
 
   return (
     <main className="bg-zinc-950 text-zinc-355 min-h-screen pt-32 pb-24">
-      <article className="max-w-4xl mx-auto px-6 lg:px-8">
+      <article className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <header className="mb-12">
           <Reveal>
             <h1 className="text-3xl md:text-5xl font-black text-white mb-4">

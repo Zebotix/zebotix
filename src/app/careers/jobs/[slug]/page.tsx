@@ -8,7 +8,12 @@ import JobApplicationForm from "../../_components/JobApplicationForm";
 import { getJobPostingBySlugAction } from "@/app/actions/careers";
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
-import { COMPANY_NAME } from "@/lib/constants";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import {
+  generateJobPostingSchema,
+  getSanitizedSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/schemas";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -31,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function JobDetailPage({ params }: Props) {
+export default async function JobDetailPage({ params }: Readonly<Props>) {
   const { slug } = await params;
   const result = await getJobPostingBySlugAction(slug);
   const job = result.success && result.data ? result.data : null;
@@ -44,8 +49,35 @@ export default async function JobDetailPage({ params }: Props) {
   const responsibilities = job.responsibilities as string[] | null;
   const benefits = job.benefits as string[] | null;
 
+  const jobSchema = generateJobPostingSchema(
+    job.title,
+    job.description,
+    new Date(job.createdAt),
+    job.location,
+    job.type
+  );
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: SITE_URL },
+    { name: "Careers", url: `${SITE_URL}/careers` },
+    { name: "Jobs", url: `${SITE_URL}/careers/jobs` },
+    { name: job.title, url: `${SITE_URL}/careers/jobs/${job.slug}` },
+  ]);
+
   return (
     <main className="min-h-screen pt-24 sm:pt-32 pb-16 sm:pb-24 bg-zinc-950 text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(jobSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(breadcrumbSchema),
+        }}
+      />
       <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
         <Reveal>
           <Button asChild variant="ghost" className="mb-8 -ml-4 text-zinc-400 hover:text-white">

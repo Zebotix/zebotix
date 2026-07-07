@@ -11,6 +11,7 @@ import FeaturesSection from "@/components/FeaturesSection";
 import HeroSection from "@/components/HeroSection";
 import ProductsCarouselSection, { type SolutionItem } from "@/components/ProductsCarousel";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import { LoadingFallback } from "@/components/ui/FallBackLoading";
 import { COMPANY_NAME, SHORT_DESC, SITE_URL } from "@/lib/constants";
 import { getSanitizedSchema, generateLocalBusinessSchema } from "@/lib/schemas";
 
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
   description: `${SHORT_DESC} Build responsive web apps, AI-driven products, and scalable systems.`,
   alternates: {
-    canonical: SITE_URL,
+    canonical: "/",
   },
   openGraph: {
     title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
@@ -49,10 +50,6 @@ export const metadata: Metadata = {
   },
 };
 
-function LoadingFallback() {
-  return <div className="w-full h-96 bg-zinc-900 border border-zinc-800 animate-pulse" />;
-}
-
 async function SolutionsWrapper() {
   const res = await getSolutionsAction();
   const solutions = res.success ? (res.data as unknown as SolutionItem[]) : [];
@@ -75,43 +72,45 @@ export default async function Home() {
   const localBusinessSchema = generateLocalBusinessSchema();
 
   return (
-    <main id="main-content">
+    <main id="main-content" className="relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: getSanitizedSchema(localBusinessSchema),
         }}
       />
-      <Suspense fallback={<LoadingFallback />}>
-        <HeroSection
-          primaryCta={{ href: "/quick-quote", label: "Get a Quick Quote" }}
-          secondaryCta={{ href: "/contact", label: "Contact Us" }}
-        />
-      </Suspense>
+      
+      {/* Sticky Hero Wrapper for Scroll-Over Effect */}
+      <div className="sticky top-0 h-screen w-full z-0">
+        <HeroSection primaryCta={{ href: "/quick-quote", label: "Get a Quick Quote" }} />
+      </div>
 
-      <TrustedBy />
+      {/* Content scrolling over the hero */}
+      <div className="relative z-10 bg-zinc-950 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+        <TrustedBy />
 
-      <Suspense fallback={<LoadingFallback />}>
-        <FeaturesSection />
-      </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          <FeaturesSection />
+        </Suspense>
 
-      <Suspense fallback={<LoadingFallback />}>
-        <SolutionsWrapper />
-      </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          <SolutionsWrapper />
+        </Suspense>
 
-      <OurProcess />
+        <OurProcess />
 
-      <Suspense fallback={<LoadingFallback />}>
-        <TestimonialsWrapper />
-      </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          <TestimonialsWrapper />
+        </Suspense>
 
-      <Suspense fallback={<LoadingFallback />}>
-        <BlogsWrapper />
-      </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          <BlogsWrapper />
+        </Suspense>
 
-      <Suspense fallback={<LoadingFallback />}>
-        <CtaSection />
-      </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          <CtaSection />
+        </Suspense>
+      </div>
     </main>
   );
 }

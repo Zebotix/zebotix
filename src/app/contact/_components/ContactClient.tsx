@@ -66,7 +66,7 @@ export default function ContactClient() {
           alt="Contact Us Background"
           fill
           priority
-          className="object-cover opacity-40 mix-blend-overlay"
+          className="object-cover opacity-70 "
         />
         <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
         <div className="relative z-10 text-center max-w-3xl px-4 mt-20">
@@ -238,7 +238,7 @@ export default function ContactClient() {
             </div>
 
             {/* Image Column */}
-            <div className="relative h-[600px] lg:h-[700px] w-full bg-zinc-900 border border-zinc-800 group">
+            <div className="relative h-[600px] lg:h-[585px] w-full bg-zinc-900 border border-zinc-800 group overflow-hidden">
               <Image
                 src="/images/contact-hr.webp"
                 alt="HR Representative"

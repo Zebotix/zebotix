@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Enterprise-grade digital infrastructure designed to scale your business operations and dominate the market.",
   alternates: {
-    canonical: `${SITE_URL}/solutions`,
+    canonical: "/solutions",
   },
   openGraph: {
     title: `Our Solutions | ${COMPANY_NAME}`,

@@ -3,13 +3,14 @@ import { type Metadata } from "next";
 import ContactClient from "./_components/ContactClient";
 
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { generateLocalBusinessSchema, getSanitizedSchema } from "@/lib/schemas";
 
 export const metadata: Metadata = {
   title: `Contact — ${COMPANY_NAME}`,
   description:
     "Contact Zebotix — Karachi-based digital studio. Reach us by phone, email, social or send a message using the form.",
   alternates: {
-    canonical: `${SITE_URL}/contact`,
+    canonical: "/contact",
   },
   openGraph: {
     title: `Contact — ${COMPANY_NAME}`,
@@ -36,6 +37,16 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactClient />;
+  const localBusinessSchema = generateLocalBusinessSchema();
+  return (
+    <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getSanitizedSchema(localBusinessSchema),
+        }}
+      />
+      <ContactClient />
+    </main>
+  );
 }
-

@@ -42,7 +42,7 @@ const CtaSection = () => {
                     size="lg"
                     className="bg-white hover:bg-zinc-200 text-black font-black uppercase tracking-wider h-14 px-8 rounded-none border border-white/10"
                   >
-                    <Link href="/contact">Get a Free Quote</Link>
+                    <Link href="/quick-quote">Get a Free Quote</Link>
                   </Button>
                   <Button
                     asChild

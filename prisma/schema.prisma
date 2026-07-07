@@ -18,6 +18,7 @@ model Solution {
   slug        String    @unique
   tagline     String
   description String    // Rich text
+  category    String?
   icon        String?
   image       String?
   benefits    Json      // Array of benefit objects
@@ -168,19 +169,7 @@ model SiteSetting {
   updatedAt DateTime  @updatedAt
 }
 
-model NavigationItem {
-  id        String    @id @default(cuid())
-  label     String
-  href      String
-  parentId  String?
-  parent    NavigationItem? @relation("NavChildren", fields: [parentId], references: [id])
-  children  NavigationItem[] @relation("NavChildren")
-  order     Int       @default(0)
-  isVisible Boolean   @default(true)
-  location  String    @default("header") // header, footer
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
+
 
 model MediaFile {
   id        String    @id @default(cuid())

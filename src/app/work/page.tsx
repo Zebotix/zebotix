@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Explore our portfolio of scalable web applications, e-commerce storefronts, and AI workflows.",
   alternates: {
-    canonical: `${SITE_URL}/work`,
+    canonical: "/work",
   },
   openGraph: {
     title: `Our Work | ${COMPANY_NAME}`,

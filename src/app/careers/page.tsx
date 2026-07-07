@@ -4,13 +4,27 @@ import Link from "next/link";
 
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
-import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { COMPANY_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: `Careers — ${COMPANY_NAME}`,
-  description: "Join Zebotix and build the future of digital platforms. We are a fully remote team focused on engineering excellence and innovation.",
+  description:
+    "Join Zebotix and build the future of digital platforms. We are a fully remote team focused on engineering excellence and innovation.",
   alternates: {
-    canonical: `${SITE_URL}/careers`,
+    canonical: "/careers",
+  },
+  openGraph: {
+    title: `Careers — ${COMPANY_NAME}`,
+    description:
+      "Join Zebotix and build the future of digital platforms. We are a fully remote team focused on engineering excellence and innovation.",
+    url: "/careers",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Careers — ${COMPANY_NAME}`,
+    description:
+      "Join Zebotix and build the future of digital platforms. We are a fully remote team focused on engineering excellence and innovation.",
   },
 };
 
@@ -18,32 +32,38 @@ const perks = [
   {
     icon: Globe2,
     title: "Work From Anywhere",
-    description: "We are a remote-first team. Work from the comfort of your home, a cafe, or anywhere in the world.",
+    description:
+      "We are a remote-first team. Work from the comfort of your home, a cafe, or anywhere in the world.",
   },
   {
     icon: Laptop,
     title: "Modern Tech Stack",
-    description: "Work with the latest technologies including Next.js, React, Node.js, and modern cloud infrastructure.",
+    description:
+      "Work with the latest technologies including Next.js, React, Node.js, and modern cloud infrastructure.",
   },
   {
     icon: Zap,
     title: "Fast-Paced Environment",
-    description: "Build products that scale rapidly. We believe in shipping fast, learning, and iterating.",
+    description:
+      "Build products that scale rapidly. We believe in shipping fast, learning, and iterating.",
   },
   {
     icon: Heart,
     title: "Health & Wellness",
-    description: "Comprehensive health coverage for you and your dependents, plus mental health and wellness stipends.",
+    description:
+      "Comprehensive health coverage for you and your dependents, plus mental health and wellness stipends.",
   },
   {
     icon: Rocket,
     title: "Learning Budget",
-    description: "Annual stipend for courses, books, conferences, and any material that helps you level up.",
+    description:
+      "Annual stipend for courses, books, conferences, and any material that helps you level up.",
   },
   {
     icon: Coffee,
     title: "Flexible Hours",
-    description: "We care about what you deliver, not when you clock in. Enjoy a flexible schedule that fits your life.",
+    description:
+      "We care about what you deliver, not when you clock in. Enjoy a flexible schedule that fits your life.",
   },
 ];
 
@@ -55,7 +75,6 @@ export default function CareersPage() {
       <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        
         {/* Hero Section */}
         <section className="text-center max-w-4xl mx-auto mb-24 sm:mb-32">
           <Reveal>
@@ -70,11 +89,17 @@ export default function CareersPage() {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-zinc-400 text-lg md:text-xl mb-10 leading-relaxed font-medium">
-              At {COMPANY_NAME}, we are on a mission to engineer high-performance software that transforms modern companies. We are a diverse, fully remote team of builders, designers, and innovators.
+              At {COMPANY_NAME}, we are on a mission to engineer high-performance software that
+              transforms modern companies. We are a diverse, fully remote team of builders,
+              designers, and innovators.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
-            <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-14 px-8 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(37,99,235,0.5)] transition-all hover:shadow-[0_0_60px_-15px_rgba(37,99,235,0.7)]">
+            <Button
+              asChild
+              size="lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold h-14 px-8 rounded-full text-lg shadow-[0_0_40px_-10px_rgba(37,99,235,0.5)] transition-all hover:shadow-[0_0_60px_-15px_rgba(37,99,235,0.7)]"
+            >
               <Link href="/careers/jobs">
                 View Open Roles
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -89,7 +114,8 @@ export default function CareersPage() {
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-5xl font-black mb-4">Why join {COMPANY_NAME}?</h2>
               <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-                We believe that doing your best work requires an environment that supports you both professionally and personally.
+                We believe that doing your best work requires an environment that supports you both
+                professionally and personally.
               </p>
             </div>
           </Reveal>
@@ -102,9 +128,7 @@ export default function CareersPage() {
                     <perk.icon className="w-6 h-6 text-blue-500" />
                   </div>
                   <h3 className="text-xl font-bold mb-3">{perk.title}</h3>
-                  <p className="text-zinc-400 leading-relaxed">
-                    {perk.description}
-                  </p>
+                  <p className="text-zinc-400 leading-relaxed">{perk.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -119,18 +143,20 @@ export default function CareersPage() {
               <div className="relative z-10">
                 <h2 className="text-3xl md:text-4xl font-black mb-4">Ready to make an impact?</h2>
                 <p className="text-zinc-400 text-lg mb-8 max-w-2xl mx-auto">
-                  Even if you don't see a role that fits your exact profile, we are always on the lookout for exceptional talent. Reach out to us.
+                  Even if you don't see a role that fits your exact profile, we are always on the
+                  lookout for exceptional talent. Reach out to us.
                 </p>
-                <Button asChild size="lg" className="bg-white text-black hover:bg-zinc-200 font-bold h-12 px-8">
-                  <Link href="/careers/jobs">
-                    Explore Openings
-                  </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-white text-black hover:bg-zinc-200 font-bold h-12 px-8"
+                >
+                  <Link href="/careers/jobs">Explore Openings</Link>
                 </Button>
               </div>
             </div>
           </Reveal>
         </section>
-        
       </div>
     </main>
   );

@@ -8,9 +8,6 @@ import { Navbar, Footer, ContactButton } from "@/components";
 import { Toaster, TooltipProvider } from "@/components/ui";
 import { useScrollHash } from "@/hooks/useScrollHash";
 
-export type NavItemWithChildren = Prisma.NavigationItemGetPayload<{
-  include: { children: true };
-}>;
 
 export default function Layout({
   children,

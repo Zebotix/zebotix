@@ -22,7 +22,7 @@ const FaqSection = ({ faqs = [] }: FaqSectionProps) => {
   return (
     <section
       id="faq"
-      className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden"
+      className="bg-zinc-950 py-20 md:py-28 border-t border-zinc-900 overflow-hidden "
       aria-labelledby="faq-heading"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -55,9 +55,9 @@ const FaqSection = ({ faqs = [] }: FaqSectionProps) => {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="border-b border-zinc-850 last:border-0 rounded-none"
+                  className="border-b border-zinc-850 last:border-0 rounded-none "
                 >
-                  <AccordionTrigger className="text-left text-base font-black text-white hover:text-blue-500 py-6 transition-all uppercase tracking-tight rounded-none border-0">
+                  <AccordionTrigger className="text-left text-base font-black text-white hover:text-blue-500 py-6 transition-all uppercase tracking-tight rounded-none border-0 cursor-pointer">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-zinc-400 text-sm leading-relaxed pb-6 rounded-none">

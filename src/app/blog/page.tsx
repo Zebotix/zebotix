@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Insights, tutorials, and updates from the Zebotix team on AI, web development, and digital strategy.",
   alternates: {
-    canonical: `${SITE_URL}/blog`,
+    canonical: "/blog",
   },
   openGraph: {
     title: `Blog | ${COMPANY_NAME}`,

@@ -223,6 +223,40 @@ export function generateLocalBusinessSchema() {
 }
 
 /**
+ * JobPosting schema - for career job postings
+ */
+export function generateJobPostingSchema(
+  title: string,
+  description: string,
+  datePosted: Date,
+  location?: string,
+  employmentType?: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title,
+    description,
+    datePosted: datePosted.toISOString(),
+    hiringOrganization: {
+      "@type": "Organization",
+      name: COMPANY_NAME,
+      sameAs: SITE_URL,
+      logo: `${SITE_URL}/Zebotix.webp`,
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: location || "Karachi",
+        addressCountry: "PK",
+      },
+    },
+    employmentType: employmentType || "FULL_TIME",
+  };
+}
+
+/**
  * Export sanitized schema for use in dangerouslySetInnerHTML
  */
 export function getSanitizedSchema(schema: unknown): string {

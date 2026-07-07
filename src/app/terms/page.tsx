@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Zebotix Terms and Conditions governing services, pricing, IP, and project cancellations.",
   alternates: {
-    canonical: `${SITE_URL}/terms`,
+    canonical: "/terms",
   },
   openGraph: {
     title: `Terms & Conditions | ${COMPANY_NAME}`,
@@ -33,7 +33,7 @@ export default async function Terms() {
 
   return (
     <main className="bg-zinc-950 text-zinc-350 min-h-screen pt-32 pb-24">
-      <article className="max-w-4xl mx-auto px-6 lg:px-8">
+      <article className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <header className="mb-12">
           <Reveal>
             <h1 className="text-3xl md:text-5xl font-black text-white mb-4">

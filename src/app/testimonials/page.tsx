@@ -1,11 +1,13 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import type { Metadata } from "next";
 
 import { getPaginatedTestimonialsAction } from "@/app/actions/testimonials";
 import { Reveal } from "@/components/animations";
+import { Button } from "@/components/ui/Button";
 import {
   Pagination,
   PaginationContent,
@@ -19,6 +21,20 @@ import {
 export const metadata: Metadata = {
   title: "Testimonials - What Our Clients Say",
   description: "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
+  alternates: {
+    canonical: "/testimonials",
+  },
+  openGraph: {
+    title: "Testimonials - What Our Clients Say",
+    description: "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
+    url: "/testimonials",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Testimonials - What Our Clients Say",
+    description: "Read testimonials from startup founders and enterprise leaders who trust Zebotix.",
+  },
 };
 
 export default async function TestimonialsPage(
@@ -196,6 +212,66 @@ export default async function TestimonialsPage(
           )}
         </div>
       </section>
+
+      {/* Testimonials CTA Section */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <Reveal distance={40}>
+            <div className="bg-zinc-900 border border-zinc-800 p-8 md:p-16 relative overflow-hidden rounded-2xl select-none shadow-2xl">
+              {/* Abstract glow effects */}
+              <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" />
+              <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div className="lg:w-3/5">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-blue-500 mb-4 block">
+                    Your Success Story Starts Here
+                  </span>
+                  <h2 className="text-3xl md:text-5xl font-black mb-6 text-white leading-[1.1] uppercase tracking-tighter">
+                    Ready to build something <br className="hidden lg:block" />
+                    <span className="text-blue-500">extraordinary?</span>
+                  </h2>
+                  <p className="text-zinc-400 text-sm mb-10 max-w-xl leading-relaxed">
+                    Join the growing list of innovative companies that trust Zebotix with their most critical digital products. Let's turn your vision into our next success story.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="bg-white hover:bg-zinc-200 text-black font-black uppercase tracking-wider h-14 px-8 rounded-none border border-white/10"
+                    >
+                      <Link href="/quick-quote">Get a Free Estimate</Link>
+                    </Button>
+                    <Button
+                      asChild
+                      size="lg"
+                      variant="outline"
+                      className="border-zinc-800 text-zinc-300 hover:bg-zinc-850 hover:text-white h-14 px-8 rounded-none bg-transparent"
+                    >
+                      <Link href="/contact">Book a Consultation</Link>
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="lg:w-2/5 w-full">
+                  <div className="relative border border-zinc-800 rounded-none bg-zinc-950 p-2">
+                    <div className="absolute inset-0 bg-linear-to-tr from-blue-500/10 via-transparent to-transparent pointer-events-none" />
+                    <Image
+                      width={500}
+                      height={400}
+                      src="/testimonials_cta.webp"
+                      alt="Business Partnership and Success"
+                      sizes="(max-width: 768px) 100vw, 500px"
+                      className="w-full grayscale brightness-75 hover:grayscale-0 hover:brightness-100 transition-all duration-700 rounded-none object-cover border border-zinc-900"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </div>
   );
 }
+

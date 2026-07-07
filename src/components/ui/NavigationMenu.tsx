@@ -7,21 +7,27 @@ import { cn } from "@/lib/utils";
 
 const NavigationMenu = React.forwardRef<
   React.ComponentRef<typeof NavigationMenuPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root> & {
+    viewportWrapperClassName?: string;
+    viewportWrapperStyle?: React.CSSProperties;
+  }
+>(({ className, children, viewportWrapperClassName, viewportWrapperStyle, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
     className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
     {...props}
   >
     {children}
-    <NavigationMenuViewport />
+    <NavigationMenuViewport
+      wrapperClassName={viewportWrapperClassName}
+      wrapperStyle={viewportWrapperStyle}
+    />
   </NavigationMenuPrimitive.Root>
 ));
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName;
 
 const NavigationMenuList = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitive.List>,
+  React.ComponentRef<typeof NavigationMenuPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
 >(({ className, ...props }, ref) => (
   <NavigationMenuPrimitive.List
@@ -39,7 +45,7 @@ const navigationMenuTriggerStyle = cva(
 );
 
 const NavigationMenuTrigger = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
+  React.ComponentRef<typeof NavigationMenuPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
@@ -57,7 +63,7 @@ const NavigationMenuTrigger = React.forwardRef<
 NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName;
 
 const NavigationMenuContent = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitive.Content>,
+  React.ComponentRef<typeof NavigationMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>
 >(({ className, ...props }, ref) => (
   <NavigationMenuPrimitive.Content
@@ -75,12 +81,21 @@ const NavigationMenuLink = NavigationMenuPrimitive.Link;
 
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
-  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
->(({ className, ...props }, ref) => (
-  <div className={cn("absolute left-0 md:left-auto md:right-0 top-full flex justify-center")}>
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport> & {
+    wrapperClassName?: string;
+    wrapperStyle?: React.CSSProperties;
+  }
+>(({ className, wrapperClassName, wrapperStyle, ...props }, ref) => (
+  <div
+    className={cn(
+      "absolute left-1/2 -translate-x-1/2 top-full flex justify-center",
+      wrapperClassName
+    )}
+    style={wrapperStyle}
+  >
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "origin-top-center relative mt-1.5 h-(--radix-navigation-menu-viewport-height) w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-(--radix-navigation-menu-viewport-width)",
+        "origin-top-center relative mt-1.5 h-(--radix-navigation-menu-viewport-height) w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out md:w-(--radix-navigation-menu-viewport-width)",
         className
       )}
       ref={ref}

@@ -5,13 +5,27 @@ import Link from "next/link";
 import { getActiveJobPostingsAction } from "@/app/actions/careers";
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
-import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { COMPANY_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: `Open Roles — Careers at ${COMPANY_NAME}`,
-  description: `View and apply for open roles at ${COMPANY_NAME}. Join our remote-first team.`,
+  title: `Open Roles | Careers — ${COMPANY_NAME}`,
+  description:
+    "View our open positions. We are a fully remote team focused on engineering excellence and innovation.",
   alternates: {
-    canonical: `${SITE_URL}/careers/jobs`,
+    canonical: "/careers/jobs",
+  },
+  openGraph: {
+    title: `Open Roles | Careers — ${COMPANY_NAME}`,
+    description:
+      "View our open positions. We are a fully remote team focused on engineering excellence and innovation.",
+    url: "/careers/jobs",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Open Roles | Careers — ${COMPANY_NAME}`,
+    description:
+      "View our open positions. We are a fully remote team focused on engineering excellence and innovation.",
   },
 };
 

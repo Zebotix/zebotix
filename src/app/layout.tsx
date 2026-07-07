@@ -86,9 +86,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
+  alternates: {},
   openGraph: {
     title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
     description: SHORT_DESC,

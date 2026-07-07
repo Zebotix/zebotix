@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Get a quick project estimate from Zebotix. Share your requirements and get a roadmap within 24 hours.",
   alternates: {
-    canonical: `${SITE_URL}/quick-quote`,
+    canonical: "/quick-quote",
   },
   openGraph: {
     title: `Project Estimator — ${COMPANY_NAME}`,

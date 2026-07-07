@@ -1,33 +1,34 @@
 import { type MetadataRoute } from "next";
 
 import { getBlogsAction } from "@/app/actions/blogs";
-import { getNavigationLinksAction } from "@/app/actions/navigation";
+import { getActiveJobPostingsAction } from "@/app/actions/careers";
 import { getPortfoliosAction } from "@/app/actions/portfolio";
 import { getSolutionsAction } from "@/app/actions/solutions";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.zebotix.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://zebotix.com";
 
-  // Main navigation routes
-  const { data: headerLinks } = await getNavigationLinksAction("header");
-  const { data: footerLinks } = await getNavigationLinksAction("footer");
+  // Static routes map
+  const staticPaths = [
+    "/",
+    "/about",
+    "/solutions",
+    "/blog",
+    "/work",
+    "/testimonials",
+    "/contact",
+    "/quick-quote",
+    "/careers",
+    "/careers/jobs",
+    "/cookie-policy",
+    "/gdpr",
+    "/privacy",
+    "/terms",
+  ];
 
-  const allNavLinks = [...(headerLinks || []), ...(footerLinks || [])];
-
-  // Extract all unique routes from nav links, including children
-  const navRoutesSet = new Set<string>();
-  allNavLinks.forEach((link) => {
-    if (link.href && !link.href.startsWith("#")) navRoutesSet.add(link.href);
-    if (link.children) {
-      link.children.forEach((child) => {
-        if (child.href && !child.href.startsWith("#")) navRoutesSet.add(child.href);
-      });
-    }
-  });
-
-  const routes = Array.from(navRoutesSet).map((href) => ({
+  const staticRoutes = staticPaths.map((href) => ({
     url: `${baseUrl}${href}`,
-    lastModified: new Date(), // We keep this for static routes that don't have a DB updated timestamp
+    lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: href === "/" ? 1 : 0.8,
     images: href === "/" ? [`${baseUrl}/Zebotix.webp`] : [],
@@ -40,7 +41,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: p.updatedAt || p.createdAt || new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
-    images: p.gallery && p.gallery.length > 0 ? [p.gallery[0].replaceAll(/&/g, "&amp;")] : [],
+    images: p.gallery && p.gallery.length > 0 ? [p.gallery[0].replaceAll(`&`, "&amp;")] : [],
   }));
 
   // Solutions routes
@@ -59,18 +60,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: b.updatedAt || b.publishedAt || b.createdAt || new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
-    images: b.image ? [b.image.replace(/&/g, "&amp;")] : [],
+    images: b.image ? [b.image.replaceAll(`&`, "&amp;")] : [],
   }));
 
-  // Static legal/policy routes
-  const staticRoutes = ["/privacy", "/terms", "/cookie-policy", "/gdpr", "/contact", "/about"].map(
-    (route) => ({
-      url: `${baseUrl}${route}`,
-      lastModified: new Date(),
-      changeFrequency: "yearly" as const,
-      priority: 0.3,
-    })
-  );
+  // Job routes
+  const { data: jobs } = await getActiveJobPostingsAction();
+  const jobRoutes = (jobs || []).map((j) => ({
+    url: `${baseUrl}/careers/jobs/${j.slug}`,
+    lastModified: j.updatedAt || j.createdAt || new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
 
-  return [...routes, ...portfolioRoutes, ...solutionRoutes, ...blogRoutes, ...staticRoutes];
+  return [...staticRoutes, ...portfolioRoutes, ...solutionRoutes, ...blogRoutes, ...jobRoutes];
 }

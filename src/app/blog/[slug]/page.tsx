@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     title: `${post.title} | Blog | ${COMPANY_NAME}`,
     description: post.excerpt,
     alternates: {
-      canonical: `${SITE_URL}/blog/${post.slug}`,
+      canonical: `/blog/${post.slug}`,
     },
     openGraph: {
       title: `${post.title} | Blog | ${COMPANY_NAME}`,

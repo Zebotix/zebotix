@@ -3,13 +3,19 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
-import { getFaqsAction } from "@/app/actions/faqs";
+import type { Metadata } from "next";
+
 import { getSolutionBySlugAction, getSolutionsAction } from "@/app/actions/solutions";
 import { Reveal } from "@/components/animations";
 import FaqSection from "@/components/FaqSection";
 import { Button } from "@/components/ui/Button";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import { generateBreadcrumbSchema, generateServiceSchema, getSanitizedSchema } from "@/lib/schemas";
+import {
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+  generateFAQPageSchema,
+  getSanitizedSchema,
+} from "@/lib/schemas";
 interface SolutionPageProps {
   params: Promise<{ slug: string }>;
 }
@@ -20,15 +26,24 @@ export async function generateMetadata({ params }: SolutionPageProps) {
   if (!res.success || !res.data) {
     return { title: "Solution Not Found" };
   }
-  
-  const title = `${res.data.title} | Solutions | ${COMPANY_NAME}`;
-  const description = res.data.tagline || `Discover our ${res.data.title} solutions at ${COMPANY_NAME}.`;
-  
-  return {
+
+  const seoData = res.data.seo as {
+    title?: string;
+    description?: string;
+    keywords?: string;
+  } | null;
+
+  const title = seoData?.title || `${res.data.title} | Solutions | ${COMPANY_NAME}`;
+  const description =
+    seoData?.description ||
+    res.data.tagline ||
+    `Discover our ${res.data.title} solutions at ${COMPANY_NAME}.`;
+
+  const metadata: Metadata = {
     title,
     description,
     alternates: {
-      canonical: `${SITE_URL}/solutions/${slug}`,
+      canonical: `/solutions/${slug}`,
     },
     openGraph: {
       title,
@@ -42,13 +57,20 @@ export async function generateMetadata({ params }: SolutionPageProps) {
       description,
     },
   };
+
+  if (seoData?.keywords) {
+    metadata.keywords = seoData.keywords;
+  }
+
+  return metadata;
 }
 
 export default async function SolutionDetailsPage({ params }: Readonly<SolutionPageProps>) {
   const { slug } = await params;
   const res = await getSolutionBySlugAction(slug);
-  const faqsRes = await getFaqsAction();
-  const faqs = faqsRes.success ? faqsRes.data : [];
+  const faqs: { question: string; answer: string }[] = res.success
+    ? (res.data?.faq as { question: string; answer: string }[])
+    : [];
 
   if (!res.success || !res.data) {
     notFound();
@@ -75,8 +97,10 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: SITE_URL },
     { name: "Solutions", url: `${SITE_URL}/solutions` },
-    { name: solution.title, url: `${SITE_URL}/solutions/${slug}` }
+    { name: solution.title, url: `${SITE_URL}/solutions/${slug}` },
   ]);
+
+  const faqSchema = Array.isArray(faqs) && faqs?.length > 0 ? generateFAQPageSchema(faqs) : null;
 
   return (
     <main className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
@@ -92,7 +116,15 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
           __html: getSanitizedSchema(breadcrumbSchema),
         }}
       />
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: getSanitizedSchema(faqSchema),
+          }}
+        />
+      )}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <Reveal>
           <Link
             href="/solutions"
@@ -205,8 +237,8 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
         </div>
 
         {/* FAQ Section */}
-        {faqs.length > 0 && (
-          <div className="mt-28 border-t border-zinc-900 pt-12">
+        {Array.isArray(faqs) && faqs.length > 0 && (
+          <div className="mt-28 pt-12">
             <FaqSection faqs={faqs} />
           </div>
         )}

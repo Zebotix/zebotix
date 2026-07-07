@@ -17,7 +17,6 @@ import {
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
-
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -26,7 +25,6 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuProps) => {
-
   const handleLinkClick = () => {
     onClose();
   };
@@ -34,7 +32,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
   return (
     <div
       className={cn(
-        "fixed inset-0 z-[100] md:hidden transition-all duration-300 h-[100vh]",
+        "fixed inset-0 z-100 md:hidden transition-all duration-300 h-screen",
         isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
       )}
     >
@@ -55,7 +53,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
         {/* Header Row */}
         <div className="flex justify-between items-center mb-8 pb-4 border-b border-zinc-900">
           <span className="text-xs font-black uppercase tracking-widest text-zinc-550">
-            Navigation
+            ZEBOTIX
           </span>
           <Button
             variant="outline"
@@ -69,25 +67,35 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
         </div>
 
         {/* Links Navigation */}
-        <nav className="flex flex-col gap-4">
+        <nav className="flex flex-col gap-2">
           <Link
             href="/"
             onClick={handleLinkClick}
             className={cn(
-              "text-sm font-black uppercase tracking-wider py-2 transition-colors block",
+              "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
               activePath === "/" ? "text-blue-500" : "text-zinc-300 hover:text-white"
             )}
           >
             Home
           </Link>
-          <Accordion type="multiple" className="w-full">
+          <Accordion type="single" collapsible className="w-full">
             {solutions.length > 0 && (
               <AccordionItem value="solutions" className="border-none">
-                <AccordionTrigger className="hover:no-underline py-2 px-0">
-                  <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
+                <div className="flex items-center justify-between w-full group">
+                  <Link
+                    href="/solutions"
+                    onClick={handleLinkClick}
+                    className={cn(
+                      "text-sm font-black uppercase tracking-wider py-3 transition-colors flex-1 text-left",
+                      activePath === "/solutions"
+                        ? "text-blue-500"
+                        : "text-zinc-300 group-hover:text-white"
+                    )}
+                  >
                     Solutions
-                  </span>
-                </AccordionTrigger>
+                  </Link>
+                  <AccordionTrigger className="hover:no-underline py-3 px-4 -mr-4 flex-none data-[state=open]:text-white text-zinc-300" />
+                </div>
                 <AccordionContent className="pb-0 pt-2">
                   <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
                     {solutions.map((item) => (
@@ -96,7 +104,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                         href={`/solutions/${item.slug}`}
                         onClick={handleLinkClick}
                         className={cn(
-                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
+                          "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
                           activePath === `/solutions/${item.slug}`
                             ? "text-blue-500"
                             : "text-zinc-550 hover:text-zinc-300"
@@ -111,59 +119,57 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
             )}
 
             <AccordionItem value="company" className="border-none">
-                <AccordionTrigger className="hover:no-underline py-2 px-0">
-                  <span className="text-sm font-black uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">
-                    Company
-                  </span>
-                </AccordionTrigger>
-                <AccordionContent className="pb-0 pt-2">
-                  <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
-                      <Link
-                        href="/about"
-                        onClick={handleLinkClick}
-                        className={cn(
-                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
-                          activePath === "/about"
-                            ? "text-blue-500"
-                            : "text-zinc-550 hover:text-zinc-300"
-                        )}
-                      >
-                        Who we are
-                      </Link>
-                      <Link
-                        href="/#testimonials"
-                        onClick={handleLinkClick}
-                        className={cn(
-                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
-                          activePath === "/#testimonials"
-                            ? "text-blue-500"
-                            : "text-zinc-550 hover:text-zinc-300"
-                        )}
-                      >
-                        Testimonials
-                      </Link>
-                      <Link
-                        href="/blog"
-                        onClick={handleLinkClick}
-                        className={cn(
-                          "text-xs font-black uppercase tracking-wider py-2 pl-3 transition-colors",
-                          activePath === "/blog"
-                            ? "text-blue-500"
-                            : "text-zinc-550 hover:text-zinc-300"
-                        )}
-                      >
-                        Blogs
-                      </Link>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+              <AccordionTrigger className="hover:no-underline py-3 px-0 group">
+                <span className="text-sm font-black uppercase tracking-wider transition-colors group-data-[state=open]:text-white text-zinc-300 group-hover:text-white">
+                  Company
+                </span>
+              </AccordionTrigger>
+              <AccordionContent className="pb-0 pt-2">
+                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
+                  <Link
+                    href="/about"
+                    onClick={handleLinkClick}
+                    className={cn(
+                      "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
+                      activePath === "/about"
+                        ? "text-blue-500"
+                        : "text-zinc-550 hover:text-zinc-300"
+                    )}
+                  >
+                    Who we are
+                  </Link>
+                  <Link
+                    href="/#testimonials"
+                    onClick={handleLinkClick}
+                    className={cn(
+                      "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
+                      activePath === "/#testimonials"
+                        ? "text-blue-500"
+                        : "text-zinc-550 hover:text-zinc-300"
+                    )}
+                  >
+                    Testimonials
+                  </Link>
+                  <Link
+                    href="/blog"
+                    onClick={handleLinkClick}
+                    className={cn(
+                      "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
+                      activePath === "/blog" ? "text-blue-500" : "text-zinc-550 hover:text-zinc-300"
+                    )}
+                  >
+                    Blogs
+                  </Link>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           </Accordion>
 
           <Link
             href="/careers"
             onClick={handleLinkClick}
             className={cn(
-              "text-sm font-black uppercase tracking-wider py-2 transition-colors",
+              "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
               activePath.startsWith("/careers") ? "text-blue-500" : "text-zinc-300 hover:text-white"
             )}
           >
@@ -173,7 +179,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
             href="/contact"
             onClick={handleLinkClick}
             className={cn(
-              "text-sm font-black uppercase tracking-wider py-2 transition-colors",
+              "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
               activePath === "/contact" ? "text-blue-500" : "text-zinc-300 hover:text-white"
             )}
           >
@@ -182,12 +188,17 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
         </nav>
 
         {/* Footer Area */}
-        {/* <div className="mt-auto pt-6 border-t border-zinc-900 flex items-center justify-between">
-          <span className="text-xs font-black uppercase tracking-wider text-zinc-550">
-            Appearance
-          </span>
-          <ThemeToggle />
-        </div> */}
+        <div className="mt-auto pt-6 border-t border-zinc-900 w-full">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="w-full h-14 border-zinc-800 hover:bg-zinc-900 bg-transparent text-white font-bold rounded-none uppercase tracking-wider"
+            onClick={handleLinkClick}
+          >
+            <Link href="/contact">Let's Discuss</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
