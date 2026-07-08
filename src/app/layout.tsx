@@ -1,4 +1,5 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
+import dynamic from "next/dynamic";
 import { Outfit } from "next/font/google";
 import React, { Suspense } from "react";
 
@@ -13,7 +14,10 @@ import {
   getSanitizedSchema,
 } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
-import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
+
+const SmoothScrollProvider = dynamic(() => import("@/providers/SmoothScrollProvider"), {
+  ssr: false,
+});
 
 import "./globals.css";
 
@@ -157,9 +161,8 @@ export default async function RootLayout({
         <Suspense fallback={null}>
           <WebVitalsReporter />
 
-          <SmoothScrollProvider>
-            <Layout solutions={solutions}>{children}</Layout>
-          </SmoothScrollProvider>
+          <SmoothScrollProvider />
+          <Layout solutions={solutions}>{children}</Layout>
         </Suspense>
       </body>
     </html>

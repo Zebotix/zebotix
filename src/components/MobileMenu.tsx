@@ -52,7 +52,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
       >
         {/* Header Row */}
         <div className="flex justify-between items-center mb-8 pb-4 border-b border-zinc-900">
-          <span className="text-xs font-black uppercase tracking-widest text-zinc-550">
+          <span className="text-xs font-black uppercase tracking-widest text-zinc-400">
             ZEBOTIX
           </span>
           <Button
@@ -109,7 +109,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                             "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
                             activePath === href
                               ? "text-blue-500"
-                              : "text-zinc-550 hover:text-zinc-300"
+                              : "text-zinc-400 hover:text-zinc-300"
                           )}
                         >
                         {item.title}
@@ -136,7 +136,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                       "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
                       activePath === "/about"
                         ? "text-blue-500"
-                        : "text-zinc-550 hover:text-zinc-300"
+                        : "text-zinc-400 hover:text-zinc-300"
                     )}
                   >
                     Who we are
@@ -148,7 +148,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                       "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
                       activePath === "/#testimonials"
                         ? "text-blue-500"
-                        : "text-zinc-550 hover:text-zinc-300"
+                        : "text-zinc-400 hover:text-zinc-300"
                     )}
                   >
                     Testimonials
@@ -158,7 +158,7 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                     onClick={handleLinkClick}
                     className={cn(
                       "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
-                      activePath === "/blog" ? "text-blue-500" : "text-zinc-550 hover:text-zinc-300"
+                      activePath === "/blog" ? "text-blue-500" : "text-zinc-400 hover:text-zinc-300"
                     )}
                   >
                     Blogs

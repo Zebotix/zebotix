@@ -86,13 +86,13 @@ export default function BlogSection({ blogs }: BlogSectionProps) {
                           sizes="(max-width: 768px) 100vw, 33vw"
                         />
                       ) : (
-                        <div className="absolute inset-0 bg-zinc-950 flex items-center justify-center text-zinc-550 font-black text-xs uppercase tracking-widest">
+                        <div className="absolute inset-0 bg-zinc-950 flex items-center justify-center text-zinc-400 font-black text-xs uppercase tracking-widest">
                           Zebotix Blog
                         </div>
                       )}
                     </div>
                     <div className="p-5 sm:p-8">
-                      <div className="flex gap-4 items-center text-[10px] font-black uppercase tracking-wider text-zinc-550 mb-4">
+                      <div className="flex gap-4 items-center text-[10px] font-black uppercase tracking-wider text-zinc-400 mb-4">
                         {formattedDate && (
                           <span className="flex items-center gap-1">
                             <Calendar className="h-3 w-3 text-blue-500" />

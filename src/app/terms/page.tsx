@@ -42,7 +42,7 @@ export default async function Terms() {
           </Reveal>
           {dbPage?.updatedAt && (
             <Reveal delay={0.1}>
-              <p className="text-sm text-zinc-550">
+              <p className="text-sm text-zinc-400">
                 Last updated:{" "}
                 <strong>
                   {new Date(dbPage.updatedAt).toLocaleDateString("en-US", {

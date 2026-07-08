@@ -41,7 +41,7 @@ export default function HeroSection({
           disableRemotePlayback
           aria-hidden="true"
           tabIndex={-1}
-          preload="auto"
+          preload="metadata"
           poster="/images/bg-3-poster.webp"
           className={cn(
             "absolute inset-0 w-full h-full object-cover pointer-events-none z-0 transition-opacity duration-1000 opacity-40"

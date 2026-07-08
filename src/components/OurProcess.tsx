@@ -74,7 +74,7 @@ export default function OurProcess() {
             >
               <div className="border-r border-b border-zinc-900 p-6 sm:p-8 flex flex-col justify-between min-h-[220px] sm:min-h-[280px] hover:bg-zinc-900/10 transition-colors group duration-300 relative select-none rounded-none">
                 <div className="flex justify-between items-center w-full">
-                  <span className="text-xs font-mono font-black text-zinc-550 tracking-wider">
+                  <span className="text-xs font-mono font-black text-zinc-400 tracking-wider">
                     STEP {item.step}
                   </span>
                   <div className="w-8 h-8 bg-zinc-900 border border-zinc-850 flex items-center justify-center group-hover:border-blue-500/35 transition-colors duration-300">

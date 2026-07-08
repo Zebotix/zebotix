@@ -60,7 +60,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
               </h3>
             </Reveal>
             <Reveal delay={0.15}>
-              <p className="text-zinc-450 text-xs max-w-lg leading-relaxed">
+              <p className="text-zinc-400 text-xs max-w-lg leading-relaxed">
                 Sign up for our newsletter to receive technical briefs on architecture, web
                 optimization, and modern software design patterns.
               </p>
@@ -115,7 +115,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                     {COMPANY_NAME}
                   </span>
                 </Link>
-                <p className="text-zinc-450 text-[10px] leading-relaxed mb-6 max-w-xs uppercase tracking-wider font-bold">
+                <p className="text-zinc-400 text-[10px] leading-relaxed mb-6 max-w-xs uppercase tracking-wider font-bold">
                   Empowering businesses with intelligent software & AI solutions. We architect
                   digital products that scale with your vision.
                 </p>
@@ -145,7 +145,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                         <li key={child.id}>
                           <Link
                             href={`/solutions/${child.industrySlug}/${child.slug}`}
-                            className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                            className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                           >
                             {child.title}
                           </Link>
@@ -170,7 +170,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                       <li key={link.href}>
                         <Link
                           href={link.href}
-                          className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                          className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                         >
                           {link.name}
                         </Link>
@@ -193,7 +193,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                     <li>
                       <Link
                         href="/about"
-                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                        className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                       >
                         Who we are
                       </Link>
@@ -201,7 +201,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                     <li>
                       <Link
                         href="/testimonials"
-                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                        className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                       >
                         Testimonials
                       </Link>
@@ -209,7 +209,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                     <li>
                       <Link
                         href="/careers"
-                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                        className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                       >
                         Career
                       </Link>
@@ -217,7 +217,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                     <li>
                       <Link
                         href="/blog"
-                        className="text-zinc-450 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                        className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
                       >
                         Blogs
                       </Link>
@@ -237,7 +237,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${COMPANY_NAME} on ${platform}`}
-                        className="text-zinc-550 hover:text-white transition-colors text-[10px] uppercase font-black tracking-wider"
+                        className="text-zinc-400 hover:text-white transition-colors text-[10px] uppercase font-black tracking-wider"
                       >
                         {platform}
                       </a>
@@ -260,7 +260,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${COMPANY_NAME} on ${platform}`}
-                className="text-zinc-550 hover:text-white transition-colors text-[10px] uppercase font-black tracking-wider"
+                className="text-zinc-400 hover:text-white transition-colors text-[10px] uppercase font-black tracking-wider"
               >
                 {platform}
               </a>
@@ -271,13 +271,13 @@ const Footer = ({ solutions = [] }: FooterProps) => {
         <div className="select-none text-center  mt-8 pt-8 border-t border-zinc-900">
           <span
             aria-hidden="true"
-            className="font-black text-[10vw] text-zinc-900 uppercase tracking-tighter leading-none block select-none"
+            className="font-black text-[10vw] text-zinc-800 uppercase tracking-tighter leading-none block select-none"
           >
             {COMPANY_NAME}
           </span>
         </div>
         {/* Bottom copyright row */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-zinc-900 text-[10px] uppercase tracking-wider text-zinc-550 font-black">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-zinc-900 text-[10px] uppercase tracking-wider text-zinc-400 font-black">
           <span>
             &copy; {year} {COMPANY_NAME}. All rights reserved.
           </span>

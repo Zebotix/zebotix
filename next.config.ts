@@ -70,6 +70,7 @@ const nextConfig: NextConfig = {
   },
 
   turbopack: {},
+  productionBrowserSourceMaps: true,
   allowedDevOrigins: Array.from(new Set(devOrigins)),
   async headers() {
     const headersList = [

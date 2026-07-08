@@ -124,7 +124,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                       {tags.slice(0, 4).map((t: string) => (
                         <span
                           key={t}
-                          className="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-blue-500/5 text-blue-500 border border-blue-500/10 rounded-none"
+                          className="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-blue-900/20 text-blue-300 border border-blue-700/30 rounded-none"
                         >
                           {t}
                         </span>
@@ -155,7 +155,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   ) : (
-                    <div className="absolute inset-0 bg-zinc-800 flex items-center justify-center text-zinc-550 font-bold rounded-none">
+                    <div className="absolute inset-0 bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold rounded-none">
                       Zebotix Case Study
                     </div>
                   )}

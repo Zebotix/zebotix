@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -93,14 +94,17 @@ const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProp
               <Reveal key={id} delay={0.1 * i} distance={30} className={cn("h-full", layoutClass)}>
                 <div className="bg-zinc-900/40 p-8 border border-zinc-800 flex flex-col justify-between h-full hover:border-blue-500/35 transition-all duration-300 relative overflow-hidden group select-none">
                   {/* Subtle Background Art */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700 pointer-events-none"
-                    style={{
-                      backgroundImage: `url(${s.image || "/images/hero-section-image.webp"})`,
-                    }}
-                  />
+                  <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                    <Image
+                      src={s.image || "/images/hero-section-image.webp"}
+                      alt={title}
+                      fill
+                      className="object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
                   {/* Dark overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-950/90 via-zinc-950/80 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-linear-to-br from-zinc-950/90 via-zinc-950/80 to-transparent pointer-events-none" />
                   {/* Glassy hover gradient */}
                   <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 

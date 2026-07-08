@@ -7,38 +7,41 @@ import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function SmoothScrollProvider({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function SmoothScrollProvider() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.4, // scroll ki speed — dreelio jaisi feel ke liye 1.2-1.6
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo easing
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
+    // Delay initialization to prevent forced reflows during the critical rendering path
+    const timer = setTimeout(() => {
+      const lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+      });
 
-    lenisRef.current = lenis;
+      lenisRef.current = lenis;
 
-    // GSAP ScrollTrigger ke saath sync karo
-    lenis.on('scroll', ScrollTrigger.update);
+      lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.destroy();
-      gsap.ticker.remove((time) => {
+      gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
       });
+
+      gsap.ticker.lagSmoothing(0);
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+        gsap.ticker.remove((time) => {
+          lenisRef.current?.raf(time * 1000);
+        });
+      }
     };
   }, []);
 
-  return <>{children}</>;
+  return null;
 }

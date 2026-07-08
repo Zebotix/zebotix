@@ -96,7 +96,7 @@ export default function TestimonialsSection({ testimonials }: Readonly<Testimoni
                     <h3 className="text-white font-black text-sm uppercase tracking-tight mb-1">
                       {t.name}
                     </h3>
-                    <p className="text-zinc-550 text-[10px] font-black uppercase tracking-wider">
+                    <p className="text-zinc-400 text-[10px] font-black uppercase tracking-wider">
                       {t.role} {t.company ? `at ${t.company}` : ""}
                     </p>
                   </div>

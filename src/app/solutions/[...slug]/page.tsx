@@ -130,7 +130,7 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
         <Reveal>
           <Link
             href="/solutions"
-            className="inline-flex items-center gap-2 text-zinc-550 hover:text-white mb-12 transition-colors group text-sm font-bold uppercase tracking-wider"
+            className="inline-flex items-center gap-2 text-zinc-400 hover:text-white mb-12 transition-colors group text-sm font-bold uppercase tracking-wider"
           >
             <ArrowLeft className="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" />
             Back to Solutions
