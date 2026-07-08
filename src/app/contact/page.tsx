@@ -8,14 +8,14 @@ import { generateLocalBusinessSchema, getSanitizedSchema } from "@/lib/schemas";
 export const metadata: Metadata = {
   title: `Contact — ${COMPANY_NAME}`,
   description:
-    "Contact Zebotix — Karachi-based digital studio. Reach us by phone, email, social or send a message using the form.",
+    "Contact Zebotix — Karachi-based digital studio. Reach us by email, social or send a message using the form.",
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
     title: `Contact — ${COMPANY_NAME}`,
     description:
-      "Contact Zebotix — Karachi-based digital studio. Reach us by phone, email, social or send a message using the form.",
+      "Contact Zebotix — Karachi-based digital studio. Reach us by email, social or send a message using the form.",
     url: `${SITE_URL}/contact`,
     type: "website",
     images: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Contact — ${COMPANY_NAME}`,
     description:
-      "Contact Zebotix — Karachi-based digital studio. Reach us by phone, email, social or send a message using the form.",
+      "Contact Zebotix — Karachi-based digital studio. Reach us by email, social or send a message using the form.",
     images: ["/Zebotix.webp"],
   },
 };

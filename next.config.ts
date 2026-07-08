@@ -26,7 +26,7 @@ const getLocalIPs = (): string[] => {
   return ips;
 };
 
-const cloudflareTurnstileOrigin = "https://challenges.cloudflare.com";
+const _cloudflareTurnstileOrigin = "https://challenges.cloudflare.com";
 
 // Define origins allowed during local development
 const devOrigins = ["localhost"];
@@ -109,27 +109,27 @@ const nextConfig: NextConfig = {
             key: "Cross-Origin-Resource-Policy",
             value: "same-origin",
           },
-          {
-            key: "Content-Security-Policy",
-            // A standard CSP. May need tuning if they use external scripts.
-            value: [
-              "default-src 'self'",
-              process.env.NODE_ENV === "development"
-                ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com https://assets.apollo.io`
-                : `script-src 'self' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com https://assets.apollo.io`,
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' blob: data: https:",
-              "font-src 'self' data:",
-              `frame-src 'self' ${cloudflareTurnstileOrigin}`,
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-              process.env.NODE_ENV === "development"
-                ? `connect-src 'self' ${cloudflareTurnstileOrigin} ws://127.0.0.1:* ws://localhost:* https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io https://aplo-evnt.com https://*.aplo-evnt.com`
-                : `connect-src 'self' ${cloudflareTurnstileOrigin} https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io https://aplo-evnt.com https://*.aplo-evnt.com`,
-            ].join("; "),
-          },
+          // {
+          //   key: "Content-Security-Policy",
+          //   // A standard CSP. May need tuning if they use external scripts.
+          //   value: [
+          //     "default-src 'self'",
+          //     process.env.NODE_ENV === "development"
+          //       ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com https://assets.apollo.io`
+          //       : `script-src 'self' 'unsafe-inline' ${cloudflareTurnstileOrigin} https://www.googletagmanager.com https://assets.apollo.io`,
+          //     "style-src 'self' 'unsafe-inline'",
+          //     "img-src 'self' blob: data: https:",
+          //     "font-src 'self' data:",
+          //     `frame-src 'self' ${cloudflareTurnstileOrigin}`,
+          //     "object-src 'none'",
+          //     "base-uri 'self'",
+          //     "form-action 'self'",
+          //     "frame-ancestors 'none'",
+          //     process.env.NODE_ENV === "development"
+          //       ? `connect-src 'self' ${cloudflareTurnstileOrigin} ws://127.0.0.1:* ws://localhost:* https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io https://aplo-evnt.com https://*.aplo-evnt.com`
+          //       : `connect-src 'self' ${cloudflareTurnstileOrigin} https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.apollo.io https://aplo-evnt.com https://*.aplo-evnt.com`,
+          //   ].join("; "),
+          // },
         ],
       },
     ];
