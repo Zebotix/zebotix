@@ -1,5 +1,4 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
-import dynamic from "next/dynamic";
 import { Outfit } from "next/font/google";
 import React, { Suspense } from "react";
 
@@ -14,10 +13,7 @@ import {
   getSanitizedSchema,
 } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
-
-const SmoothScrollProvider = dynamic(() => import("@/providers/SmoothScrollProvider"), {
-  ssr: false,
-});
+import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
 
 import "./globals.css";
 
