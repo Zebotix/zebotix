@@ -17,5 +17,7 @@ export function secureRandom(): number {
   }
 
   // Throw an error if Web Crypto is not available instead of silently falling back to insecure Math.random()
-  throw new Error("Secure random number generation is not supported in this environment. The crypto.getRandomValues API is missing.");
+  throw new Error(
+    "Secure random number generation is not supported in this environment. The crypto.getRandomValues API is missing."
+  );
 }
