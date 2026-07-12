@@ -13,7 +13,8 @@
     "prisma:seed": "npx tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@ai-sdk/google": "^3.0.80",
+    "@ai-sdk/google": "^4.0.12",
+    "@ai-sdk/openai": "^4.0.11",
     "@base-ui/react": "^1.5.0",
     "@gsap/react": "^2.1.2",
     "@hookform/resolvers": "^3.9.0",
@@ -71,7 +72,7 @@
     "@tiptap/react": "^3.25.0",
     "@tiptap/starter-kit": "^3.25.0",
     "@types/pg": "^8.20.0",
-    "ai": "^6.0.197",
+    "ai": "^7.0.22",
     "bcryptjs": "^3.0.3",
     "caniuse-lite": "^1.0.30001788",
     "cheerio": "^1.2.0",

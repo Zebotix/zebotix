@@ -1,5 +1,6 @@
 import { google } from "@ai-sdk/google";
-import { generateText, Output } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { generateObject } from "ai";
 import { z } from "zod";
 
 import { generateAndUploadImage } from "./image-generator";
@@ -36,23 +37,63 @@ export async function generateAndPublishBlog() {
       ? `Here are some of the latest tech news headlines:\n${headlines}`
       : "Generate a blog post about a cutting-edge topic in Artificial Intelligence, Robotics, or Web Development.";
 
-  logger.info("Generating blog post content with Gemini...");
+  logger.info("Generating blog post content...");
 
-  const { output } = await generateText({
-    model: google("gemini-1.5-pro-latest"),
-    output: Output.object({ schema: blogSchema }),
-    prompt: `
-      You are an expert tech blogger for 'Zebotix'. Your task is to write a highly engaging, informative, and SEO-optimized blog post based on recent tech trends.
-      
-      ${newsContext}
-      
-      Instructions:
-      - Pick ONE of the most interesting news items or a current major trend.
-      - Write a comprehensive blog post in rich HTML format.
-      - Ensure it sounds professional but engaging (author: Zebotix Team).
-      - Provide a vivid, detailed image prompt that represents the core concept of the post.
-    `,
-  });
+  // Define an array of models, prioritizing free/cheaper models with extensive fallbacks
+  const fallbackModels = [
+    google("gemini-1.5-flash"), // Google's fast and cost-effective model
+    google("gemini-1.5-flash-8b"), // Google's lightweight flash model
+    openai("gpt-4o-mini"), // OpenAI's cheap and fast model
+    google("gemini-1.5-pro"), // Google's high-performance model
+    openai("gpt-4o"), // OpenAI's flagship fast model
+    openai("gpt-4-turbo"), // OpenAI's previous turbo model
+    openai("gpt-4"), // OpenAI's standard GPT-4
+    google("gemini-1.0-pro"), // Google's legacy pro model
+    openai("gpt-3.5-turbo"), // OpenAI's legacy fast model
+    google("gemini-pro"), // Google's alias for 1.0 pro
+  ];
+
+  let output;
+  let success = false;
+  let lastError;
+
+  for (const model of fallbackModels) {
+    try {
+      logger.info(`Attempting to generate blog with model: ${model.provider}:${model.modelId}`);
+
+      const response = await generateObject({
+        model,
+        schema: blogSchema,
+        system: "You are an expert tech blogger for 'Zebotix'. Your task is to write a highly engaging, informative, and SEO-optimized blog post based on recent tech trends.",
+        prompt: `
+          ${newsContext}
+          
+          Instructions:
+          - Pick ONE of the most interesting news items or a current major trend.
+          - Write a comprehensive blog post in rich HTML format.
+          - Ensure it sounds professional but engaging (author: Zebotix Team).
+          - Provide a vivid, detailed image prompt that represents the core concept of the post.
+        `,
+      });
+
+      output = response.object;
+      success = true;
+      logger.info(`Successfully generated blog with model: ${model.provider}:${model.modelId}`);
+      break; // Exit the loop on success
+    } catch (e) {
+      logger.warn(
+        `Failed to generate with model ${model.provider}:${model.modelId}. Error: ${e instanceof Error ? e.message : String(e)}`
+      );
+      lastError = e;
+    }
+  }
+
+  if (!success || !output) {
+    const errorMessage = lastError instanceof Error ? lastError.message : String(lastError);
+    throw new Error(
+      `All models failed to generate blog content. Last error: ${errorMessage}`
+    );
+  }
 
   logger.info("Blog content generated. Generating image...");
 
