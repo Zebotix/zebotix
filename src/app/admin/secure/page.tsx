@@ -49,6 +49,7 @@ export default async function AdminDashboard() {
           <button className="bg-zinc-800 text-white font-semibold py-3 px-6 hover:bg-zinc-700 transition-colors">
             Write Blog Post
           </button>
+          {/* auto blog generate button */}
           <GenerateAutoBlogButton />
         </div>
       </div>
