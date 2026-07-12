@@ -5,6 +5,8 @@ import path from 'path'
 
 import sharp from 'sharp'
 
+import { secureRandom } from '@/lib/utils'
+
 export async function uploadImageAction(formData: FormData) {
   const file = formData.get('file') as File
   if (!file) return { success: false, error: 'No file provided' }
@@ -14,7 +16,7 @@ export async function uploadImageAction(formData: FormData) {
     const buffer = Buffer.from(arrayBuffer)
     
     // Create unique filename using timestamp and random string
-    const uniqueId = Date.now() + '-' + Math.round(Math.random() * 1e9)
+    const uniqueId = Date.now() + '-' + Math.round(secureRandom() * 1e9)
     const filename = `${uniqueId}.webp`
     const uploadDir = path.join(process.cwd(), 'public', 'uploads')
     

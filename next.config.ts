@@ -38,7 +38,7 @@ if (isDev) {
 
   // Also support custom origins from env variable if specified
   if (process.env.ALLOWED_DEV_ORIGINS) {
-    const customOrigins = process.env.ALLOWED_DEV_ORIGINS.split(",")
+    const customOrigins = process.env?.ALLOWED_DEV_ORIGINS?.split(",")
       .map((item) => item.trim())
       .filter(Boolean);
     devOrigins.push(...customOrigins);

@@ -111,7 +111,7 @@ export default async function TestimonialsPage(
                         role="img"
                         aria-label={`Rating: ${t.rating} stars`}
                       >
-                        {[...Array(5)].map((_, i) => (
+                        {Array.from({ length: 5 }).map((_, i) => (
                           <Star
                             key={i}
                             className={`h-4 w-4 ${
@@ -169,7 +169,7 @@ export default async function TestimonialsPage(
                     />
                   </PaginationItem>
 
-                  {[...new Array(meta.totalPages)].map((_, i) => {
+                  {Array.from({ length: meta.totalPages }).map((_, i) => {
                     const pageNum = i + 1;
                     // Show current, first, last, and pages adjacent to current
                     const isVisible =

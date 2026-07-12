@@ -6,7 +6,11 @@ import { getBlogsAction } from "@/app/actions/blogs";
 import { Reveal } from "@/components/animations";
 import { getPostBySlug } from "@/lib/blog";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import { generateBlogPostingSchema, generateBreadcrumbSchema, getSanitizedSchema } from "@/lib/schemas";
+import {
+  generateBlogPostingSchema,
+  generateBreadcrumbSchema,
+  getSanitizedSchema,
+} from "@/lib/schemas";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -69,7 +73,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: SITE_URL },
     { name: "Blog", url: `${SITE_URL}/blog` },
-    { name: post.title, url: `${SITE_URL}/blog/${post.slug}` }
+    { name: post.title, url: `${SITE_URL}/blog/${post.slug}` },
   ]);
 
   return (
@@ -107,7 +111,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <div className="flex items-center gap-4 text-gray-400" role="doc-imprint">
+            <div className="flex items-center gap-4 text-gray-400">
               <span className="font-bold text-white">{post.author}</span>
               <span>•</span>
               <time dateTime={new Date(post.publishedAt || post.createdAt).toISOString()}>
@@ -122,10 +126,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
         <Reveal delay={0.3} distance={50} className="mb-16">
           <div className="relative h-100 md:h-150 rounded-3xl overflow-hidden border border-white/5 shadow-2xl">
             <Image
-              src={
-                post.image ||
-                "/images/hero-section-image.webp"
-              }
+              src={post.image || "/images/hero-section-image.webp"}
               alt={post.title}
               fill
               className="object-cover"
