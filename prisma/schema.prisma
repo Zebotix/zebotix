@@ -94,24 +94,34 @@ model Testimonial {
 // ═══ LEAD MANAGEMENT ═══
 
 model QuickQuote {
-  id            String    @id @default(cuid())
-  projectType   String
-  businessType  String
-  colorThemes   String[]
-  features      String[]
-  budget        String
-  timeline      String
-  details       String?
-  referenceUrls String[]
-  attachments   String[]
-  name          String
-  email         String
-  phone         String?
-  company       String?
-  status        String    @default("new") // new, reviewed, contacted, closed
-  notes         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id               String    @id @default(cuid())
+  country          String
+  city             String?
+  preferredContact String?
+  projectType      String
+  businessType     String
+  companySize      String?
+  designStyle      String[]
+  platforms        String[]
+  features         String[]
+  aiFeatures       String[]
+  integrations     String[]
+  budget           String
+  timeline         String
+  details          String?
+  additionalNotes  String?
+  referenceUrls    String[]
+  attachments      String[]
+  name             String
+  email            String
+  phone            String?
+  company          String?
+  estimatedCostPkr Int?
+  estimatedCostUsd Int?
+  status           String    @default("new") // new, reviewed, contacted, closed
+  notes            String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 }
 
 model ContactSubmission {

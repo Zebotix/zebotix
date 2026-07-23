@@ -41,16 +41,13 @@ export async function generateAndPublishBlog() {
 
   // Define an array of models, prioritizing free/cheaper models with extensive fallbacks
   const fallbackModels = [
-    google("gemini-1.5-flash"), // Google's fast and cost-effective model
-    google("gemini-1.5-flash-8b"), // Google's lightweight flash model
+    google("gemini-2.5-flash"), // Google's latest fast and cost-effective model
+    google("gemini-2.5-pro"), // Google's latest high-performance model
     openai("gpt-4o-mini"), // OpenAI's cheap and fast model
-    google("gemini-1.5-pro"), // Google's high-performance model
     openai("gpt-4o"), // OpenAI's flagship fast model
     openai("gpt-4-turbo"), // OpenAI's previous turbo model
     openai("gpt-4"), // OpenAI's standard GPT-4
-    google("gemini-1.0-pro"), // Google's legacy pro model
     openai("gpt-3.5-turbo"), // OpenAI's legacy fast model
-    google("gemini-pro"), // Google's alias for 1.0 pro
   ];
 
   let output;
@@ -64,7 +61,8 @@ export async function generateAndPublishBlog() {
       const response = await generateObject({
         model,
         schema: blogSchema,
-        system: "You are an expert tech blogger for 'Zebotix'. Your task is to write a highly engaging, informative, and SEO-optimized blog post based on recent tech trends.",
+        system:
+          "You are an expert tech blogger for 'Zebotix'. Your task is to write a highly engaging, informative, and SEO-optimized blog post based on recent tech trends.",
         prompt: `
           ${newsContext}
           
@@ -90,9 +88,7 @@ export async function generateAndPublishBlog() {
 
   if (!success || !output) {
     const errorMessage = lastError instanceof Error ? lastError.message : String(lastError);
-    throw new Error(
-      `All models failed to generate blog content. Last error: ${errorMessage}`
-    );
+    throw new Error(`All models failed to generate blog content. Last error: ${errorMessage}`);
   }
 
   logger.info("Blog content generated. Generating image...");

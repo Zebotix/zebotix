@@ -12,19 +12,32 @@ export const contactSchema = z.object({
 export type ContactInput = z.infer<typeof contactSchema>;
 
 export const quickQuoteSchema = z.object({
+  country: z.string().min(1, "Country is required"),
+  city: z.string().optional(),
+  preferredContact: z.string().optional(),
   projectType: z.string().min(1, "Project type is required"),
-  businessType: z.string().min(1, "Business type is required"),
-  colorThemes: z.array(z.string()).default([]),
+  businessType: z.string().min(1, "Business industry is required"),
+  companySize: z.string().optional(),
+  projectGoals: z.string().optional(),
+  designStyle: z.array(z.string()).default([]),
+  platforms: z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),
-  budget: z.string().min(1, "Budget is required"),
+  wantsAI: z.string().optional(),
+  aiFeatures: z.array(z.string()).default([]),
+  integrations: z.array(z.string()).default([]),
+  budget: z.string().min(1, "Budget expectation is required"),
   timeline: z.string().min(1, "Timeline is required"),
-  details: z.string().optional(),
   referenceUrls: z.array(z.string()).default([]),
   attachments: z.array(z.string()).default([]),
-  name: z.string().min(1, "Name is required"),
+  details: z.string().optional(),
+  additionalNotes: z.string().optional(),
+  name: z.string().min(1, "Full Name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
   company: z.string().optional(),
+  engagementModel: z.string().optional(),
+  estimatedCostPkr: z.number().optional().nullable(),
+  estimatedCostUsd: z.number().optional().nullable(),
 });
 
 export type QuickQuoteInput = z.infer<typeof quickQuoteSchema>;

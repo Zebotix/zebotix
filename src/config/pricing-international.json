@@ -1,0 +1,79 @@
+{
+  "projectTypes": {
+    "Website": 1500,
+    "Web App": 3500,
+    "Mobile App": 4000,
+    "ERP": 8000,
+    "CRM": 5000,
+    "AI Automation": 6000,
+    "AI SaaS": 7000,
+    "School ERP": 6000,
+    "Healthcare": 6000,
+    "Restaurant": 2500,
+    "Real Estate": 3500,
+    "Marketplace": 7000,
+    "Custom Software": 5000
+  },
+  "features": {
+    "Authentication": 200,
+    "Role Management": 300,
+    "Dashboard": 500,
+    "CMS": 400,
+    "Reports": 300,
+    "Analytics": 300,
+    "Inventory": 600,
+    "Booking System": 500,
+    "Appointments": 400,
+    "Notifications": 200,
+    "Push Notifications": 300,
+    "Email": 100,
+    "SMS": 100,
+    "Maps": 150,
+    "Chat": 500,
+    "Blogs": 200,
+    "CRM": 1500,
+    "ERP": 2500,
+    "Invoices": 400,
+    "File Upload": 150,
+    "Multi-language": 400,
+    "Dark Mode": 200,
+    "Offline Mode": 800,
+    "Vendor Dashboard": 800,
+    "Payment Module": 500,
+    "Order Management": 600,
+    "Reviews and Ratings": 300
+  },
+  "aiFeatures": {
+    "AI Assistant": 1000,
+    "AI Search": 800,
+    "Automation": 600,
+    "Vector Database": 500,
+    "Knowledge Base": 800,
+    "Analytics and Monitoring": 400
+  },
+  "integrations": {
+    "API Integration": 500,
+    "WhatsApp Integration": 300,
+    "Google Maps": 150,
+    "Google Login": 150,
+    "Social Login": 250,
+    "Custom APIs": 800
+  },
+  "platforms": {
+    "Website": 0,
+    "Android": 2000,
+    "iPhone": 2000,
+    "Admin Dashboard": 800,
+    "Employee Portal": 1000,
+    "Customer Portal": 1000,
+    "Vendor Portal": 1200,
+    "Desktop App": 2500
+  },
+  "timelineModifiers": {
+    "Urgent": 1.25,
+    "1 Month": 1.1,
+    "2 Months": 1.0,
+    "3 Months": 1.0,
+    "Flexible": 0.9
+  }
+}

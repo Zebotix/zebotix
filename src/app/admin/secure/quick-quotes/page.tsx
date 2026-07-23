@@ -139,10 +139,10 @@ export default async function QuickQuotesPage() {
                     </div>
 
                     <div className="md:col-span-2 border-t border-zinc-800 pt-4">
-                      <p className="text-sm text-zinc-400 font-medium mb-2">Color Themes</p>
+                      <p className="text-sm text-zinc-400 font-medium mb-2">Design Style</p>
                       <div className="flex flex-wrap gap-2">
-                        {quote.colorThemes && quote.colorThemes.length > 0 ? (
-                          quote.colorThemes.map((theme) => (
+                        {quote.designStyle && quote.designStyle.length > 0 ? (
+                          quote.designStyle.map((theme: string) => (
                             <span
                               key={theme}
                               className="px-2 py-1 bg-zinc-900 border border-zinc-800 text-xs rounded-md text-zinc-300"

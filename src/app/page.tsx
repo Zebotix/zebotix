@@ -100,7 +100,7 @@ export default async function Home() {
 
       {/* Sticky Hero Wrapper for Scroll-Over Effect */}
       <div className="sticky top-0 h-screen w-full z-0 overflow-hidden">
-        <HeroSection primaryCta={{ href: "/quick-quote", label: "Get a Quick Quote" }} />
+        <HeroSection primaryCta={{ href: "/quick-quote#estimator", label: "Get a Quick Quote" }} />
       </div>
 
       {/* Content scrolling over the hero */}

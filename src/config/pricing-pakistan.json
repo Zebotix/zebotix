@@ -1,0 +1,79 @@
+{
+  "projectTypes": {
+    "Website": 150000,
+    "Web App": 400000,
+    "Mobile App": 500000,
+    "ERP": 1200000,
+    "CRM": 600000,
+    "AI Automation": 800000,
+    "AI SaaS": 1000000,
+    "School ERP": 800000,
+    "Healthcare": 900000,
+    "Restaurant": 300000,
+    "Real Estate": 400000,
+    "Marketplace": 900000,
+    "Custom Software": 600000
+  },
+  "features": {
+    "Authentication": 25000,
+    "Role Management": 40000,
+    "Dashboard": 75000,
+    "CMS": 50000,
+    "Reports": 40000,
+    "Analytics": 40000,
+    "Inventory": 80000,
+    "Booking System": 75000,
+    "Appointments": 60000,
+    "Notifications": 25000,
+    "Push Notifications": 40000,
+    "Email": 15000,
+    "SMS": 15000,
+    "Maps": 20000,
+    "Chat": 75000,
+    "Blogs": 25000,
+    "CRM": 200000,
+    "ERP": 350000,
+    "Invoices": 50000,
+    "File Upload": 20000,
+    "Multi-language": 50000,
+    "Dark Mode": 25000,
+    "Offline Mode": 100000,
+    "Vendor Dashboard": 120000,
+    "Payment Module": 70000,
+    "Order Management": 80000,
+    "Reviews and Ratings": 40000
+  },
+  "aiFeatures": {
+    "AI Assistant": 150000,
+    "AI Search": 120000,
+    "Automation": 80000,
+    "Vector Database": 70000,
+    "Knowledge Base": 120000,
+    "Analytics and Monitoring": 60000
+  },
+  "integrations": {
+    "API Integration": 70000,
+    "WhatsApp Integration": 40000,
+    "Google Maps": 20000,
+    "Google Login": 20000,
+    "Social Login": 30000,
+    "Custom APIs": 100000
+  },
+  "platforms": {
+    "Website": 0,
+    "Android": 250000,
+    "iPhone": 250000,
+    "Admin Dashboard": 100000,
+    "Employee Portal": 120000,
+    "Customer Portal": 120000,
+    "Vendor Portal": 150000,
+    "Desktop App": 300000
+  },
+  "timelineModifiers": {
+    "Urgent": 1.25,
+    "1 Month": 1.1,
+    "2 Months": 1.0,
+    "3 Months": 1.0,
+    "Flexible": 0.9
+  }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "rec_ai_auto",
+    "conditions": [
+      { "field": "projectType", "operator": "equals", "value": "AI Automation" }
+    ],
+    "priority": 100,
+    "category": "Feature",
+    "targetField": "features",
+    "suggestions": ["Admin Dashboard", "User Authentication", "Activity Logs", "Role Management"],
+    "message": "Since you selected AI Automation, we highly recommend adding an Admin Dashboard and Role Management to monitor your models."
+  },
+  {
+    "id": "rec_mobile",
+    "conditions": [
+      { "field": "platforms", "operator": "contains", "value": "Android" },
+      { "field": "platforms", "operator": "contains", "value": "iPhone" }
+    ],
+    "conditionType": "OR",
+    "priority": 90,
+    "category": "Feature",
+    "targetField": "features",
+    "suggestions": ["Push Notifications", "Offline Support"],
+    "message": "For mobile applications, Push Notifications and Offline Support are essential for user engagement."
+  },
+  {
+    "id": "rec_marketplace",
+    "conditions": [
+      { "field": "projectType", "operator": "equals", "value": "Marketplace" }
+    ],
+    "priority": 95,
+    "category": "Feature",
+    "targetField": "features",
+    "suggestions": ["Vendor Dashboard", "Payment Module", "Order Management", "Reviews and Ratings"],
+    "message": "Marketplaces require a robust Vendor Dashboard and secure Payment Modules to function correctly."
+  },
+  {
+    "id": "rec_ai_features",
+    "conditions": [
+      { "field": "aiFeatures", "operator": "notEmpty" }
+    ],
+    "priority": 80,
+    "category": "Technology",
+    "targetField": "aiFeatures",
+    "suggestions": ["Vector Database", "Knowledge Base", "Analytics and Monitoring"],
+    "message": "When integrating AI features, a Vector Database is typically necessary for embeddings and semantic search."
+  }
+]

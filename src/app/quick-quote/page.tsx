@@ -1,5 +1,14 @@
 import { type Metadata } from "next";
 
+import ClientExpectations from "./_components/landing/ClientExpectations";
+import ComparisonSection from "./_components/landing/ComparisonSection";
+import FaqSection from "./_components/landing/FaqSection";
+import HeroSection from "./_components/landing/HeroSection";
+import IndustriesSection from "./_components/landing/IndustriesSection";
+import ProcessTimeline from "./_components/landing/ProcessTimeline";
+import SocialProof from "./_components/landing/SocialProof";
+import TechnologiesGrid from "./_components/landing/TechnologiesGrid";
+import WhyZebotix from "./_components/landing/WhyZebotix";
 import QuickQuoteClient from "./_components/QuickQuoteClient";
 
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
@@ -36,6 +45,23 @@ export const metadata: Metadata = {
 };
 
 export default function QuickQuotePage() {
-  return <QuickQuoteClient />;
-}
+  return (
+    <div className="bg-zinc-950 min-h-screen font-sans selection:bg-blue-500/30 selection:text-white">
+      <HeroSection />
+      <SocialProof />
+      <WhyZebotix />
+      <ComparisonSection />
+      <IndustriesSection />
+      <TechnologiesGrid />
+      <ProcessTimeline />
 
+      {/* The Interactive Estimator */}
+      <section id="estimator" className="scroll-mt-24">
+        <QuickQuoteClient />
+      </section>
+
+      <ClientExpectations />
+      <FaqSection />
+    </div>
+  );
+}
