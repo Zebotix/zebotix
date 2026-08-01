@@ -11,6 +11,7 @@ import type { Prisma } from "@/generated/prisma/client";
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui";
 import { COMPANY_NAME, SOCIAL_LINKS, CONTACT_EMAIL } from "@/lib/constants";
+import { SEO_SERVICES } from "@/lib/seo-services";
 import { cn } from "@/lib/utils";
 
 interface FooterProps {
@@ -22,8 +23,6 @@ const legalLinks = [
   { name: "Cookie Policy", href: "/cookie-policy" },
   { name: "GDPR Compliance", href: "/gdpr" },
 ];
-
-import { SEO_SERVICES } from "@/lib/seo-services";
 
 const Footer = ({ solutions = [] }: FooterProps) => {
   const year = new Date().getFullYear();
@@ -49,7 +48,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
   return (
     <footer
       key={pathname}
-      className="relative z-20 bg-zinc-950 border-t border-zinc-900 pt-20 pb-12 overflow-hidden"
+      className="relative z-20 bg-zinc-950 border-t border-zinc-900 pt-20 pb-12 overflow-hidden text-zinc-300"
       role="contentinfo"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -80,7 +79,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   required
-                  className="bg-zinc-900 border-0 focus:ring-0 focus:outline-hidden p-4 text-xs text-white placeholder-zinc-550 grow rounded-none"
+                  className="bg-zinc-900 border-0 focus:ring-0 focus:outline-hidden p-4 text-xs text-white placeholder-zinc-400 grow rounded-none"
                 />
                 <Button
                   type="submit"
@@ -106,7 +105,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                 >
                   <div className="relative w-8 h-8 flex items-center justify-center">
                     <Image
-                      src="/Zebotix.webp"
+                      src="/Zebotix.png"
                       alt={`${COMPANY_NAME} Logo`}
                       fill
                       className="object-contain"
@@ -305,7 +304,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
         <div className="select-none text-center  mt-8 pt-8 border-t border-zinc-900">
           <span
             aria-hidden="true"
-            className="font-black text-[10vw] text-zinc-800 uppercase tracking-tighter leading-none block select-none"
+            className="font-black text-[10vw] text-zinc-700 uppercase tracking-tighter leading-none block select-none"
           >
             {COMPANY_NAME}
           </span>

@@ -1,12 +1,13 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { SEO_SERVICES } from "@/lib/seo-services";
-import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import HeroSection from "@/components/HeroSection";
-import { Reveal } from "@/components/animations";
 import { Check } from "lucide-react";
+import { type Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { Reveal } from "@/components/animations";
+import HeroSection from "@/components/HeroSection";
 import { Button } from "@/components/ui/Button";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { SEO_SERVICES } from "@/lib/seo-services";
 
 interface ServicePageProps {
   params: Promise<{ slug: string }>;

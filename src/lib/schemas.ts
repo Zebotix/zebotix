@@ -27,7 +27,7 @@ export function generateOrganizationSchema() {
     "@type": "Organization",
     name: COMPANY_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/Zebotix.webp`,
+    logo: `${SITE_URL}/Zebotix.png`,
     description: SHORT_DESC,
     sameAs: [
       SOCIAL_LINKS.twitter,
@@ -114,7 +114,7 @@ export function generateBlogPostingSchema(
       name: COMPANY_NAME,
       logo: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/Zebotix.webp`,
+        url: `${SITE_URL}/Zebotix.png`,
       },
     },
     mainEntityOfPage: {
@@ -204,7 +204,7 @@ export function generateLocalBusinessSchema() {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "ProfessionalService"],
     name: COMPANY_NAME,
-    image: `${SITE_URL}/Zebotix.webp`,
+    image: `${SITE_URL}/Zebotix.png`,
     description: SHORT_DESC,
     url: SITE_URL,
     telephone: CONTACT_PHONE,
@@ -251,7 +251,7 @@ export function generateJobPostingSchema(
       "@type": "Organization",
       name: COMPANY_NAME,
       sameAs: SITE_URL,
-      logo: `${SITE_URL}/Zebotix.webp`,
+      logo: `${SITE_URL}/Zebotix.png`,
     },
     jobLocation: {
       "@type": "Place",

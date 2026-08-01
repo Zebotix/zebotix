@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     default: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     template: `%s | ${COMPANY_NAME}`,
   },
-  description: `${SHORT_DESC} Partner with Zebotix for enterprise-grade web development, AI integration, and full-cycle product engineering.`,
+  description: SHORT_DESC,
   applicationName: COMPANY_NAME,
   keywords: [
     "IT Services",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   creator: COMPANY_NAME,
   publisher: COMPANY_NAME,
   icons: {
-    icon: "/Zebotix.webp",
-    shortcut: "/Zebotix.webp",
-    apple: "/Zebotix.webp",
+    icon: "/Zebotix.png",
+    shortcut: "/Zebotix.png",
+    apple: "/Zebotix.png",
   },
   manifest: "/favicon/site.webmanifest",
   verification: {
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/Zebotix.webp",
+        url: "/Zebotix.png",
         width: 1200,
         height: 630,
         alt: `${COMPANY_NAME} — software and AI solutions`,
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
-    images: ["/Zebotix.webp"],
+    images: ["/Zebotix.png"],
     creator: "@zebotix1499",
   },
 };

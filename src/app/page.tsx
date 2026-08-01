@@ -25,7 +25,7 @@ const TrustedBy = dynamic(() => import("@/components/TrustedBy"));
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
-  description: `${SHORT_DESC} Build responsive web apps, AI-driven products, and scalable systems.`,
+  description: SHORT_DESC,
   alternates: {
     canonical: "/",
   },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: COMPANY_NAME,
     images: [
       {
-        url: `/Zebotix.webp`,
+        url: `/Zebotix.png`,
         width: 1200,
         height: 630,
         alt: `${COMPANY_NAME} — software and AI solutions`,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
-    images: [`/Zebotix.webp`],
+    images: [`/Zebotix.png`],
   },
 };
 

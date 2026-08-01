@@ -155,8 +155,9 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                       src={image}
                       alt={project.title}
                       fill
+                      quality={60}
                       className="object-cover transition-transform duration-700 group-hover:scale-103 rounded-none grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 650px"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 500px"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold rounded-none">

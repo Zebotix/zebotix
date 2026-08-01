@@ -1,6 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import HeroVideo from "./HeroVideo";
+
 import { Button } from "@/components/ui";
 import { COMPANY_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -32,25 +34,7 @@ export default function HeroSection({
     >
       {/* Cinematic Radial Wash Background */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          disablePictureInPicture
-          disableRemotePlayback
-          aria-hidden="true"
-          tabIndex={-1}
-          preload="metadata"
-          poster="/images/bg-3-poster.webp"
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover pointer-events-none z-0 transition-opacity duration-1000 opacity-40"
-          )}
-          style={{ willChange: "transform", transform: "translate3d(0, 0, 0)" }}
-        >
-          <source src="/videos/bg-3-opt.webm" type="video/webm" />
-          <source src="/videos/bg-3-opt.mp4" type="video/mp4" />
-        </video>
+        <HeroVideo />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex flex-col items-start w-full">

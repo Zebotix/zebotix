@@ -14,9 +14,9 @@ export const metadata: Metadata = {
     "The page you are looking for can't be found. Explore Zebotix services or contact us.",
   robots: "noindex,follow",
   icons: {
-    icon: "/Zebotix.webp",
-    shortcut: "/Zebotix.webp",
-    apple: "/Zebotix.webp",
+    icon: "/Zebotix.png",
+    shortcut: "/Zebotix.png",
+    apple: "/Zebotix.png",
   },
 };
 

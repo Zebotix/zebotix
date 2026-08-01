@@ -1,9 +1,10 @@
-import { Metadata } from "next";
-import Link from "next/link";
 import { ArrowRight, Code } from "lucide-react";
-import { SEO_SERVICES } from "@/lib/seo-services";
-import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { type Metadata } from "next";
+import Link from "next/link";
+
 import { Reveal } from "@/components/animations";
+import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
+import { SEO_SERVICES } from "@/lib/seo-services";
 
 export const metadata: Metadata = {
   title: `Our IT Services & Custom Software Solutions | ${COMPANY_NAME}`,

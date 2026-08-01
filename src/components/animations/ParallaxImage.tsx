@@ -67,8 +67,9 @@ const ParallaxImage = ({
           src={src}
           alt={alt}
           fill
+          quality={60}
           className={`object-cover ${className}`}
-          sizes='(max-width: 768px) 100vw, 50vw'
+          sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px'
         />
       </div>
     </div>

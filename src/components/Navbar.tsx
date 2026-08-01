@@ -64,7 +64,7 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
           <Link href="/" className="group flex items-center gap-3 select-none" onClick={closeMenu}>
             <div className="relative w-10 h-10 flex items-center justify-center transform group-hover:scale-105 transition-all duration-500 drop-shadow-md">
               <Image
-                src="/Zebotix.webp"
+                src="/Zebotix.png"
                 alt={`${COMPANY_NAME} Logo`}
                 fill
                 className="object-contain"
