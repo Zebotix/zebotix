@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import Link from "next/link";
 import React from "react";
 
 import GenerateAutoBlogButton from "../_components/GenerateAutoBlogButton";
@@ -43,12 +44,12 @@ export default async function AdminDashboard() {
       <div className="mt-12">
         <h2 className="text-xl font-semibold mb-6 border-b border-zinc-800 pb-4">Quick Actions</h2>
         <div className="flex flex-wrap gap-4">
-          <button className="bg-white text-black font-semibold py-3 px-6 hover:bg-zinc-200 transition-colors">
+          <Link href="/admin/secure/portfolios" className="bg-white text-black font-semibold py-3 px-6 hover:bg-zinc-200 transition-colors">
             Add New Portfolio
-          </button>
-          <button className="bg-zinc-800 text-white font-semibold py-3 px-6 hover:bg-zinc-700 transition-colors">
+          </Link>
+          <Link href="/admin/secure/blogs" className="bg-zinc-800 text-white font-semibold py-3 px-6 hover:bg-zinc-700 transition-colors">
             Write Blog Post
-          </button>
+          </Link>
           {/* auto blog generate button */}
           <GenerateAutoBlogButton />
         </div>

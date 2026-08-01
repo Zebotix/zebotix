@@ -46,25 +46,34 @@ const TECH_FEEDS = [
 export async function fetchLatestTechNews(limit: number = 5): Promise<NewsItem[]> {
   const allNews: NewsItem[] = [];
 
-  for (const feedUrl of TECH_FEEDS) {
+  // Shuffle feeds and pick 3 to fetch in parallel to avoid long response times
+  const selectedFeeds = TECH_FEEDS.toSorted(() => 0.5 - Math.random()).slice(0, 3);
+
+  const fetchPromises = selectedFeeds.map(async (feedUrl) => {
     try {
+      // Use AbortController for 5 seconds timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
       const response = await fetch(feedUrl, {
         next: { revalidate: 3600 },
         headers: {
           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         },
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         logger.error(`Failed to fetch RSS from ${feedUrl}: ${response.statusText}`);
-        continue;
+        return [];
       }
 
       const xmlText = await response.text();
       const $ = cheerio.load(xmlText, { xmlMode: true });
-
-      // Handle both RSS <item> and Atom <entry>
       const items = $("item, entry").slice(0, limit);
+      const feedNews: NewsItem[] = [];
 
       items.each((_, el) => {
         const title = $(el).find("title").first().text();
@@ -74,7 +83,6 @@ export async function fetchLatestTechNews(limit: number = 5): Promise<NewsItem[]
           $(el).find("summary").first().text() ||
           $(el).find("content").first().text();
 
-        // Clean up description (remove HTML tags)
         description = description.replace(/<[^>]*>?/gm, "").trim();
 
         const pubDate =
@@ -83,13 +91,18 @@ export async function fetchLatestTechNews(limit: number = 5): Promise<NewsItem[]
           $(el).find("updated").first().text();
 
         if (title && description) {
-          allNews.push({ title, link, description, pubDate });
+          feedNews.push({ title, link, description, pubDate });
         }
       });
+      return feedNews;
     } catch (error) {
       console.error(`Error processing feed ${feedUrl}:`, error);
+      return [];
     }
-  }
+  });
+
+  const results = await Promise.all(fetchPromises);
+  results.forEach(feedResults => allNews.push(...feedResults));
 
   // Shuffle and pick some to give variety to the AI
   return allNews.toSorted(() => 0.5 - secureRandom()).slice(0, limit * 2);

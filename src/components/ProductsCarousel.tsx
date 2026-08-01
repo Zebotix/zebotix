@@ -100,7 +100,7 @@ const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProp
                       alt={title}
                       fill
                       className="object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 650px"
                     />
                   </div>
                   {/* Dark overlay for text readability */}

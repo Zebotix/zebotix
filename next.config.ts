@@ -61,12 +61,14 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days cache
+    deviceSizes: [640, 650, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
   experimental: {
     serverActions: {
       bodySizeLimit: "50mb",
     },
     optimizePackageImports: ["lucide-react", "@radix-ui/react-icons", "framer-motion", "gsap"],
+    optimizeCss: true,
   },
 
   turbopack: {},

@@ -23,6 +23,8 @@ const legalLinks = [
   { name: "GDPR Compliance", href: "/gdpr" },
 ];
 
+import { SEO_SERVICES } from "@/lib/seo-services";
+
 const Footer = ({ solutions = [] }: FooterProps) => {
   const year = new Date().getFullYear();
   const pathname = usePathname();
@@ -91,10 +93,10 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </Reveal>
           </div>
         </div>
-        {/* Links Columns Grid - aligned correctly */}{" "}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-10 gap-x-4 gap-y-8 sm:gap-8 lg:gap-12 pt-12 sm:pt-16 pb-8 sm:pb-12">
+        {/* Links Columns Grid - aligned correctly */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-x-4 gap-y-8 sm:gap-8 lg:gap-12 pt-12 sm:pt-16 pb-8 sm:pb-12">
           {/* Column 1: Info */}
-          <div className="col-span-2">
+          <div className="col-span-2 lg:col-span-3">
             <Reveal distance={30}>
               <div className="flex flex-col">
                 <Link
@@ -133,7 +135,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
           </div>
 
           {solutions.length > 0 && (
-            <div className="col-span-2 sm:col-span-3">
+            <div className="col-span-1 lg:col-span-2">
               <Reveal delay={0.1} distance={30}>
                 <div className="flex flex-col">
                   <nav aria-label="Solutions navigation">
@@ -158,10 +160,42 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </div>
           )}
 
-          <div className={cn("col-span-2")}>
+          <div className={cn("col-span-1 lg:col-span-3")}>
+            <Reveal delay={0.15} distance={30}>
+              <div className="flex flex-col">
+                <nav aria-label="Services navigation">
+                  <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
+                    Services
+                  </h4>
+                  <ul className="space-y-3 mb-6">
+                    {SEO_SERVICES.slice(0, 5).map((service) => (
+                      <li key={service.slug}>
+                        <Link
+                          href={`/services/${service.slug}`}
+                          className="text-zinc-400 hover:text-blue-500 transition-colors text-[10px] font-black uppercase tracking-wider block"
+                        >
+                          {service.keyword}
+                        </Link>
+                      </li>
+                    ))}
+                    <li>
+                      <Link
+                        href="/services"
+                        className="text-blue-500 hover:text-blue-400 transition-colors text-[10px] font-black uppercase tracking-wider block mt-2"
+                      >
+                        View All Services &rarr;
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className={cn("col-span-1 lg:col-span-2")}>
             <Reveal delay={0.2} distance={30}>
               <div className="flex flex-col">
-                <nav aria-label="Company navigation">
+                <nav aria-label="Legal navigation">
                   <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
                     Legal
                   </h4>

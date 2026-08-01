@@ -1,5 +1,5 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Outfit } from "next/font/google";
+import Script from "next/script";
 import React, { Suspense } from "react";
 
 import type { Metadata, Viewport } from "next";
@@ -34,34 +34,26 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+    default: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     template: `%s | ${COMPANY_NAME}`,
   },
-  description: `${SHORT_DESC} Build responsive web apps, AI-driven products, and scalable systems with our expert team.`,
+  description: `${SHORT_DESC} Partner with Zebotix for enterprise-grade web development, AI integration, and full-cycle product engineering.`,
   applicationName: COMPANY_NAME,
   keywords: [
+    "IT Services",
+    "Custom Software Development",
+    "IT Services Company",
+    "Software Development Agency",
+    "Web Application Development",
+    "Enterprise AI Solutions",
+    "IT Consulting",
+    "B2B IT Solutions",
+    "E-commerce Solutions",
+    "Full-Stack Development",
+    "React Next.js Development",
+    "Machine Learning Integration",
+    "Mobile App Development",
     COMPANY_NAME,
-    "e-commerce solutions",
-    "products showcasing and portfolios",
-    "clothes selling websites",
-    "business websites",
-    "responsive websites",
-    "web development services",
-    "mobile app development",
-    "web apps",
-    "web design",
-    "web development",
-    "web solutions",
-    "mobile apps",
-    "web development company",
-    "software development company",
-    "AI solutions",
-    "web application development",
-    "machine learning services",
-    "IT services",
-    "custom software",
-    "product engineering",
-    "full-stack development",
   ],
   authors: [{ name: COMPANY_NAME, url: SITE_URL }],
   creator: COMPANY_NAME,
@@ -88,7 +80,7 @@ export const metadata: Metadata = {
   },
   alternates: {},
   openGraph: {
-    title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+    title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
     url: SITE_URL,
     siteName: COMPANY_NAME,
@@ -104,7 +96,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+    title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
     images: ["/Zebotix.webp"],
     creator: "@zebotix1499",
@@ -153,7 +145,20 @@ export default async function RootLayout({
         <Suspense fallback={null}>
           <GoogleAnalyticsTracker />
         </Suspense>
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"} />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"}`}
+          strategy="lazyOnload"
+        />
+        <Script id="google-analytics" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
         <Suspense fallback={null}>
           <WebVitalsReporter />
 

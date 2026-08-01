@@ -24,13 +24,13 @@ const TrustedBy = dynamic(() => import("@/components/TrustedBy"));
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+  title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
   description: `${SHORT_DESC} Build responsive web apps, AI-driven products, and scalable systems.`,
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+    title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
     type: "website",
     url: SITE_URL,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${COMPANY_NAME} — Empowering innovation with software & AI`,
+    title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
     images: [`/Zebotix.webp`],
   },

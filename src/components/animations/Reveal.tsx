@@ -33,8 +33,9 @@ const Reveal = ({
       const element = containerRef.current;
       if (!element) return;
 
-      const vars: gsap.TweenVars = {
-        opacity: 0,
+      const fromVars: gsap.TweenVars = { opacity: 0 };
+      const toVars: gsap.TweenVars = {
+        opacity: 1,
         duration,
         delay,
         ease: 'power3.out',
@@ -45,12 +46,24 @@ const Reveal = ({
         },
       };
 
-      if (direction === 'up') vars.y = distance;
-      if (direction === 'down') vars.y = -distance;
-      if (direction === 'left') vars.x = distance;
-      if (direction === 'right') vars.x = -distance;
+      if (direction === 'up') {
+        fromVars.y = distance;
+        toVars.y = 0;
+      }
+      if (direction === 'down') {
+        fromVars.y = -distance;
+        toVars.y = 0;
+      }
+      if (direction === 'left') {
+        fromVars.x = distance;
+        toVars.x = 0;
+      }
+      if (direction === 'right') {
+        fromVars.x = -distance;
+        toVars.x = 0;
+      }
 
-      gsap.from(element, vars);
+      gsap.fromTo(element, fromVars, toVars);
     },
     { scope: containerRef }
   );

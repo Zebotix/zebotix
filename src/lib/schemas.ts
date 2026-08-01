@@ -197,19 +197,28 @@ export function generateWebsiteSchema() {
 }
 
 /**
- * LocalBusiness schema - for contact/location information
+ * ProfessionalService schema - for contact/location information and SEO context
  */
 export function generateLocalBusinessSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "ProfessionalService"],
     name: COMPANY_NAME,
     image: `${SITE_URL}/Zebotix.webp`,
     description: SHORT_DESC,
     url: SITE_URL,
     telephone: CONTACT_PHONE,
     email: CONTACT_EMAIL,
+    priceRange: "$$",
     sameAs: [SOCIAL_LINKS.twitter, SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram],
+    knowsAbout: [
+      "IT Services",
+      "Custom Software Development",
+      "Artificial Intelligence",
+      "Web Application Development",
+      "Mobile App Development",
+      "B2B Enterprise Solutions",
+    ],
     areaServed: {
       "@type": "Country",
       name: "Pakistan",

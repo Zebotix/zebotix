@@ -18,7 +18,7 @@ export interface HeroSectionProps {
 export default function HeroSection({
   eyebrow = "Tired of software that slows you down?",
   title,
-  description = `Outdated tech and manual processes cost you time and money. We eliminate your bottlenecks with ${COMPANY_NAME}'s custom software and AI solutions.`,
+  description = `Outdated tech and manual processes cost you time and money. We eliminate bottlenecks with ${COMPANY_NAME}'s enterprise-grade IT services, custom software, and AI automation.`,
   primaryCta = { href: "/quick-quote", label: "Get a Quick Quote" },
   className = "",
 }: Readonly<HeroSectionProps>) {
@@ -62,14 +62,14 @@ export default function HeroSection({
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black mb-6 sm:mb-8 text-white tracking-tighter leading-[1.05] max-w-5xl">
             {title || (
               <>
-                We build{" "}
+                Top-Tier{" "}
                 <span
                   className="inline-block w-16 sm:w-24 lg:w-32 h-8 sm:h-12 lg:h-16 border border-white/10 align-middle bg-cover bg-center mx-2"
                   style={{
                     backgroundImage: "url(/images/hero-section-image.webp)",
                   }}
                 />{" "}
-                systems that accelerate growth.
+                IT Services & Custom Software.
               </>
             )}
           </h1>

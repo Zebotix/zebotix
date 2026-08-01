@@ -43,16 +43,20 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
       cards.forEach((card, index) => {
         if (index === cards.length - 1) return; // Skip last card
 
-        gsap.to(card, {
-          scale: 0.94,
-          opacity: 0.4,
-          scrollTrigger: {
-            trigger: card,
-            start: "top top+=140",
-            end: "bottom top+=140",
-            scrub: true,
-          },
-        });
+        gsap.fromTo(
+          card,
+          { scale: 1, opacity: 1 },
+          {
+            scale: 0.94,
+            opacity: 0.4,
+            scrollTrigger: {
+              trigger: card,
+              start: "top top+=140",
+              end: "bottom top+=140",
+              scrub: true,
+            },
+          }
+        );
       });
     },
     { scope: containerRef }
@@ -152,7 +156,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-103 rounded-none grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 650px"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-zinc-800 flex items-center justify-center text-zinc-400 font-bold rounded-none">

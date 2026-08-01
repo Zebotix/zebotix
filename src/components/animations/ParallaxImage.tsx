@@ -38,16 +38,20 @@ const ParallaxImage = ({
       const image = imageRef.current;
       if (!container || !image) return;
 
-      gsap.to(image, {
-        yPercent: 20 * speed,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: container,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
+      gsap.fromTo(
+        image,
+        { yPercent: 0 },
+        {
+          yPercent: 20 * speed,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        }
+      );
     },
     { scope: containerRef }
   );
