@@ -5,7 +5,9 @@ export async function GET() {
   
   const content = `# Zebotix
 
-Zebotix is an innovative software engineering agency focusing on scalable software architecture, custom software development, high-performance e-commerce, AI automation, and cloud infrastructure.
+> Zebotix is an innovative software engineering agency focusing on scalable software architecture, custom software development, high-performance e-commerce, AI automation, and cloud infrastructure.
+
+Zebotix builds robust, scalable e-commerce solutions, AI automation pipelines, and advanced web applications that drive real business value.
 
 ## Solutions
 ${(solutions || []).map((s) => `- [${s.title}](https://www.zebotix.com/solutions/${s.slug}): ${s.tagline || s.description?.substring(0, 50)}`).join("\n")}
