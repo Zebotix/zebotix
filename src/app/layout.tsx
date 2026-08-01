@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Outfit } from "next/font/google";
 import Script from "next/script";
 import React, { Suspense } from "react";
@@ -136,6 +137,7 @@ export default async function RootLayout({
           "modal-scroll min-h-screen bg-background text-foreground antialiased font-sans"
         )}
       >
+        <SpeedInsights />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-zebotix-blue focus:text-white focus:rounded-md"

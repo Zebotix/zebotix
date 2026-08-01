@@ -304,7 +304,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
         <div className="select-none text-center  mt-8 pt-8 border-t border-zinc-900">
           <span
             aria-hidden="true"
-            className="font-black text-[10vw] text-zinc-700 uppercase tracking-tighter leading-none block select-none"
+            className="font-black text-[10vw] text-zinc-500 uppercase tracking-tighter leading-none block select-none"
           >
             {COMPANY_NAME}
           </span>
