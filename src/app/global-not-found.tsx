@@ -89,8 +89,8 @@ export default function NotFound() {
                 <div className="mt-4 text-sm text-gray-400">
                   <p>
                     Want us to fix this? Report the broken link or send details to{" "}
-                    <a href="mailto:zebotix@gmail.com" className="text-indigo-300 hover:underline">
-                      zebotix@gmail.com
+                    <a href="mailto:support@zebotix.com" className="text-indigo-300 hover:underline">
+                      support@zebotix.com
                     </a>
                     .
                   </p>
@@ -158,8 +158,8 @@ export default function NotFound() {
                   <p className="mb-2">Need urgent help?</p>
                   <p className="text-xs">
                     Email:{" "}
-                    <a href="mailto:zebotix@gmail.com" className="text-indigo-300 hover:underline">
-                      zebotix@gmail.com
+                    <a href="mailto:support@zebotix.com" className="text-indigo-300 hover:underline">
+                      support@zebotix.com
                     </a>
                   </p>
                   <p className="text-xs">Karachi, Pakistan</p>

@@ -18,14 +18,14 @@ export const metadata: Metadata = {
       "Insights, tutorials, and updates from the Zebotix team on AI, web development, and digital strategy.",
     url: `${SITE_URL}/blog`,
     type: "website",
-    images: [{ url: "/Zebotix.png", width: 1200, height: 630, alt: `${COMPANY_NAME} Blog` }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `${COMPANY_NAME} Blog` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `Blog | ${COMPANY_NAME}`,
     description:
       "Insights, tutorials, and updates from the Zebotix team on AI, web development, and digital strategy.",
-    images: ["/Zebotix.png"],
+    images: ["/og-image.png"],
   },
 };
 

@@ -75,13 +75,13 @@ export async function seedCMS(prisma: PrismaClient) {
           <h2 class="text-2xl font-black text-white mb-3">6. Your Rights (GDPR/EU Clients)</h2>
           <p>
             You may request access, correction, or deletion of your personal data by contacting us
-            at <a href="mailto:zebotix@gmail.com" class="underline text-blue-500">zebotix@gmail.com</a>. We respond within 30 days.
+            at <a href="mailto:hello@zebotix.com" class="underline text-blue-500">hello@zebotix.com</a>. We respond within 30 days.
           </p>
         </section>
 
         <footer class="mt-8 border-t border-zinc-800 pt-4 text-sm text-zinc-500">
           <p>
-            Questions about these Privacy Polices? Contact us at <a href="mailto:zebotix@gmail.com" class="text-blue-500 hover:underline">zebotix@gmail.com</a>.
+            Questions about these Privacy Polices? Contact us at <a href="mailto:hello@zebotix.com" class="text-blue-500 hover:underline">hello@zebotix.com</a>.
           </p>
         </footer>
       `,
@@ -221,7 +221,7 @@ export async function seedCMS(prisma: PrismaClient) {
 
         <footer class="mt-8 border-t border-zinc-800 pt-4 text-sm text-zinc-500">
           <p>
-            Questions about these Terms? Contact us at <a href="mailto:zebotix@gmail.com" class="text-blue-500 hover:underline">zebotix@gmail.com</a>.
+            Questions about these Terms? Contact us at <a href="mailto:hello@zebotix.com" class="text-blue-500 hover:underline">hello@zebotix.com</a>.
           </p>
         </footer>
       `,
@@ -304,7 +304,7 @@ export async function seedCMS(prisma: PrismaClient) {
 
         <footer class="mt-8 border-t border-zinc-800 pt-4 text-sm text-zinc-500">
           <p>
-            Questions about cookies? Contact us at <a href="mailto:zebotix@gmail.com" class="text-blue-500 hover:underline">zebotix@gmail.com</a>.
+            Questions about cookies? Contact us at <a href="mailto:hello@zebotix.com" class="text-blue-500 hover:underline">hello@zebotix.com</a>.
           </p>
         </footer>
       `,

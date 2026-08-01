@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/Zebotix.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: `${COMPANY_NAME} — software and AI solutions`,
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
     description: SHORT_DESC,
-    images: ["/Zebotix.png"],
+    images: ["/og-image.png"],
     creator: "@zebotix1499",
   },
 };

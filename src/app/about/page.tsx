@@ -33,14 +33,14 @@ export const metadata: Metadata = {
       "Learn about Zebotix, our mission, digital services, team, and how we help businesses grow.",
     url: `${SITE_URL}/about`,
     type: "website",
-    images: [{ url: "/Zebotix.png", width: 1200, height: 630, alt: `${COMPANY_NAME} About` }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: `${COMPANY_NAME} About` }],
   },
   twitter: {
     card: "summary_large_image",
     title: `About Us — ${COMPANY_NAME}`,
     description:
       "Learn about Zebotix, our mission, digital services, team, and how we help businesses grow.",
-    images: ["/Zebotix.png"],
+    images: ["/og-image.png"],
   },
 };
 

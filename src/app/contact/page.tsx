@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/Zebotix.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: `${COMPANY_NAME} — Contact Us`,
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: `Contact — ${COMPANY_NAME}`,
     description:
       "Contact Zebotix — Karachi-based digital studio. Reach us by email, social or send a message using the form.",
-    images: ["/Zebotix.png"],
+    images: ["/og-image.png"],
   },
 };
 

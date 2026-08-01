@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       card: "summary_large_image",
       title: `${post.title} | Blog | ${COMPANY_NAME}`,
       description: post.excerpt,
-      images: post.image ? [post.image] : [`${SITE_URL}/Zebotix.png`],
+      images: post.image ? [post.image] : [`${SITE_URL}/og-image.png`],
     },
   };
 }
@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
   const blogPostingSchema = generateBlogPostingSchema(
     post.title,
     post.excerpt,
-    post.image || `${SITE_URL}/Zebotix.png`,
+    post.image || `${SITE_URL}/og-image.png`,
     new Date(post.publishedAt || post.createdAt),
     post.updatedAt ? new Date(post.updatedAt) : undefined,
     slug

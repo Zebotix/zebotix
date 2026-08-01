@@ -116,8 +116,8 @@ export default async function PrivacyPolicy() {
                   <p>
                     You may request access, correction, or deletion of your personal data by
                     contacting us at{" "}
-                    <a href="mailto:zebotix@gmail.com" className="underline text-blue-500">
-                      zebotix@gmail.com
+                    <a href="mailto:hello@zebotix.com" className="underline text-blue-500">
+                      hello@zebotix.com
                     </a>
                     <span>. We respond within 30 days.</span>
                   </p>

@@ -93,7 +93,7 @@ export default async function SolutionDetailsPage({ params }: Readonly<SolutionP
     solution.title,
     solution.tagline || "",
     undefined, // price
-    `${SITE_URL}/Zebotix.png` // default image
+    `${SITE_URL}/og-image.png` // default image
   );
 
   const breadcrumbSchema = generateBreadcrumbSchema([

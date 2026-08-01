@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/Zebotix.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: `${COMPANY_NAME} — Quick Quote`,
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: `Project Estimator — ${COMPANY_NAME}`,
     description:
       "Get a quick project estimate from Zebotix. Share your requirements and get a roadmap within 24 hours.",
-    images: ["/Zebotix.png"],
+    images: ["/og-image.png"],
   },
 };
 

@@ -31,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: href === "/" ? 1 : 0.8,
-    images: href === "/" ? [`${baseUrl}/Zebotix.png`] : [],
+    images: href === "/" ? [`${baseUrl}/og-image.png`] : [],
   }));
 
   // Portfolio/Work routes with images
