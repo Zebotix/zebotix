@@ -35,7 +35,7 @@ export default async function SolutionsPage() {
 
   return (
     <main className="bg-zinc-950 text-zinc-300 min-h-screen pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <header className="max-w-3xl mb-20">
           <Reveal>
             <span className="text-blue-500 font-bold uppercase tracking-widest text-xs flex items-center gap-2 mb-4">

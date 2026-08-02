@@ -21,6 +21,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/NavigationMenu";
 import { COMPANY_NAME } from "@/lib/constants";
+import { SEO_SERVICES } from "@/lib/seo-services";
 import { cn } from "@/lib/utils";
 
 const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[] }) => {
@@ -195,9 +196,56 @@ const Navbar = ({ solutions = [] }: { solutions?: Prisma.SolutionGetPayload<{}>[
               Careers
             </NavLink>
 
-            <NavLink href="/contact" active={pathname === "/contact"}>
-              Contact
-            </NavLink>
+            <NavigationMenu
+              delayDuration={100}
+              className="static!"
+              viewportWrapperClassName="!left-1/2 !-translate-x-1/2 top-full mt-0"
+              viewportWrapperStyle={{}}
+            >
+              <NavigationMenuList className="gap-2 p-0 m-0">
+                {/* Services */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    onClick={() => router.push("/services")}
+                    className={cn(
+                      "px-4 py-2 h-auto text-xs font-black uppercase tracking-widest transition-colors relative group/navitem select-none flex items-center gap-1 cursor-pointer bg-transparent border-none outline-none hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                      pathname.startsWith("/services")
+                        ? "text-blue-500 hover:text-blue-500 data-[state=open]:text-blue-500 focus:text-blue-500"
+                        : "text-zinc-400 hover:text-white data-[state=open]:text-white focus:text-white"
+                    )}
+                  >
+                    Services
+                    <div
+                      className={cn(
+                        "absolute bottom-0 left-4 right-4 h-[2px] bg-blue-500 transition-transform origin-left duration-300",
+                        pathname.startsWith("/services")
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover/navitem:scale-x-100 group-data-[state=open]/navitem:scale-x-100 group-focus/navitem:scale-x-100"
+                      )}
+                    />
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-zinc-950 border-t-0 border border-zinc-900 p-6 shadow-2xl rounded-none w-full md:w-[800px] lg:w-[900px]">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {SEO_SERVICES.map((item) => (
+                        <NavigationMenuLink key={item.slug} asChild>
+                          <Link
+                            href={`/services/${item.slug}`}
+                            className="group block p-4 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-colors"
+                          >
+                            <h4 className="text-xs font-black text-zinc-300 group-hover:text-blue-500 uppercase tracking-wider mb-2 leading-tight">
+                              {item.keyword}
+                            </h4>
+                            <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest line-clamp-2">
+                              {item.heroHeadline}
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
 
           <Button

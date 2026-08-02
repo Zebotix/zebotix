@@ -4,6 +4,7 @@ import { getBlogsAction } from "@/app/actions/blogs";
 import { getActiveJobPostingsAction } from "@/app/actions/careers";
 import { getPortfoliosAction } from "@/app/actions/portfolio";
 import { getSolutionsAction } from "@/app/actions/solutions";
+import { SEO_SERVICES } from "@/lib/seo-services";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://zebotix.com";
@@ -12,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
     "/",
     "/about",
+    "/services",
     "/solutions",
     "/blog",
     "/work",
@@ -76,5 +78,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...portfolioRoutes, ...solutionRoutes, ...blogRoutes, ...jobRoutes];
+  // SEO Service routes
+  const seoServiceRoutes = SEO_SERVICES.map((service) => ({
+    url: `${baseUrl}/services/${service.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
+  }));
+
+  return [...staticRoutes, ...portfolioRoutes, ...solutionRoutes, ...blogRoutes, ...jobRoutes, ...seoServiceRoutes];
 }

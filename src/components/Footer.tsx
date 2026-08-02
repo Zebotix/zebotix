@@ -12,7 +12,6 @@ import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui";
 import { COMPANY_NAME, SOCIAL_LINKS, CONTACT_EMAIL } from "@/lib/constants";
 import { SEO_SERVICES } from "@/lib/seo-services";
-import { cn } from "@/lib/utils";
 
 interface FooterProps {
   solutions?: Prisma.SolutionGetPayload<{}>[];
@@ -92,10 +91,10 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </Reveal>
           </div>
         </div>
-        {/* Links Columns Grid - aligned correctly */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-x-4 gap-y-8 sm:gap-8 lg:gap-12 pt-12 sm:pt-16 pb-8 sm:pb-12">
+        {/* Links Columns Grid - Refined for flexible and responsive layout */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-13 gap-x-6 gap-y-10 sm:gap-x-8 lg:gap-x-6 xl:gap-x-8 pt-12 sm:pt-16 pb-8 sm:pb-12">
           {/* Column 1: Info */}
-          <div className="col-span-2 lg:col-span-3">
+          <div className="col-span-2 sm:col-span-4 lg:col-span-3">
             <Reveal distance={30}>
               <div className="flex flex-col">
                 <Link
@@ -134,7 +133,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
           </div>
 
           {solutions.length > 0 && (
-            <div className="col-span-1 lg:col-span-2">
+            <div className="col-span-2 sm:col-span-3">
               <Reveal delay={0.1} distance={30}>
                 <div className="flex flex-col">
                   <nav aria-label="Solutions navigation">
@@ -159,7 +158,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </div>
           )}
 
-          <div className={cn("col-span-1 lg:col-span-3")}>
+          <div className="col-span-2 sm:col-span-2 lg:col-span-2">
             <Reveal delay={0.15} distance={30}>
               <div className="flex flex-col">
                 <nav aria-label="Services navigation">
@@ -191,7 +190,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </Reveal>
           </div>
 
-          <div className={cn("col-span-1 lg:col-span-2")}>
+          <div className="col-span-1 sm:col-span-2 lg:col-span-2">
             <Reveal delay={0.2} distance={30}>
               <div className="flex flex-col">
                 <nav aria-label="Legal navigation">
@@ -215,9 +214,9 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </Reveal>
           </div>
 
-          <div className="col-span-1 lg:col-span-2">
-            <Reveal delay={0.2} distance={30}>
-              <div className="flex flex-col">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+            <Reveal delay={0.25} distance={30}>
+              <div className="flex flex-col h-full">
                 <nav aria-label="Company navigation">
                   <h4 className="text-white font-black text-[10px] uppercase tracking-widest mb-6">
                     Company
@@ -258,10 +257,10 @@ const Footer = ({ solutions = [] }: FooterProps) => {
                   </ul>
                 </nav>
 
-                <div className="hidden sm:block pt-4 border-t border-zinc-900">
+                <div className="hidden sm:block pt-4 border-t border-zinc-900 mt-2">
                   <nav
                     aria-label={`${COMPANY_NAME} social links`}
-                    className="flex flex-wrap gap-x-4 gap-y-2"
+                    className="flex flex-wrap gap-x-3 gap-y-2"
                   >
                     {Object.entries(SOCIAL_LINKS).map(([platform, url]) => (
                       <a

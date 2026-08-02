@@ -1,4 +1,5 @@
 import { getSolutionsAction } from "@/app/actions/solutions";
+import { SEO_SERVICES } from "@/lib/seo-services";
 
 export const revalidate = 3600; // Revalidate every hour
 export const dynamic = "force-static"; // Ensure it's statically generated
@@ -12,13 +13,16 @@ export async function GET() {
 
 Zebotix builds robust, scalable e-commerce solutions, AI automation pipelines, and advanced web applications that drive real business value.
 
-## Solutions
-${(solutions || []).map((s) => `- [${s.title}](https://zebotix.com/solutions/${s.slug}): ${s.tagline || s.description?.substring(0, 50)}`).join("\n")}
+## Services
+${SEO_SERVICES.map((s) => `- [${s.keyword}](https://zebotix.com/services/${s.slug}): ${s.description}`).join("\n")}
 
-## Contact
-- Website: [Zebotix Home](https://zebotix.com)
-- Work: [Our Portfolio](https://zebotix.com/work)
-- Blog: [Zebotix Blog](https://zebotix.com/blog)
+## Solutions
+${(solutions || []).map((s) => `- [${s.title}](https://zebotix.com/solutions/${s.industrySlug}/${s.slug}): ${s.tagline || s.description?.substring(0, 100)}`).join("\n")}
+
+## Resources
+- [Zebotix Home](https://zebotix.com)
+- [Our Portfolio](https://zebotix.com/work)
+- [Zebotix Blog](https://zebotix.com/blog)
 `;
 
   return new Response(content, {

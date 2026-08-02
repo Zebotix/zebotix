@@ -15,6 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/Accordion";
 import { Button } from "@/components/ui/Button";
+import { SEO_SERVICES } from "@/lib/seo-services";
 import { cn } from "@/lib/utils";
 
 interface MobileMenuProps {
@@ -112,14 +113,54 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                               : "text-zinc-400 hover:text-zinc-300"
                           )}
                         >
-                        {item.title}
-                      </Link>
+                          {item.title}
+                        </Link>
                       );
                     })}
                   </div>
                 </AccordionContent>
               </AccordionItem>
             )}
+
+            <AccordionItem value="services" className="border-none">
+              <div className="flex items-center justify-between w-full group">
+                <Link
+                  href="/services"
+                  onClick={handleLinkClick}
+                  className={cn(
+                    "text-sm font-black uppercase tracking-wider py-3 transition-colors flex-1 text-left",
+                    activePath === "/services"
+                      ? "text-blue-500"
+                      : "text-zinc-300 group-hover:text-white"
+                  )}
+                >
+                  Services
+                </Link>
+                <AccordionTrigger className="hover:no-underline py-3 px-4 -mr-4 flex-none data-[state=open]:text-white text-zinc-300" />
+              </div>
+              <AccordionContent className="pb-0 pt-2">
+                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
+                  {SEO_SERVICES.map((item) => {
+                    const href = `/services/${item.slug}`;
+                    return (
+                      <Link
+                        key={item.slug}
+                        href={href}
+                        onClick={handleLinkClick}
+                        className={cn(
+                          "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
+                          activePath === href
+                            ? "text-blue-500"
+                            : "text-zinc-400 hover:text-zinc-300"
+                        )}
+                      >
+                        {item.keyword}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
             <AccordionItem value="company" className="border-none">
               <AccordionTrigger className="hover:no-underline py-3 px-0 group">
@@ -177,16 +218,6 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
             )}
           >
             Careers
-          </Link>
-          <Link
-            href="/contact"
-            onClick={handleLinkClick}
-            className={cn(
-              "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
-              activePath === "/contact" ? "text-blue-500" : "text-zinc-300 hover:text-white"
-            )}
-          >
-            Contact
           </Link>
         </nav>
 

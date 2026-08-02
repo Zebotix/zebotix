@@ -64,7 +64,6 @@ export const metadata: Metadata = {
     shortcut: "/Zebotix.png",
     apple: "/Zebotix.png",
   },
-  manifest: "/favicon/site.webmanifest",
   verification: {
     google: process.env.GOOGLE_CONSOLE_VERIFICATION,
   },
