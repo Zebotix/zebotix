@@ -11,6 +11,7 @@ import {
   generateBreadcrumbSchema,
   generateFAQPageSchema,
   generateServiceSchema,
+  getSanitizedSchema,
 } from "@/lib/schemas";
 import { SEO_SERVICES } from "@/lib/seo-services";
 
@@ -72,16 +73,16 @@ export default async function ServiceSeoPage({ params }: Readonly<ServicePagePro
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateServiceSchema(service.title, service.description)),
+          __html: getSanitizedSchema(generateServiceSchema(service.title, service.description)),
         }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQPageSchema(service.faqs)) }}
+        dangerouslySetInnerHTML={{ __html: getSanitizedSchema(generateFAQPageSchema(service.faqs)) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateBreadcrumbSchema(breadcrumbs)) }}
+        dangerouslySetInnerHTML={{ __html: getSanitizedSchema(generateBreadcrumbSchema(breadcrumbs)) }}
       />
 
       <HeroSection

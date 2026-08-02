@@ -34,6 +34,7 @@ export function generateOrganizationSchema() {
       SOCIAL_LINKS.facebook,
       SOCIAL_LINKS.instagram,
       SOCIAL_LINKS.github,
+      SOCIAL_LINKS.linkedIn,
     ],
     contactPoint: {
       "@type": "ContactPoint",
@@ -210,7 +211,7 @@ export function generateLocalBusinessSchema() {
     telephone: CONTACT_PHONE,
     email: CONTACT_EMAIL,
     priceRange: "$$",
-    sameAs: [SOCIAL_LINKS.twitter, SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram],
+    sameAs: [SOCIAL_LINKS.twitter, SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram, SOCIAL_LINKS.linkedIn],
     knowsAbout: [
       "IT Services",
       "Custom Software Development",
@@ -262,6 +263,34 @@ export function generateJobPostingSchema(
       },
     },
     employmentType: employmentType || "FULL_TIME",
+  };
+}
+
+/**
+ * WebPage schema - for static informational pages
+ */
+export function generateWebPageSchema(
+  name: string,
+  description: string,
+  url: string
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url,
+    isPartOf: {
+      "@type": "WebSite",
+      name: COMPANY_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: COMPANY_NAME,
+      url: SITE_URL,
+      logo: `${SITE_URL}/Zebotix.png`,
+    },
   };
 }
 
