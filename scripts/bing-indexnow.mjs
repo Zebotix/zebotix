@@ -1,6 +1,7 @@
+import fetch from "node-fetch";
 
 const HOST = "zebotix.com";
-const KEY = "24c6c13c15fd4d2497ff321155c7814c";
+const KEY = "1e9e03d3c8834c0fb383c38b25121b6d";
 
 async function submitToIndexNow() {
   console.log(`🌐 Fetching sitemap from https://${HOST}/sitemap.xml...`);

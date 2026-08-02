@@ -1,4 +1,4 @@
-import { google } from "@ai-sdk/google";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
@@ -6,6 +6,10 @@ import { z } from "zod";
 import { generateAndUploadImage } from "./image-generator";
 import { fetchLatestTechNews } from "./news-fetcher";
 import { logger } from "../security/logger";
+
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+});
 
 const blogSchema = z.object({
   title: z.string().describe("A catchy, SEO-friendly title for the blog post."),
@@ -41,13 +45,10 @@ export async function generateAndPublishBlog() {
 
   // Define an array of models, prioritizing free/cheaper models with extensive fallbacks
   const fallbackModels = [
-    google("gemini-2.5-flash"), // Google's latest fast and cost-effective model
-    google("gemini-2.5-pro"), // Google's latest high-performance model
+    google("gemini-1.5-flash"), // Google's fast and cost-effective model
+    google("gemini-1.5-pro"), // Google's high-performance model
     openai("gpt-4o-mini"), // OpenAI's cheap and fast model
     openai("gpt-4o"), // OpenAI's flagship fast model
-    openai("gpt-4-turbo"), // OpenAI's previous turbo model
-    openai("gpt-4"), // OpenAI's standard GPT-4
-    openai("gpt-3.5-turbo"), // OpenAI's legacy fast model
   ];
 
   let output;
@@ -61,7 +62,7 @@ export async function generateAndPublishBlog() {
       const response = await generateObject({
         model,
         schema: blogSchema,
-        system:
+        instructions:
           "You are an expert tech blogger for 'Zebotix'. Your task is to write a highly engaging, informative, and SEO-optimized blog post based on recent tech trends.",
         prompt: `
           ${newsContext}

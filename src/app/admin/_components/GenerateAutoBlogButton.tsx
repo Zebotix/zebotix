@@ -16,13 +16,13 @@ export default function GenerateAutoBlogButton() {
       try {
         const result = await generateAutoBlogAction();
         if (result.success) {
-          toast(`Successfully generated blog: ${result.data?.title}`);
+          toast.success(`Successfully generated blog: ${result.data?.title}`);
         } else {
-          toast(`Failed to generate blog: ${result.error}`);
+          toast.error(`Failed to generate blog: ${result.error}`);
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
-        toast(errorMessage);
+        toast.error(`Unexpected error: ${errorMessage}`);
       } finally {
         setLoading(false);
       }
