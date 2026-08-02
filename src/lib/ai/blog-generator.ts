@@ -1,6 +1,7 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { openai } from "@ai-sdk/openai";
-import { generateObject } from "ai";
+import { createGroq } from "@ai-sdk/groq";
+import { createMistral } from "@ai-sdk/mistral";
+import { generateObject, type LanguageModel } from "ai";
 import { z } from "zod";
 
 import { generateAndUploadImage } from "./image-generator";
@@ -10,6 +11,31 @@ import { logger } from "../security/logger";
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 });
+const groq = createGroq({
+  apiKey: process.env.GROQ_API_KEY,
+});
+const mistral = createMistral({
+  apiKey: process.env.MISTRAL_API_KEY,
+});
+
+// Model success tracker (in-memory)
+interface ModelStats {
+  attempts: number;
+  successes: number;
+}
+const modelStats: Record<string, ModelStats> = {};
+
+function getStats(modelId: string) {
+  if (!modelStats[modelId]) {
+    modelStats[modelId] = { attempts: 0, successes: 0 };
+  }
+  return modelStats[modelId];
+}
+
+function getSuccessRate(modelId: string) {
+  const stats = getStats(modelId);
+  return stats.attempts === 0 ? 1 : stats.successes / stats.attempts;
+}
 
 const blogSchema = z.object({
   title: z.string().describe("A catchy, SEO-friendly title for the blog post."),
@@ -43,21 +69,48 @@ export async function generateAndPublishBlog() {
 
   logger.info("Generating blog post content...");
 
-  // Define an array of models, prioritizing free/cheaper models with extensive fallbacks
-  const fallbackModels = [
-    google("gemini-1.5-flash"), // Google's fast and cost-effective model
-    google("gemini-1.5-pro"), // Google's high-performance model
-    openai("gpt-4o-mini"), // OpenAI's cheap and fast model
-    openai("gpt-4o"), // OpenAI's flagship fast model
+  // Define base models in user's priority order
+  type ExtendedModel = LanguageModel & { modelId?: string; provider?: string };
+  const baseModels: LanguageModel[] = [
+    google("gemini-2.5-flash"),
+    google("gemini-2.5-flash-lite"),
+    google("gemini-2.5-pro"),
+    groq("llama-3.3-70b-versatile"),
+    groq("llama-3.1-8b-instant"),
+    groq("qwen/qwen3-32b"),
+    mistral("mistral-small-3.1"),
+    mistral("ministral-8b"),
   ];
+
+  // Sort based on success rate (descending), preserving priority if tied
+  const fallbackModels = baseModels
+    .map((model, index) => ({
+      model,
+      index,
+      rate: getSuccessRate((model as ExtendedModel).modelId || "unknown-model"),
+    }))
+    .sort((a, b) => {
+      if (b.rate === a.rate) {
+        return a.index - b.index;
+      }
+      return b.rate - a.rate;
+    })
+    .map((x) => x.model);
 
   let output;
   let success = false;
   let lastError;
 
   for (const model of fallbackModels) {
+    const modelId = (model as ExtendedModel).modelId || "unknown-model";
+    const provider = (model as ExtendedModel).provider || "unknown-provider";
     try {
-      logger.info(`Attempting to generate blog with model: ${model.provider}:${model.modelId}`);
+      logger.info(
+        `Attempting to generate blog with model: ${provider}:${modelId} (Success Rate: ${(getSuccessRate(modelId) * 100).toFixed(1)}%)`
+      );
+
+      const stats = getStats(modelId);
+      stats.attempts++;
 
       const response = await generateObject({
         model,
@@ -77,11 +130,12 @@ export async function generateAndPublishBlog() {
 
       output = response.object;
       success = true;
-      logger.info(`Successfully generated blog with model: ${model.provider}:${model.modelId}`);
+      stats.successes++;
+      logger.info(`Successfully generated blog with model: ${provider}:${modelId}`);
       break; // Exit the loop on success
     } catch (e) {
       logger.warn(
-        `Failed to generate with model ${model.provider}:${model.modelId}. Error: ${e instanceof Error ? e.message : String(e)}`
+        `Failed to generate with model ${provider}:${modelId}. Error: ${e instanceof Error ? e.message : String(e)}`
       );
       lastError = e;
     }
