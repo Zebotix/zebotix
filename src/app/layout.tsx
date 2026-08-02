@@ -1,6 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Outfit } from "next/font/google";
-import Script from "next/script";
 import React, { Suspense } from "react";
 
 import type { Metadata, Viewport } from "next";
@@ -146,20 +145,7 @@ export default async function RootLayout({
         <Suspense fallback={null}>
           <GoogleAnalyticsTracker />
         </Suspense>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"}`}
-          strategy="lazyOnload"
-        />
-        <Script id="google-analytics" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID ?? "G-JD55RSPP55"}', {
-              page_path: window.location.pathname,
-            });
-          `}
-        </Script>
+
         <Suspense fallback={null}>
           <WebVitalsReporter />
           <SmoothScrollProvider />

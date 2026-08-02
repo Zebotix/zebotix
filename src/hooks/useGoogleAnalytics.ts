@@ -17,11 +17,14 @@ type GlobalWindow = typeof globalThis & {
   gtag?: GtagFn;
 };
 
-export const useGoogleAnalytics = () => {
+export const useGoogleAnalytics = (consentGiven: boolean | null = true) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    if (pathname?.startsWith('/admin') || consentGiven !== true) {
+      return;
+    }
     // Track page views on route change
     const win = globalThis as GlobalWindow;
     if (typeof win.gtag === 'function') {
@@ -30,5 +33,5 @@ export const useGoogleAnalytics = () => {
         page_path: url,
       });
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, consentGiven]);
 };
