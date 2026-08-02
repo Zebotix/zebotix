@@ -73,25 +73,19 @@ export async function generateAndPublishBlog() {
   type ExtendedModel = LanguageModel & { modelId?: string; provider?: string };
   const baseModels: LanguageModel[] = [
     // Google Gemini Models
-    google("gemini-2.5-flash"),
-    google("gemini-2.5-flash-lite"),
     google("gemini-2.5-pro"),
     google("gemini-2.0-flash"),
-    google("gemini-1.5-flash"),
+    google("gemini-2.0-flash-exp"), // Often the free tier for AI Studio
+    google("gemini-1.5-pro"),
     
-    // Groq Models
-    groq("llama-3.3-70b-versatile"),
-    groq("llama-3.1-8b-instant"),
-    groq("qwen/qwen3-32b"),
-    groq("mixtral-8x7b-32768"),
-    groq("gemma2-9b-it"),
-    groq("deepseek-r1-distill-llama-70b"),
-
-    // Mistral Models
-    mistral("mistral-small-3.1"),
-    mistral("ministral-8b"),
-    mistral("open-mistral-nemo"),
+    // Groq Models (Keeping the latest that might support JSON schema, removed decommissioned ones)
+    groq("llama-3.2-3b-preview"),
+    groq("llama-3.1-70b-versatile"), // Some versions support structured outputs
+    
+    // Mistral Models (Removed invalid ones)
+    mistral("open-mistral-nemo"), // This one successfully worked!
     mistral("pixtral-12b-2409"),
+    mistral("mistral-large-latest"),
   ];
 
   // Sort based on success rate (descending), preserving priority if tied
