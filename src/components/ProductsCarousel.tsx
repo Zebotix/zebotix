@@ -99,9 +99,9 @@ const ProductsCarouselSection = ({ solutions = [] }: ProductsCarouselSectionProp
                       src={s.image || "/images/hero-section-image.webp"}
                       alt={title}
                       fill
-                      quality={60}
+                      quality={50}
                       className="object-cover opacity-30 group-hover:opacity-50 group-hover:scale-105 transition-all duration-700"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 400px"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 480px"
                     />
                   </div>
                   {/* Dark overlay for text readability */}

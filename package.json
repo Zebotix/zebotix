@@ -198,12 +198,6 @@
     "sharp": true,
     "unrs-resolver": true
   },
-  "browserslist": [
-    "chrome >= 100",
-    "firefox >= 100",
-    "safari >= 15",
-    "edge >= 100"
-  ],
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
   }
