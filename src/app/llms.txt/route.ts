@@ -1,5 +1,8 @@
 import { getSolutionsAction } from "@/app/actions/solutions";
 
+export const revalidate = 3600; // Revalidate every hour
+export const dynamic = 'force-static'; // Ensure it's statically generated
+
 export async function GET() {
   const { data: solutions } = await getSolutionsAction();
   
