@@ -33,6 +33,9 @@ const Reveal = ({
       const element = containerRef.current;
       if (!element) return;
 
+      const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+      if (isBot) return;
+
       const fromVars: gsap.TweenVars = { opacity: 0 };
       const toVars: gsap.TweenVars = {
         opacity: 1,

@@ -147,6 +147,13 @@ const nextConfig: NextConfig = {
             type: "host",
             value: "www.zebotix.com",
           },
+        ],
+        destination: "https://zebotix.com/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [
           {
             type: "host",
             value: "zebotix.vercel.app",
