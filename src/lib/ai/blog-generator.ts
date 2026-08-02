@@ -43,7 +43,7 @@ const blogSchema = z.object({
   content: z
     .string()
     .describe(
-      "Full blog post content in rich HTML format (use <h2>, <p>, <strong>, <ul>, etc.). Make it comprehensive, engaging, and at least 600 words."
+      "Full blog post content in rich HTML format (use <h2>, <p>, <strong>, <ul>, etc.). Make it comprehensive, engaging, and at least 600 words. DO NOT include any <img> tags or images in the HTML."
     ),
   excerpt: z.string().describe("A short 1-2 sentence summary of the post."),
   category: z
@@ -129,6 +129,7 @@ export async function generateAndPublishBlog() {
           Instructions:
           - Pick ONE of the most interesting news items or a current major trend.
           - Write a comprehensive blog post in rich HTML format.
+          - DO NOT include any images or <img> tags within the HTML content.
           - Ensure it sounds professional but engaging (author: Zebotix Team).
           - Provide a vivid, detailed image prompt that represents the core concept of the post.
         `,
