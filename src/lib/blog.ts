@@ -1,4 +1,4 @@
-import { unstable_cache as unstableCache } from "next/cache";
+import { unstable_cache as unstableCache, revalidateTag } from "next/cache";
 
 import type { Prisma } from "@/generated/prisma/client";
 
@@ -44,7 +44,11 @@ export const getPostBySlug = unstableCache(
 );
 
 export async function createPost(data: Prisma.BlogPostCreateInput) {
-  return await prisma.blogPost.create({
+  const post = await prisma.blogPost.create({
     data,
   });
+  
+  revalidateTag("posts", "max");
+  
+  return post;
 }
