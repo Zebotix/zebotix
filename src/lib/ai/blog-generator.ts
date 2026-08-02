@@ -8,6 +8,9 @@ import { generateAndUploadImage } from "./image-generator";
 import { fetchLatestTechNews } from "./news-fetcher";
 import { logger } from "../security/logger";
 
+import prisma from "@/lib/db/prisma";
+import { SEO_SERVICES } from "@/lib/seo-services";
+
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 });
@@ -43,7 +46,7 @@ const blogSchema = z.object({
   content: z
     .string()
     .describe(
-      "Full blog post content in rich HTML format (use <h2>, <p>, <strong>, <ul>, etc.). Make it comprehensive, engaging, and at least 600 words. DO NOT include any <img> tags or images in the HTML."
+      "Full blog post content in rich HTML format (use <h2>, <p>, <strong>, <ul>, etc.). Make it comprehensive, engaging, and at least 600 words. DO NOT include any <img> tags. DO NOT include the Title, Date, or Author in the content, as these are rendered separately."
     ),
   excerpt: z.string().describe("A short 1-2 sentence summary of the post."),
   category: z
@@ -69,6 +72,29 @@ export async function generateAndPublishBlog() {
 
   logger.info("Generating blog post content...");
 
+  logger.info("Fetching dynamic routes...");
+  const [solutions, portfolios, blogs] = await Promise.all([
+    prisma.solution.findMany({ where: { isPublished: true }, select: { title: true, slug: true } }),
+    prisma.portfolio.findMany({
+      where: { isPublished: true },
+      select: { title: true, slug: true },
+    }),
+    prisma.blogPost.findMany({ where: { isPublished: true }, select: { title: true, slug: true } }),
+  ]);
+
+  const dynamicSolutions = solutions
+    .map((s) => `- Solution: ${s.title} (/solutions/${s.slug})`)
+    .join("\n          ");
+  const dynamicPortfolios = portfolios
+    .map((p) => `- Case Study/Work: ${p.title} (/work/${p.slug})`)
+    .join("\n          ");
+  const dynamicServices = SEO_SERVICES.map(
+    (s) => `- Service: ${s.keyword} (/services/${s.slug})`
+  ).join("\n          ");
+  const dynamicBlogs = blogs
+    .map((b) => `- Blog Post: ${b.title} (/blog/${b.slug})`)
+    .join("\n          ");
+
   // Define base models in user's priority order
   type ExtendedModel = LanguageModel & { modelId?: string; provider?: string };
   const baseModels: LanguageModel[] = [
@@ -77,11 +103,11 @@ export async function generateAndPublishBlog() {
     google("gemini-2.0-flash"),
     google("gemini-2.0-flash-exp"), // Often the free tier for AI Studio
     google("gemini-1.5-pro"),
-    
+
     // Groq Models (Keeping the latest that might support JSON schema, removed decommissioned ones)
     groq("llama-3.2-3b-preview"),
     groq("llama-3.1-70b-versatile"), // Some versions support structured outputs
-    
+
     // Mistral Models (Removed invalid ones)
     mistral("open-mistral-nemo"), // This one successfully worked!
     mistral("pixtral-12b-2409"),
@@ -126,9 +152,28 @@ export async function generateAndPublishBlog() {
         prompt: `
           ${newsContext}
           
+          Available Internal Routes for Links:
+          - Home: /
+          - About: /about
+          - Blog: /blog
+          - Contact: /contact
+          - Services: /services
+          - Solutions: /solutions
+          - Work/Portfolio: /work
+          - Quick Quote: /quick-quote
+          - Careers: /careers
+          
+          Dynamic Pages (Use these for specific references):
+          ${dynamicSolutions}
+          ${dynamicPortfolios}
+          ${dynamicServices}
+          ${dynamicBlogs}
+          
           Instructions:
           - Pick ONE of the most interesting news items or a current major trend.
           - Write a comprehensive blog post in rich HTML format.
+          - DO NOT include the blog Title, Date, or Author in your HTML output. Only write the main body content.
+          - When adding internal links (e.g., 'Get in Touch', 'Solutions', or linking to a specific case study), ONLY use the exact routes listed above. Do not invent routes like '/contact-us'.
           - DO NOT include any images or <img> tags within the HTML content.
           - Ensure it sounds professional but engaging (author: Zebotix Team).
           - Provide a vivid, detailed image prompt that represents the core concept of the post.
