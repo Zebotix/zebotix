@@ -215,7 +215,7 @@ const Footer = ({ solutions = [] }: FooterProps) => {
             </Reveal>
           </div>
 
-          <div className={cn("col-span-3")}>
+          <div className="col-span-1 lg:col-span-2">
             <Reveal delay={0.2} distance={30}>
               <div className="flex flex-col">
                 <nav aria-label="Company navigation">

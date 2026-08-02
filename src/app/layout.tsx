@@ -163,7 +163,6 @@ export default async function RootLayout({
         </Script>
         <Suspense fallback={null}>
           <WebVitalsReporter />
-
           <SmoothScrollProvider />
           <Layout solutions={solutions}>{children}</Layout>
         </Suspense>
