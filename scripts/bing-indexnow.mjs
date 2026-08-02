@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 const HOST = "zebotix.com";
 const KEY = "1e9e03d3c8834c0fb383c38b25121b6d";
 
