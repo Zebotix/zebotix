@@ -79,7 +79,8 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
           >
             Home
           </Link>
-          <Accordion type="single" collapsible className="w-full">
+          
+          <Accordion type="single" collapsible className="w-full flex flex-col gap-2">
             {solutions.length > 0 && (
               <AccordionItem value="solutions" className="border-none">
                 <div className="flex items-center justify-between w-full group">
@@ -122,45 +123,16 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
               </AccordionItem>
             )}
 
-            <AccordionItem value="services" className="border-none">
-              <div className="flex items-center justify-between w-full group">
-                <Link
-                  href="/services"
-                  onClick={handleLinkClick}
-                  className={cn(
-                    "text-sm font-black uppercase tracking-wider py-3 transition-colors flex-1 text-left",
-                    activePath === "/services"
-                      ? "text-blue-500"
-                      : "text-zinc-300 group-hover:text-white"
-                  )}
-                >
-                  Services
-                </Link>
-                <AccordionTrigger className="hover:no-underline py-3 px-4 -mr-4 flex-none data-[state=open]:text-white text-zinc-300" />
-              </div>
-              <AccordionContent className="pb-0 pt-2">
-                <div className="pl-4 flex flex-col gap-2 border-l border-zinc-900 ml-2">
-                  {SEO_SERVICES.map((item) => {
-                    const href = `/services/${item.slug}`;
-                    return (
-                      <Link
-                        key={item.slug}
-                        href={href}
-                        onClick={handleLinkClick}
-                        className={cn(
-                          "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
-                          activePath === href
-                            ? "text-blue-500"
-                            : "text-zinc-400 hover:text-zinc-300"
-                        )}
-                      >
-                        {item.keyword}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
+            <Link
+              href="/work"
+              onClick={handleLinkClick}
+              className={cn(
+                "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
+                activePath === "/work" ? "text-blue-500" : "text-zinc-300 hover:text-white"
+              )}
+            >
+              Portfolio
+            </Link>
 
             <AccordionItem value="company" className="border-none">
               <AccordionTrigger className="hover:no-underline py-3 px-0 group">
@@ -183,11 +155,11 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                     Who we are
                   </Link>
                   <Link
-                    href="/#testimonials"
+                    href="/testimonials"
                     onClick={handleLinkClick}
                     className={cn(
                       "text-xs font-black uppercase tracking-wider py-3 pl-3 transition-colors block",
-                      activePath === "/#testimonials"
+                      activePath === "/testimonials"
                         ? "text-blue-500"
                         : "text-zinc-400 hover:text-zinc-300"
                     )}
@@ -207,18 +179,65 @@ const MobileMenu = ({ isOpen, onClose, activePath, solutions = [] }: MobileMenuP
                 </div>
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
 
-          <Link
-            href="/careers"
-            onClick={handleLinkClick}
-            className={cn(
-              "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
-              activePath.startsWith("/careers") ? "text-blue-500" : "text-zinc-300 hover:text-white"
-            )}
-          >
-            Careers
-          </Link>
+            <Link
+              href="/careers"
+              onClick={handleLinkClick}
+              className={cn(
+                "text-sm font-black uppercase tracking-wider py-3 transition-colors block",
+                activePath.startsWith("/careers") ? "text-blue-500" : "text-zinc-300 hover:text-white"
+              )}
+            >
+              Careers
+            </Link>
+
+            <AccordionItem value="services" className="border-none">
+              <div className="flex items-center justify-between w-full group">
+                <Link
+                  href="/services"
+                  onClick={handleLinkClick}
+                  className={cn(
+                    "text-sm font-black uppercase tracking-wider py-3 transition-colors flex-1 text-left",
+                    activePath === "/services"
+                      ? "text-blue-500"
+                      : "text-zinc-300 group-hover:text-white"
+                  )}
+                >
+                  Services
+                </Link>
+                <AccordionTrigger className="hover:no-underline py-3 px-4 -mr-4 flex-none data-[state=open]:text-white text-zinc-300" />
+              </div>
+              <AccordionContent className="pb-0 pt-2">
+                <div className="pl-4 flex flex-col gap-4 border-l border-zinc-900 ml-2 mt-2">
+                  {Array.from(new Set(SEO_SERVICES.map((s) => s.category))).map((category) => (
+                    <div key={category} className="flex flex-col gap-1">
+                      <span className="text-[10px] font-black text-zinc-600 uppercase tracking-widest pl-3 mb-1">
+                        {category}
+                      </span>
+                      {SEO_SERVICES.filter((s) => s.category === category).map((item) => {
+                        const href = `/services/${item.slug}`;
+                        return (
+                          <Link
+                            key={item.slug}
+                            href={href}
+                            onClick={handleLinkClick}
+                            className={cn(
+                              "text-xs font-bold uppercase tracking-wider py-2 pl-3 transition-colors block",
+                              activePath === href
+                                ? "text-blue-500"
+                                : "text-zinc-400 hover:text-zinc-300"
+                            )}
+                          >
+                            {item.keyword}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </nav>
 
         {/* Footer Area */}

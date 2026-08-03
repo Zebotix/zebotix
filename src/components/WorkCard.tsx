@@ -47,9 +47,10 @@ export function WorkCard({ work }: Readonly<{ work: Portfolio }>) {
           </div>
         )}
 
-        <p className="text-zinc-400 mb-6 line-clamp-3 text-sm md:text-base font-light leading-relaxed">
-          {work.problem}
-        </p>
+        <div 
+          className="text-zinc-400 mb-6 line-clamp-3 text-sm md:text-base font-light leading-relaxed [&>p]:m-0"
+          dangerouslySetInnerHTML={{ __html: work.problem || "" }}
+        />
 
         <div className="mt-auto">
           <div className="flex flex-wrap gap-2 mb-6">

@@ -227,7 +227,7 @@
   }
 
   * {
-    @apply border-border;
+    @apply border-border tracking-wide;
   }
 
   body {

@@ -124,9 +124,10 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
         </Reveal>
 
         <Reveal delay={0.4} className="prose prose-invert prose-blue max-w-none">
-          <p className="text-xl text-zinc-300 max-w-3xl mb-8 leading-relaxed font-light">
-            {post.excerpt}
-          </p>
+          <div 
+            className="text-xl text-zinc-300 max-w-3xl mb-8 leading-relaxed font-light [&>p]:m-0"
+            dangerouslySetInnerHTML={{ __html: post.excerpt || "" }}
+          />
           <div
             dangerouslySetInnerHTML={{ __html: post.content }}
             className="text-gray-300 text-lg leading-relaxed space-y-6"

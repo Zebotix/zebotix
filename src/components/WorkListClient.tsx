@@ -86,7 +86,7 @@ export function WorkListClient({ initialWorks }: Readonly<{ initialWorks: Portfo
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-full md:w-[200px] bg-zinc-950 border-zinc-800 text-zinc-300">
+            <SelectTrigger className="w-full md:w-50 bg-zinc-950 border-zinc-800 text-zinc-300">
               <SelectValue placeholder="Industry" />
             </SelectTrigger>
             <SelectContent className="bg-zinc-950 border-zinc-800">
@@ -141,9 +141,10 @@ export function WorkListClient({ initialWorks }: Readonly<{ initialWorks: Portfo
                     {featuredWork.title}
                   </Link>
                 </h3>
-                <p className="text-zinc-400 mb-8 line-clamp-4 leading-relaxed font-light">
-                  {featuredWork.problem}
-                </p>
+                <div 
+                  className="text-zinc-400 mb-8 line-clamp-4 leading-relaxed font-light [&>p]:m-0"
+                  dangerouslySetInnerHTML={{ __html: featuredWork.problem || "" }}
+                />
                 <div className="mt-auto flex items-center text-white font-bold group-hover:text-zebotix-blue transition-colors w-fit">
                   Explore Project
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

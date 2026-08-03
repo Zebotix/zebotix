@@ -154,7 +154,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </header>
 
         <Reveal delay={0.3} distance={50} className="mb-24">
-          <div className="relative h-[400px] md:h-[700px] overflow-hidden border border-zinc-900 shadow-2xl">
+          <div className="relative h-100 md:h-175 overflow-hidden border border-zinc-900 shadow-2xl">
             {image && (
               <Image
                 src={image}

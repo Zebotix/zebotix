@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { generateAndPublishBlog } from "@/lib/ai/blog-generator";
 import { createPost } from "@/lib/blog";
 import prisma from "@/lib/db/prisma";
@@ -51,6 +53,9 @@ export async function generateAutoBlogAction() {
       isPublished: blogData.isPublished,
       publishedAt: blogData.publishedAt,
     });
+    revalidatePath("/blog");
+    revalidatePath("/admin/secure/blogs");
+    revalidatePath("/");
     return { success: true, data: newPost };
   } catch (error) {
     console.error("Error generating auto blog:", error);

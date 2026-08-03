@@ -34,35 +34,48 @@ export default function ServicesIndexPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-lg md:text-xl text-zinc-400 leading-relaxed">
-              We provide end-to-end software engineering and IT consulting services for forward-thinking enterprises.
+              We provide end-to-end software engineering and IT consulting services for
+              forward-thinking enterprises.
             </p>
           </Reveal>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {SEO_SERVICES.map((service, index) => (
-            <Reveal key={service.slug} delay={0.1 * (index % 3)}>
-              <Link
-                href={`/services/${service.slug}`}
-                className="group block h-full bg-zinc-900/50 border border-zinc-800 p-8 hover:border-blue-500/50 transition-all duration-300"
-              >
-                <div className="bg-blue-500/10 w-12 h-12 flex items-center justify-center mb-6">
-                  <Code className="text-blue-500 w-6 h-6" />
-                </div>
-                <h2 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
-                  {service.keyword}
+        {Array.from(new Set(SEO_SERVICES.map((s) => s.category))).map((category) => {
+          const categoryServices = SEO_SERVICES.filter((s) => s.category === category);
+          return (
+            <div key={category} className="mb-24 last:mb-0">
+              <Reveal delay={0.1}>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 border-b border-zinc-800 pb-4">
+                  {category}
                 </h2>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-6 line-clamp-3">
-                  {service.content}
-                </p>
-                <div className="flex items-center text-blue-500 font-bold text-sm uppercase tracking-wider mt-auto">
-                  Learn More
-                  <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+              </Reveal>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categoryServices.map((service, index) => (
+                  <Reveal key={service.slug} delay={0.1 * (index % 3)}>
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="group block h-full bg-zinc-900/50 border border-zinc-800 p-8 hover:border-blue-500/50 transition-all duration-300"
+                    >
+                      <div className="bg-blue-500/10 w-12 h-12 flex items-center justify-center mb-6">
+                        <Code className="text-blue-500 w-6 h-6" />
+                      </div>
+                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+                        {service.keyword}
+                      </h3>
+                      <p className="text-zinc-500 text-sm leading-relaxed mb-6 line-clamp-3">
+                        {service.content}
+                      </p>
+                      <div className="flex items-center text-blue-500 font-bold text-sm uppercase tracking-wider mt-auto">
+                        Learn More
+                        <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </Link>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </main>
   );

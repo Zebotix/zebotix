@@ -107,9 +107,10 @@ export default function BlogSection({ blogs }: BlogSectionProps) {
                       <h3 className="text-xl font-black text-white mb-3 group-hover:text-blue-500 transition-colors leading-tight uppercase tracking-tight">
                         {blog.title}
                       </h3>
-                      <p className="text-zinc-400 text-xs leading-relaxed line-clamp-3">
-                        {blog.excerpt}
-                      </p>
+                      <div 
+                        className="text-zinc-400 text-xs leading-relaxed line-clamp-3 [&>p]:m-0"
+                        dangerouslySetInnerHTML={{ __html: blog.excerpt || "" }}
+                      />
                     </div>
                   </Link>
                   <div className="px-5 sm:px-8 pb-5 sm:pb-8 pt-0 border-t border-zinc-850/50 mt-4">

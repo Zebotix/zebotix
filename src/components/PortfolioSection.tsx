@@ -106,13 +106,13 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
             return (
               <div
                 key={project.slug}
-                className="group portfolio-stack-card sticky top-24 md:top-32 w-full min-h-[480px] md:min-h-[560px] bg-zinc-900 border border-zinc-800 flex flex-col md:flex-row justify-between mb-12 sm:mb-16 shadow-[0_-20px_50px_rgba(0,0,0,0.4)] will-change-transform select-none rounded-none"
+                className="group portfolio-stack-card sticky top-24 md:top-32 w-full min-h-120 md:min-h-140 bg-zinc-900 border border-zinc-800 flex flex-col md:flex-row justify-between mb-12 sm:mb-16 shadow-[0_-20px_50px_rgba(0,0,0,0.4)] will-change-transform select-none rounded-none"
                 style={{
                   zIndex: index + 1,
                 }}
               >
                 {/* Details Side */}
-                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between h-full min-h-[240px] md:min-h-[560px] z-10 bg-zinc-900 rounded-none">
+                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-between h-full min-h-60 md:min-h-140 z-10 bg-zinc-900 rounded-none">
                   <div>
                     <span className="text-[10px] font-black uppercase tracking-widest text-blue-500 mb-6 block">
                       Case Study 0{index + 1}
@@ -120,9 +120,10 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                     <h3 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
                       {project.title}
                     </h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed mb-8 max-w-md line-clamp-3">
-                      {summary}
-                    </p>
+                    <div 
+                      className="text-zinc-400 text-sm leading-relaxed mb-8 max-w-md line-clamp-3 [&>p]:m-0"
+                      dangerouslySetInnerHTML={{ __html: summary }}
+                    />
 
                     <div className="flex flex-wrap gap-2 mb-8">
                       {tags.slice(0, 4).map((t: string) => (
@@ -149,7 +150,7 @@ const PortfolioSection = ({ portfolios = [] }: PortfolioSectionProps) => {
                 </div>
 
                 {/* Mock Image Side */}
-                <div className="w-full md:w-1/2 relative min-h-[240px] md:min-h-[560px] overflow-hidden border-t md:border-t-0 md:border-l border-zinc-850 rounded-none">
+                <div className="w-full md:w-1/2 relative min-h-60 md:min-h-140 overflow-hidden border-t md:border-t-0 md:border-l border-zinc-850 rounded-none">
                   {image ? (
                     <Image
                       src={image}

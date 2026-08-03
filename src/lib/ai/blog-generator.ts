@@ -173,6 +173,7 @@ export async function generateAndPublishBlog() {
           - Pick ONE of the most interesting news items or a current major trend.
           - Write a comprehensive blog post in rich HTML format.
           - DO NOT include the blog Title, Date, or Author in your HTML output. Only write the main body content.
+          - CRITICAL LINKING RULES: The anchor text MUST perfectly match the destination. Do not use generic text like "Zebotix" when linking to a specific solution or service. If you are linking to a specific service or solution, the anchor text MUST be the exact name of that service/solution. If linking to the Home page, you may use "Zebotix" or "Home". Do NOT insert random links over irrelevant text. The text and the link MUST be highly relevant to each other.
           - When adding internal links (e.g., 'Get in Touch', 'Solutions', or linking to a specific case study), ONLY use the exact routes listed above. Do not invent routes like '/contact-us'.
           - DO NOT include any images or <img> tags within the HTML content.
           - Ensure it sounds professional but engaging (author: Zebotix Team).
