@@ -3,14 +3,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { getBlogsAction } from "@/app/actions/blogs";
+import { StructuredData } from "@/components";
 import { Reveal } from "@/components/animations";
 import { getPostBySlug } from "@/lib/blog";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import {
-  generateBlogPostingSchema,
-  generateBreadcrumbSchema,
-  getSanitizedSchema,
-} from "@/lib/schemas";
+import { generateBlogPostingSchema, generateBreadcrumbSchema } from "@/lib/schemas";
 
 interface PostPageProps {
   params: Promise<{ slug: string }>;
@@ -78,18 +75,8 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
 
   return (
     <article className="pt-32 pb-24">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: getSanitizedSchema(blogPostingSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: getSanitizedSchema(breadcrumbSchema),
-        }}
-      />
+      <StructuredData data={blogPostingSchema} />
+      <StructuredData data={breadcrumbSchema} />
       <div className="section-container max-w-4xl">
         <header className="mb-12">
           <Reveal>

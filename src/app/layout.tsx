@@ -5,12 +5,11 @@ import React, { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 
 import { getSolutionsAction } from "@/app/actions/solutions";
-import { Layout, GoogleAnalytics as GoogleAnalyticsTracker, WebVitalsReporter } from "@/components";
+import { Layout, GoogleAnalytics as GoogleAnalyticsTracker, WebVitalsReporter, StructuredData } from "@/components";
 import { COMPANY_NAME, SITE_URL, SHORT_DESC } from "@/lib/constants";
 import {
   generateOrganizationSchema,
   generateWebsiteSchema,
-  getSanitizedSchema,
 } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
@@ -77,6 +76,11 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {},
   openGraph: {
     title: `${COMPANY_NAME} | Custom Software Development & IT Services`,
@@ -84,6 +88,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: COMPANY_NAME,
     type: "website",
+    locale: "en_US",
     images: [
       {
         url: "/og-image.png",
@@ -116,18 +121,8 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: getSanitizedSchema(organizationJsonLd),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: getSanitizedSchema(websiteJsonLd),
-          }}
-        />
+        <StructuredData data={organizationJsonLd} />
+        <StructuredData data={websiteJsonLd} />
       </head>
       <body
         className={cn(

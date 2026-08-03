@@ -15,10 +15,11 @@ import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { StructuredData } from "@/components";
 import { Reveal } from "@/components/animations";
 import { Button } from "@/components/ui/Button";
 import { COMPANY_NAME, SITE_URL } from "@/lib/constants";
-import { generateOrganizationSchema, getSanitizedSchema } from "@/lib/schemas";
+import { generateOrganizationSchema } from "@/lib/schemas";
 
 export const metadata: Metadata = {
   title: `About Us — ${COMPANY_NAME}`,
@@ -80,10 +81,7 @@ export default function About() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white overflow-hidden pb-10">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: getSanitizedSchema(schema) }}
-      />
+      <StructuredData data={schema} />
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32">
@@ -106,7 +104,7 @@ export default function About() {
             </div>
           </Reveal>
           <Reveal distance={40} delay={0.2}>
-            <div className="relative h-[400px] lg:h-[500px] w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
+            <div className="relative h-100 lg:h-125 w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl">
               <Image
                 src="/about_hero.webp"
                 alt="Zebotix Workspace"
@@ -183,7 +181,7 @@ export default function About() {
       <section className="py-24 bg-zinc-900/30 border-y border-zinc-900">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
           <Reveal>
-            <div className="relative h-[400px] lg:h-[500px] w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-xl">
+            <div className="relative h-100 lg:h-125 w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-xl">
               <Image
                 src="/about_process.webp"
                 alt="Agile Workflow Process"
@@ -274,7 +272,7 @@ export default function About() {
             </Reveal>
           </div>
           <Reveal className="order-1 lg:order-2">
-            <div className="relative h-[300px] lg:h-[400px] w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-xl">
+            <div className="relative h-75 lg:h-100 w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-xl">
               <Image
                 src="/shield_illustration.webp"
                 alt="Digital Security Shield"

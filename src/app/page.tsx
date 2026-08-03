@@ -7,6 +7,7 @@ import { getBlogsAction } from "@/app/actions/blogs";
 import { getFeaturedPortfoliosAction } from "@/app/actions/portfolio";
 import { getSolutionsAction } from "@/app/actions/solutions";
 import { getTestimonialsAction } from "@/app/actions/testimonials";
+import { StructuredData } from "@/components";
 import BlogSection from "@/components/BlogSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HeroSection from "@/components/HeroSection";
@@ -15,7 +16,7 @@ import ProductsCarouselSection, { type SolutionItem } from "@/components/Product
 import TestimonialsSection from "@/components/TestimonialsSection";
 import { LoadingFallback } from "@/components/ui/FallBackLoading";
 import { COMPANY_NAME, SHORT_DESC, SITE_URL } from "@/lib/constants";
-import { getSanitizedSchema, generateLocalBusinessSchema } from "@/lib/schemas";
+import { generateLocalBusinessSchema } from "@/lib/schemas";
 
 const OurProcess = dynamic(() => import("@/components/OurProcess"));
 const CtaSection = dynamic(() => import("@/components/CtaSection"));
@@ -91,12 +92,7 @@ export default async function Home() {
 
   return (
     <main id="main-content" className="relative  bg-zinc-950 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: getSanitizedSchema(localBusinessSchema),
-        }}
-      />
+      <StructuredData data={localBusinessSchema} />
 
       {/* Sticky Hero Wrapper for Scroll-Over Effect */}
       <div className="sticky top-0 h-screen w-full z-0 overflow-hidden">
