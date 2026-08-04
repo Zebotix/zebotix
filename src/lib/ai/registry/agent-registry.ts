@@ -10,7 +10,7 @@ export interface AIAgent<Input = unknown, Output = unknown> {
 }
 
 class AgentRegistry {
-  private agents: Map<string, AIAgent<never, unknown>> = new Map();
+  private readonly agents: Map<string, AIAgent<never, unknown>> = new Map();
 
   register<I, O>(agent: AIAgent<I, O>) {
     if (this.agents.has(agent.id)) {
