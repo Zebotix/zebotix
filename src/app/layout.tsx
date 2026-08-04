@@ -58,9 +58,9 @@ export const metadata: Metadata = {
   creator: COMPANY_NAME,
   publisher: COMPANY_NAME,
   icons: {
-    icon: "/Zebotix.png",
-    shortcut: "/Zebotix.png",
-    apple: "/Zebotix.png",
+    icon: "/icon-192x192.png",
+    shortcut: "/icon-192x192.png",
+    apple: "/icon-192x192.png",
   },
   verification: {
     google: process.env.GOOGLE_CONSOLE_VERIFICATION,
