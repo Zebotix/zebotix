@@ -10,7 +10,7 @@ export interface AIAgent<Input = unknown, Output = unknown> {
 }
 
 class AgentRegistry {
-  private agents: Map<string, AIAgent> = new Map();
+  private agents: Map<string, AIAgent<never, unknown>> = new Map();
 
   register<I, O>(agent: AIAgent<I, O>) {
     if (this.agents.has(agent.id)) {
@@ -25,10 +25,10 @@ class AgentRegistry {
     if (!agent) {
       throw new Error(`Agent ${agentId} not found in registry.`);
     }
-    return agent as AIAgent<I, O>;
+    return agent as unknown as AIAgent<I, O>;
   }
 
-  list(): AIAgent[] {
+  list(): AIAgent<never, unknown>[] {
     return Array.from(this.agents.values());
   }
 }
