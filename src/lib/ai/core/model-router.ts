@@ -63,7 +63,7 @@ export class ModelRouter {
         });
         
         let fallbackModelId: string = AI_MODELS.GEMINI_1_5_PRO;
-        if (id === "groq") fallbackModelId = AI_MODELS.LLAMA_3_1_70B;
+        if (id === "groq") fallbackModelId = AI_MODELS.LLAMA_3_3_70B;
         if (id === "mistral") fallbackModelId = AI_MODELS.MISTRAL_NEMO;
         
         return { model: p.getInstance(fallbackModelId), providerId: id, modelId: fallbackModelId };

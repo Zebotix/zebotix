@@ -137,7 +137,7 @@ export class AgentExecutor {
           await new Promise((resolve) => setTimeout(resolve, AI_TIMEOUTS.RETRY_DELAY_MS * attempt));
           if (attempt === 1 && currentProvider === "google") {
             currentProvider = "groq";
-            currentModelId = "llama-3.1-70b-versatile";
+            currentModelId = "llama-3.3-70b-versatile";
           }
         }
       }
