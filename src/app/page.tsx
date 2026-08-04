@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 import type { Metadata } from "next";
 
-import { getBlogsAction } from "@/app/actions/blogs";
+import { getPaginatedBlogsAction } from "@/app/actions/blogs";
 import { getFeaturedPortfoliosAction } from "@/app/actions/portfolio";
 import { getSolutionsAction } from "@/app/actions/solutions";
 import { getTestimonialsAction } from "@/app/actions/testimonials";
@@ -82,7 +82,7 @@ async function TestimonialsWrapper() {
 }
 
 async function BlogsWrapper() {
-  const res = await getBlogsAction(true);
+  const res = await getPaginatedBlogsAction(1, 3);
   const blogs = res.success ? res.data : [];
   return <BlogSection blogs={blogs} />;
 }

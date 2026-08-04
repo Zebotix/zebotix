@@ -56,22 +56,54 @@ model Portfolio {
   updatedAt   DateTime  @updatedAt
 }
 
+model MediaFile {
+  id             String   @id @default(cuid())
+
+  provider       String
+  originalUrl    String?
+  hostedUrl      String
+
+  altText        String?
+  caption        String?
+
+  photographer   String?
+  license        String?
+  licenseUrl     String?
+
+  width          Int?
+  height         Int?
+
+  mimeType       String?
+  size           Int?
+
+  checksum       String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  blogPosts      BlogPost[]
+
+  @@map("MediaFile") // Maps to the existing table to avoid data loss
+}
+
 model BlogPost {
-  id          String    @id @default(cuid())
-  title       String
-  slug        String    @unique
-  content     String    // Rich text
-  excerpt     String
-  author      String    @default("Zebotix Team")
-  category    String?
-  tags        String[]
-  image       String?
-  isFeatured  Boolean   @default(false)
-  isPublished Boolean   @default(false)
-  seo         Json?
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  content         String    // Rich text
+  excerpt         String
+  author          String    @default("Zebotix Team")
+  category        String?
+  tags            String[]
+  image           String?   // Legacy image field
+  featuredImageId String?
+  featuredImage   MediaFile?    @relation(fields: [featuredImageId], references: [id])
+  isFeatured      Boolean   @default(false)
+  isPublished     Boolean   @default(false)
+  seo             Json?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Testimonial {
@@ -95,25 +127,26 @@ model Testimonial {
 
 model QuickQuote {
   id               String    @id @default(cuid())
-  country          String
+  country          String    @default("")
   city             String?
   preferredContact String?
-  projectType      String
-  businessType     String
+  projectType      String    @default("")
+  businessType     String    @default("")
   companySize      String?
   designStyle      String[]
   platforms        String[]
   features         String[]
   aiFeatures       String[]
   integrations     String[]
-  budget           String
-  timeline         String
+  colorThemes      String[]
+  budget           String    @default("")
+  timeline         String    @default("")
   details          String?
   additionalNotes  String?
   referenceUrls    String[]
   attachments      String[]
-  name             String
-  email            String
+  name             String    @default("")
+  email            String    @default("")
   phone            String?
   company          String?
   estimatedCostPkr Int?
@@ -183,16 +216,6 @@ model SiteSetting {
 
 
 
-model MediaFile {
-  id        String    @id @default(cuid())
-  filename  String
-  url       String
-  mimeType  String
-  size      Int
-  alt       String?
-  folder    String    @default("/")
-  createdAt DateTime  @default(now())
-}
 
 model AnnouncementBar {
   id        String    @id @default(cuid())

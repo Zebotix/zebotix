@@ -47,7 +47,7 @@ export async function fetchLatestTechNews(limit: number = 5): Promise<NewsItem[]
   const allNews: NewsItem[] = [];
 
   // Shuffle feeds and pick 3 to fetch in parallel to avoid long response times
-  const selectedFeeds = TECH_FEEDS.toSorted(() => 0.5 - Math.random()).slice(0, 3);
+  const selectedFeeds = TECH_FEEDS.toSorted(() => 0.5 - secureRandom()).slice(0, 3);
 
   const fetchPromises = selectedFeeds.map(async (feedUrl) => {
     try {

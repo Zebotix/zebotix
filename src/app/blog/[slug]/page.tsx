@@ -77,14 +77,14 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
     <article className="pt-32 pb-24">
       <StructuredData data={blogPostingSchema} />
       <StructuredData data={breadcrumbSchema} />
-      <div className="section-container max-w-4xl">
+      <div className="section-container max-w-5xl">
         <header className="mb-12">
           <Reveal>
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 mb-6 flex-wrap">
               {post.tags.map((tag: string) => (
                 <span
                   key={tag}
-                  className="text-xs uppercase tracking-widest text-zebotix-blue font-black bg-zebotix-blue/10 px-3 py-1 rounded-full border border-zebotix-blue/20"
+                  className="text-xs uppercase tracking-widest text-zebotix-blue font-black bg-zebotix-blue/10 px-3 py-1 rounded-full border border-zebotix-blue/20  min-w-fit whitspace-nowrap"
                   aria-label={`Blog tag: ${tag}`}
                 >
                   {tag}
@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: Readonly<PostPageProps>) 
         </Reveal>
 
         <Reveal delay={0.4} className="prose prose-invert prose-blue max-w-none">
-          <div 
+          <div
             className="text-xl text-zinc-300 max-w-3xl mb-8 leading-relaxed font-light [&>p]:m-0"
             dangerouslySetInnerHTML={{ __html: post.excerpt || "" }}
           />

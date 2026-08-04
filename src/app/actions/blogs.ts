@@ -22,6 +22,28 @@ export async function getBlogsAction(onlyFeatured = false) {
   }
 }
 
+export async function getPaginatedBlogsAction(page = 1, limit = 10) {
+  try {
+    const blogs = await prisma.blogPost.findMany({
+      where: {
+        isPublished: true,
+      },
+      orderBy: { publishedAt: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
+    const totalPages = await prisma.blogPost.count({
+      where: {
+        isPublished: true,
+      },
+    });
+    return { success: true, data: blogs, totalPages };
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    return { success: false, error: "Failed to fetch blogs", data: [] };
+  }
+}
+
 export async function getBlogBySlugAction(slug: string) {
   try {
     const blog = await prisma.blogPost.findUnique({

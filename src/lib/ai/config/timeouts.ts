@@ -1,0 +1,17 @@
+export const AI_TIMEOUTS = {
+  // Base timeouts (ms)
+  DEFAULT_REQUEST: 30000,
+  LONG_REQUEST: 60000,
+  
+  // Specific tasks
+  RESEARCH_TIMEOUT: 45000,
+  CONTENT_GENERATION: 90000,
+  IMAGE_GENERATION: 60000,
+  
+  // Tools
+  TOOL_EXECUTION: 15000,
+  
+  // Retries
+  MAX_RETRIES: 3,
+  RETRY_DELAY_MS: 1000,
+};
